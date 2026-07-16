@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מבוא לאבטחת סייבר — תוכנית לימוד ממבחני עבר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Assistant:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14; --surface:#121a24; --surface2:#18222f; --surface3:#1e2a38;
+  --border:#26333f; --border2:#324150;
+  --text:#dce4ec; --muted:#8394a3; --faint:#5b6b78;
+  --teal:#2dd4bf; --cyan:#22d3ee; --amber:#f5b944; --green:#45d99a; --red:#f2637e; --violet:#a78bfa;
+  --mono:'JetBrains Mono',monospace; --disp:'Rubik',sans-serif; --body:'Assistant',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;
+  background-image:radial-gradient(circle at 15% -5%,rgba(45,212,191,.07),transparent 40%),radial-gradient(circle at 90% 5%,rgba(167,139,250,.06),transparent 35%);}
+code,.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate;font-size:.9em}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px}
+
+/* ---------- HERO ---------- */
+.hero{padding:64px 0 40px;position:relative}
+.eyebrow{font-family:var(--mono);font-size:.8rem;letter-spacing:.18em;color:var(--teal);
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--teal)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.1rem,6vw,3.5rem);line-height:1.08;letter-spacing:-.01em}
+h1 .hl{color:var(--teal)}
+.sub{color:var(--muted);font-size:1.12rem;margin-top:18px;max-width:620px}
+.metrics{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;flex:1;min-width:130px}
+.metric .num{font-family:var(--disp);font-weight:700;font-size:2rem;color:var(--cyan);line-height:1}
+.metric .lbl{color:var(--muted);font-size:.85rem;margin-top:6px}
+.callout{margin-top:26px;background:linear-gradient(180deg,rgba(245,185,68,.09),rgba(245,185,68,.03));
+  border:1px solid rgba(245,185,68,.3);border-right:3px solid var(--amber);border-radius:12px;padding:16px 20px;font-size:1rem}
+.callout b{color:var(--amber)}
+
+/* ---------- SECTION SHELL ---------- */
+section{padding:44px 0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+.sec-head .idx{font-family:var(--mono);color:var(--faint);font-size:.9rem}
+.sec-head h2{font-family:var(--disp);font-weight:700;font-size:1.75rem;letter-spacing:-.01em}
+.sec-intro{color:var(--muted);margin:-12px 0 26px;max-width:680px}
+
+/* ---------- FREQUENCY CHART ---------- */
+.bars{display:flex;flex-direction:column;gap:11px}
+.bar-row{display:grid;grid-template-columns:1fr;gap:6px}
+.bar-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.bar-name{font-weight:600;font-size:.98rem}
+.bar-name .en{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+.bar-count{font-family:var(--mono);font-size:.82rem;color:var(--muted);white-space:nowrap}
+.bar-track{height:10px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--teal),var(--cyan));width:0;transition:width 1.1s cubic-bezier(.22,1,.36,1)}
+.bar-fill.p2{background:linear-gradient(90deg,#3b9d92,#3aa9c4)}
+.bar-fill.p3{background:linear-gradient(90deg,#4a6c7a,#5b8496)}
+.tier-tag{font-family:var(--mono);font-size:.68rem;padding:2px 7px;border-radius:5px;letter-spacing:.05em;vertical-align:middle}
+.t1{background:rgba(45,212,191,.16);color:var(--teal)}
+.t2{background:rgba(245,185,68,.14);color:var(--amber)}
+.t3{background:rgba(131,148,163,.14);color:var(--muted)}
+
+/* ---------- INSIGHT CARDS ---------- */
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.insight{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+.insight h3{font-family:var(--disp);font-weight:600;font-size:1.05rem;margin-bottom:8px;color:var(--text);display:flex;align-items:center;gap:8px}
+.insight h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none}
+.insight p{color:var(--muted);font-size:.95rem}
+
+/* ---------- STUDY / TOPIC ---------- */
+.progress-wrap{position:sticky;top:0;z-index:40;background:rgba(10,14,20,.9);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);padding:12px 0;margin-bottom:8px}
+.progress-inner{display:flex;align-items:center;gap:14px}
+.progress-inner .txt{font-family:var(--mono);font-size:.82rem;color:var(--muted);white-space:nowrap}
+.progress-bar{flex:1;height:8px;background:var(--surface2);border-radius:5px;overflow:hidden}
+.progress-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--green));transition:width .4s}
+.progress-inner .score{font-family:var(--mono);font-size:.82rem;color:var(--green);white-space:nowrap}
+
+.topic{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.topic-head{display:flex;align-items:center;gap:14px;padding:20px 22px;cursor:pointer;user-select:none;transition:background .2s}
+.topic-head:hover{background:var(--surface2)}
+.topic-rank{font-family:var(--mono);font-weight:700;font-size:.85rem;color:var(--bg);background:var(--teal);
+  border-radius:8px;padding:5px 9px;flex:none}
+.topic.p2 .topic-rank{background:var(--amber)}
+.topic.p3 .topic-rank{background:var(--muted)}
+.topic-titles{flex:1;min-width:0}
+.topic-titles .he{font-family:var(--disp);font-weight:600;font-size:1.18rem;line-height:1.25}
+.topic-titles .en{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:2px}
+.phase-tag{display:inline-block;font-family:var(--disp);font-size:.66rem;letter-spacing:.08em;color:var(--violet);
+  background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.28);border-radius:20px;padding:2px 10px;margin-top:7px;font-weight:600}
+.topic-freq{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-align:left;flex:none}
+.topic-freq .big{color:var(--cyan);font-size:1.05rem;font-weight:700}
+.chev{flex:none;color:var(--muted);transition:transform .3s;font-size:1.2rem}
+.topic.open .chev{transform:rotate(180deg)}
+.topic-body{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.topic-inner{padding:4px 22px 24px}
+
+.material{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.material h4{font-family:var(--disp);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;font-weight:600}
+.material p{margin-bottom:11px;font-size:1rem}
+.material p:last-child{margin-bottom:0}
+.material ul{list-style:none;margin:4px 0 12px}
+.material li{padding-right:20px;position:relative;margin-bottom:8px;font-size:.99rem}
+.material li::before{content:"▸";position:absolute;right:0;color:var(--teal)}
+.material .key{color:var(--cyan);font-weight:600}
+.material .warn{color:var(--amber);font-weight:600}
+.material .no{color:var(--red);font-weight:600}
+.trap{background:rgba(242,99,126,.08);border:1px solid rgba(242,99,126,.25);border-radius:10px;padding:12px 16px;margin-top:6px;font-size:.95rem}
+.trap b{color:var(--red)}
+.formula{background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-family:var(--mono);
+  direction:ltr;text-align:left;font-size:.9rem;color:var(--cyan);margin:10px 0;overflow-x:auto}
+
+/* ---------- QUIZ ---------- */
+.quiz-label{font-family:var(--disp);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);
+  margin-bottom:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.q{border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;background:var(--surface2)}
+.q-meta{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-bottom:8px}
+.q-text{font-weight:600;font-size:1.03rem;margin-bottom:14px;line-height:1.55}
+.q-text code{color:var(--cyan)}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:right;background:var(--surface);border:1px solid var(--border2);border-radius:10px;
+  padding:11px 15px;cursor:pointer;font-family:inherit;font-size:.97rem;color:var(--text);
+  transition:all .15s;display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.opt:hover:not(:disabled){border-color:var(--teal);background:var(--surface3)}
+.opt:disabled{cursor:default}
+.opt .mark{font-family:var(--mono);font-weight:700;color:var(--muted);flex:none}
+.opt.correct{border-color:var(--green);background:rgba(69,217,154,.12)}
+.opt.correct .mark{color:var(--green)}
+.opt.wrong{border-color:var(--red);background:rgba(242,99,126,.12)}
+.opt.wrong .mark{color:var(--red)}
+.opt code{color:var(--cyan)}
+.explain{margin-top:13px;padding:12px 15px;border-radius:10px;background:var(--bg);border-right:3px solid var(--teal);
+  font-size:.94rem;color:var(--muted);display:none}
+.explain.show{display:block;animation:fade .3s}
+.explain b{color:var(--teal)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* ---------- global inline helpers (work in intro/material/analogy/deeper) ---------- */
+.k,.key{color:var(--cyan);font-weight:600}
+.w,.warn{color:var(--amber);font-weight:600}
+.no{color:var(--red);font-weight:600}
+
+/* ---------- analogy block ---------- */
+.analogy{background:linear-gradient(180deg,rgba(167,139,250,.10),rgba(167,139,250,.03));
+  border:1px solid rgba(167,139,250,.28);border-right:3px solid var(--violet);border-radius:12px;
+  padding:15px 18px;margin-bottom:18px;font-size:1.02rem;line-height:1.72}
+.analogy-tag{display:inline-block;font-family:var(--disp);font-size:.68rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--violet);font-weight:700;margin-left:9px}
+.analogy b{color:var(--violet);font-weight:700}
+
+/* ---------- from-zero intro ---------- */
+.intro{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+.intro h4{font-family:var(--disp);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:13px;font-weight:600}
+.intro p{margin-bottom:11px;font-size:1rem;line-height:1.75}
+.intro ul{list-style:none;margin:6px 0 13px}
+.intro li{padding-right:20px;position:relative;margin-bottom:9px;font-size:1rem;line-height:1.72}
+.intro li::before{content:"▸";position:absolute;right:0;color:var(--cyan)}
+.intro b{color:var(--text);font-weight:700}
+.intro code{color:var(--cyan)}
+
+/* ---------- "want to go deeper?" collapsible ---------- */
+.deeper-btn{margin-top:11px;background:var(--surface3);border:1px solid var(--border2);border-radius:9px;
+  color:var(--teal);font-family:var(--disp);font-weight:600;font-size:.88rem;padding:9px 15px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.deeper-btn:hover{border-color:var(--teal);background:var(--surface2)}
+.deeper-btn .dchev{transition:transform .3s;font-size:.9rem}
+.deeper-btn.open .dchev{transform:rotate(180deg)}
+.deeper-panel{max-height:0;overflow:hidden;transition:max-height .45s ease}
+.deeper-inner{background:rgba(45,212,191,.05);border:1px solid rgba(45,212,191,.22);border-right:3px solid var(--teal);
+  border-radius:10px;padding:14px 16px;margin-top:11px;font-size:.97rem;line-height:1.74;color:var(--muted)}
+.deeper-inner b{color:var(--text);font-weight:700}
+.deeper-inner code{color:var(--cyan)}
+
+/* ---------- defensive bidi for mixed Hebrew/English/code ---------- */
+.analogy,.intro,.material,.q-text,.explain,.deeper-inner,.opt>span:last-child{direction:rtl;text-align:right}
+.analogy code,.intro code,.material code,.q-text code,.explain code,.deeper-inner code,.opt code{unicode-bidi:isolate}
+
+/* ---------- FOOTER ---------- */
+footer{padding:50px 0 70px;text-align:center;color:var(--faint);font-size:.9rem;border-top:1px solid var(--border);margin-top:30px}
+footer .big{font-family:var(--disp);color:var(--muted);font-size:1.05rem;margin-bottom:8px}
+.pill{display:inline-block;font-family:var(--mono);font-size:.78rem;background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;padding:4px 12px;margin:3px;color:var(--muted)}
+@media(max-width:560px){
+  body{font-size:16px}
+  .topic-head{padding:16px}.topic-inner{padding:4px 15px 20px}
+  .metric{min-width:calc(50% - 7px)}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+<div class="wrap">
+  <div class="eyebrow">689156 · מבוא לאבטחת סייבר · ד״ר מנחם ליבוביץ</div>
+  <h1>יום אחד. <span class="hl">הנושאים שבאמת חוזרים.</span></h1>
+  <p class="sub">ניתחתי את כל מבחני העבר, וסידרתי את הנושאים <b>לפי סדר לימוד</b> — מהיסוד ומעלה, בלי להניח ידע מוקדם. כל נושא: אנלוגיה, הסבר מ־0 לכל מושג, המלכודות שמפילות, ותרגול על השאלות המקוריות עם משוב מיידי והרחבה לכל שאלה.</p>
+  <div class="metrics">
+    <div class="metric"><div class="num">10</div><div class="lbl">שאלות אמריקאיות במבחן</div></div>
+    <div class="metric"><div class="num">×10</div><div class="lbl">נק׳ לכל שאלה (משקל שווה)</div></div>
+    <div class="metric"><div class="num">~11</div><div class="lbl">נושאי־ליבה חוזרים</div></div>
+    <div class="metric"><div class="num" id="qtotal">0</div><div class="lbl">שאלות מקוריות לתרגול</div></div>
+  </div>
+  <div class="callout">
+    <b>המפתח שגילינו:</b> בכל מבחני העבר, התשובה הנכונה היא <b>סעיף א׳</b> — הן פשוט מסדרות את התשובה הנכונה ראשונה. במבחן שלך הסעיפים יהיו מעורבבים, אז כאן <b>ערבבתי אותם</b> כדי שתתרגל באמת. אל תחפש דפוס — תבין את החומר.
+  </div>
+</div>
+</header>
+
+<!-- ============ FREQUENCY ANALYSIS ============ -->
+<section>
+<div class="wrap">
+  <div class="sec-head"><span class="idx">01</span><h2>פילוח מבחני העבר</h2></div>
+  <p class="sec-intro">כמה פעמים כל נושא הופיע ב-<b>10 המבחנים המלאים</b> שנותחו (כל המבחנים מ־2023, 2024 ו־2025). ככל שהעמודה ארוכה — כך הסיכוי שתראה אותו גבוה יותר. <span style="color:var(--teal)">טורקיז = חובה מוחלטת</span>.</p>
+  <div class="bars" id="bars"></div>
+</div>
+</section>
+
+<!-- ============ INSIGHTS ============ -->
+<section>
+<div class="wrap">
+  <div class="sec-head"><span class="idx">02</span><h2>מה חשוב לדעת לפני שמתחילים</h2></div>
+  <div class="insights">
+    <div class="insight"><h3><span class="dot"></span>הליבה: קריפטו + web + PKI + ביטקוין</h3><p>ביטקוין מופיע ב<b>כל</b> מבחן. אחריו: תעודות (CT/OCSP), אבטחת web (XSS/CSRF/SQLi) וצפנים. שים לב: התקפות רשת (ARP/DNS) הופיעו כמעט בכל מבחני 2024 ו-2023 — אבל <b>ירדו ב-2025</b> (לא הופיעו ב-3 האחרונים). אל תזניח אותן.</p></div>
+    <div class="insight"><h3><span class="dot"></span>שאלות חישוב מובטחות</h3><p>כמעט תמיד יש 2–3 שאלות חישוב: RSA (למצוא <code>d</code> או φ(n) או חתימה), ו־Diffie-Hellman (סוד משותף). מחשבון מותר — תרגל את הטכניקה של חזקות מודולריות שלב־שלב.</p></div>
+    <div class="insight"><h3><span class="dot"></span>שאלות ״איזו טענה <u>אינה</u> נכונה״</h3><p>חצי מהשאלות מנוסחות הפוך — צריך למצוא את השגויה. קרא לאט את המילה ״נכונה / אינה נכונה״. זו טעות הכי נפוצה תחת לחץ.</p></div>
+    <div class="insight"><h3><span class="dot"></span>אותן שאלות בדיוק חוזרות</h3><p>הקורס ממחזר ארכיטיפים: אותה שאלת ה־pseudo-code של MAC, אותה שאלת TLS-MitM, אותה שאלת SCT. אם תזהה את הארכיטיפ — פתרת. לכן כל התרגול כאן הוא שאלות אמיתיות מהמבחנים.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ============ PROGRESS BAR ============ -->
+<div class="progress-wrap">
+<div class="wrap">
+  <div class="progress-inner">
+    <span class="txt">התקדמות תרגול</span>
+    <div class="progress-bar"><span id="pbar"></span></div>
+    <span class="score" id="pscore">0 / 0</span>
+  </div>
+</div>
+</div>
+
+<!-- ============ STUDY TOPICS ============ -->
+<section style="padding-top:20px">
+<div class="wrap">
+  <div class="sec-head"><span class="idx">03</span><h2>לימוד + תרגול, נושא אחר נושא</h2></div>
+  <p class="sec-intro">מסודר <b>לפי סדר לימוד</b> — כל נושא נבנה על הקודם, אז התחל מלמעלה גם אם אתה מתחיל מאפס. כל נושא פותח ב<b>אנלוגיה</b>, המשך ב<b>הסבר מ־0</b> של כל מושג, תמצית לזכירה, ואז תרגול על השאלות המקוריות. אחרי כל שאלה יש כפתור <span style="color:var(--teal)">״רוצה להעמיק?״</span> עם הרחבה. שלושה שלבים: <span style="color:var(--violet)">יסודות → נבנה על היסודות → נושאים עצמאיים</span>.</p>
+  <div id="topics"></div>
+</div>
+</section>
+
+<footer>
+<div class="wrap">
+  <div class="big">בהצלחה במבחן 💪</div>
+  <p>עברת על הנושאים שמכסים את רוב מבחני העבר. אם נשאר זמן — חזור על שאלות החישוב (RSA, DH) ועל ההבחנה CT מול OCSP/CRL.</p>
+  <div style="margin-top:16px">
+    <span class="pill">RSA</span><span class="pill">Diffie-Hellman</span><span class="pill">TLS / MitM</span>
+    <span class="pill">Certificate Transparency</span><span class="pill">OCSP</span><span class="pill">XSS / CSRF</span>
+    <span class="pill">Bitcoin</span><span class="pill">Merkle tree</span><span class="pill">Hash properties</span>
+    <span class="pill">MAC</span><span class="pill">Ciphers</span>
+  </div>
+</div>
+</footer>
+
+<script>
+/* ============================================================
+   DATA — נושאים לפי עדיפות, כל שאלה verbatim ממבחני העבר.
+   correct = הטקסט הנכון (יעורבב בזמן ריצה).
+   ============================================================ */
+const FREQ = [
+  {he:"ביטקוין ובלוקצ׳יין",en:"Bitcoin / Blockchain / Merkle",n:10,tier:1},
+  {he:"תעודות, CT, OCSP ו-CRL",en:"Certificates / CT / OCSP / CRL",n:9,tier:1},
+  {he:"אבטחת Web: XSS, CSRF, SQLi",en:"Web security",n:9,tier:1},
+  {he:"TLS, MitM ו-chain of trust",en:"TLS / MitM / PKI",n:8,tier:1},
+  {he:"צפנים קלאסיים",en:"Caesar / Vigenère / OTP / ECB",n:8,tier:1},
+  {he:"חתימה דיגיטלית ו-MAC",en:"signatures / MAC",n:7,tier:2},
+  {he:"Diffie-Hellman",en:"key exchange",n:6,tier:2},
+  {he:"התקפות רשת",en:"ARP / DNS / DDoS / firewall",n:6,tier:2},
+  {he:"RSA (חישובים)",en:"textbook RSA",n:5,tier:2},
+  {he:"תכונות פונקציית Hash",en:"collision / pre-image",n:4,tier:3},
+  {he:"שמירת סיסמאות",en:"salt / pepper / hash",n:4,tier:3},
+];
+
+/* ============================================================
+   TOPICS — סדר פדגוגי (יסודות → מתקדם).
+   כל נושא: analogy, intro (מ-0), material (תמצית), questions[{...,deeper}].
+   ============================================================ */
+const TOPICS = [
+
+/* ========== 1. יסודות ההצפנה ========== */
+{
+  rank:"1", phase:"יסודות", he:"יסודות ההצפנה והצפנים הקלאסיים",
+  en:"Encryption Basics & Classical Ciphers",
+  freq:"8 מבחנים", freqNote:"הבסיס לכל הקורס",
+  analogy:"הצפנה זה כמו לכתוב מכתב בשפה סודית. ה<b>מפתח</b> הוא ספר התרגום. מי שיש לו את הספר קורא את המכתב; מי שאין לו רואה ג׳יבריש. כל השאלה בקריפטוגרפיה היא: מי מחזיק את ספר התרגום, וכמה קשה להמציא אותו בלי רשות.",
+  intro:`
+    <p><b>מה זו בכלל הצפנה?</b> לוקחים טקסט קריא (<b>plaintext</b>), מפעילים עליו פעולה מתמטית עם <b>מפתח</b>, ומקבלים טקסט מבולגן (<b>ciphertext</b>). הפעולה ההפוכה (עם המפתח הנכון) נקראת <b>פענוח</b>.</p>
+    <p><b>שני עולמות של הצפנה — ההבחנה הכי חשובה בקורס:</b></p>
+    <ul>
+      <li><b>הצפנה סימטרית:</b> <b>אותו מפתח</b> מצפין ומפענח. מהיר, אבל שני הצדדים צריכים איכשהו לחלוק את המפתח בסוד מראש. דוגמאות: <span class="k">DES, 3DES, AES</span>.</li>
+      <li><b>הצפנה א-סימטרית:</b> <b>זוג מפתחות</b> — מפתח ציבורי (מפרסמים לכולם) ומפתח פרטי (שומרים בסוד). מה שהוצפן עם הציבורי נפתח רק עם הפרטי. פותר את בעיית חלוקת המפתחות, אבל איטי. דוגמאות: <span class="k">RSA, Diffie-Hellman</span>.</li>
+    </ul>
+    <p>שים לב: <span class="k">SHA256 היא לא הצפנה בכלל</span> — היא פונקציית <b>hash</b> (נלמד בהמשך). לא ניתן ״לפענח״ אותה.</p>
+    <p><b>הצפנים הקלאסיים</b> (פשוטים, לא בטוחים היום, אבל מלמדים את העקרונות):</p>
+    <ul>
+      <li><b>צופן קיסר (Caesar):</b> מזיזים כל אות במספר קבוע. הזזה של 3: A→D, B→E... זה הכי בסיסי. חולשה: רק 25 מפתחות אפשריים.</li>
+      <li><b>צופן החלפה (Substitution):</b> כל אות ממופה לאות אחרת באופן שרירותי (לא רק הזזה). מרחב מפתחות ענק (<span class="mono">26!</span> לאלפבית לטיני), אבל עדיין נשבר בקלות עם ניתוח תדירויות.</li>
+      <li><b>Vigenère:</b> צופן קיסר עם מפתח שהוא <b>מילה חוזרת</b> — כל אות מוזזת לפי אות אחרת במפתח. חזק יותר מקיסר.</li>
+      <li><b>One Time Pad (OTP):</b> מפתח אקראי לגמרי, <b>באורך הטקסט</b>, שמשתמשים בו <b>פעם אחת בלבד</b>. מבצעים XOR בין הטקסט למפתח. זה הצופן היחיד עם ״ביטחון מושלם״ מוכח מתמטית. <span class="w">הבעיה הגדולה:</span> איך מעבירים מפתח ארוך כמו הטקסט עצמו בבטחה? אם יכולת להעביר אותו — יכולת להעביר את הטקסט.</li>
+    </ul>
+    <p><b>Mode of operation (מצב הפעלה):</b> צפני בלוקים (כמו DES/AES) מצפינים בלוק אחד בכל פעם. איך מחברים בלוקים? המצב הפשוט <span class="k">ECB</span> מצפין כל בלוק בנפרד — וזו חולשה: <b>בלוקים זהים בטקסט → בלוקים זהים בהצפנה</b>, מה שמדליף מידע על המבנה. מצבים בטוחים יותר (CBC וכו׳) ״משרשרים״ בלוקים כדי למנוע זאת.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li><span class="k">סימטרי</span> = אותו מפתח (DES/3DES/AES). <span class="k">א-סימטרי</span> = זוג מפתחות (RSA/DH). <span class="k">SHA256</span> = hash, לא הצפנה.</li>
+      <li>קיסר: <code>QUIZ</code> +3 → <code>TXLC</code>.</li>
+      <li>Substitution: מרחב <code>26!</code>; אם ידוע מיפוי אחד → <code>25!</code>. כל תווי ה-ciphertext זהים → מספר plaintexts = גודל האלפבית.</li>
+      <li>Vigenère: הסתברות ששני תווים במרחק = אורך המפתח יהיו זהים = <code>1/(גודל אלפבית)</code>.</li>
+      <li>OTP: XOR, מפתח אקראי באורך הטקסט, חד-פעמי, ביטחון מושלם. <span class="w">בעיה: הפצת המפתחות.</span></li>
+      <li>ECB: בלוקים זהים → ciphertext זהה. <code>ABCDEFGHABCDEFGH</code> → הפלט חוזר. 3DES: EDE = <code>EncK3(DecK2(EncK1(m)))</code>.</li>
+    </ul>`,
+  questions:[
+    {src:"24/11/2024 · ש׳2", q:"נתון plaintext הבא: \"QUIZ\" (ה-plaintext הוא ללא הגרשיים). לפי צופן קיסר (צופן קיסר ממש כפי שנלמד ולא צפנים כלליים יותר), מה יהיה ה-ciphertext?",
+     correct:"TXLC", opts:["RVMC","NLLW","OXFY"],
+     ex:"צופן קיסר = הזזה של 3: Q→T, U→X, I→L, Z→C.",
+     deeper:"למה דווקא הזזה של 3? זו הקונבנציה שנלמדת (״צופן קיסר״ המקורי, על שם יוליוס קיסר, השתמש בהזזה 3). בפועל אפשר כל הזזה. שים לב ל-Z→C: אחרי Z ״עוטפים״ בחזרה ל-A (חשבון מודולו 26). זו הסיבה שקיסר נשבר תוך שניות: יש רק 25 הזזות אפשריות, ותוקף פשוט מנסה את כולן (brute force) עד שיוצא טקסט קריא."},
+    {src:"24/11/2024 · ש׳3", q:"בצופן Vigenère, המפתח ״CODE״ (בלי הגרשיים) משמש להצפנה של plaintext שהינו באורך 5 תווים. נתון שכל אות ב-plaintext נבחרה באקראי מתוך 26 אותיות האלפבית. מה ההסתברות ששני תווים מוצפנים זהים יופיעו במרחק של 4 תווים אחד מהשני ב-ciphertext? (יופיעו במרחק של 4 תווים אחד מהשני ==< בין המופע הראשון של התו למופע השני יש 3 תווים אחרים)",
+     correct:"1/26", opts:["1/13","1/16","1/4"],
+     ex:"מרחק 4 = אותו מיקום במפתח החוזר (אותה אות מפתח). לכן זהות ⟺ אותה אות plaintext — 1/26.",
+     deeper:"ב-Vigenère המפתח ״CODE״ חוזר: מיקום 1 מוזז ב-C, מיקום 2 ב-O, מיקום 3 ב-D, מיקום 4 ב-E, ואז מיקום 5 חוזר ל-C. שני תווים במרחק 4 (למשל מיקום 1 ומיקום 5) מוזזים באותה אות מפתח (C). לכן הם ייצאו זהים ב-ciphertext בדיוק כאשר אותיות ה-plaintext שלהם זהות — הסתברות 1/26. זו בדיוק החולשה שמנצל ניתוח Kasiski לשבירת Vigenère: מרחקים חוזרים חושפים את אורך המפתח."},
+    {src:"08/08/2023 · ש׳9", q:"ciphertext באורך 7 תווים שכולם זהים, שנוצר ע״י צופן החלפה. האלפבית 28 תווים. כמה plaintexts יכולים להתאים?",
+     correct:"28", opts:["28 בחזקת 7","28 * 7","7!"],
+     ex:"בצופן החלפה, אם כל תווי ה-ciphertext זהים → כל תווי ה-plaintext חייבים להיות אות אחת זהה — 28 בחירות אפשריות.",
+     deeper:"צופן החלפה הוא מיפוי חד-חד-ערכי (בּיִיֶקְצְיָה): כל אות מקור → אות יעד אחת קבועה, וההיפך. אם כל שבעת התווים ב-ciphertext זהים (נניח כולם 'X'), אז כל שבע אותיות ה-plaintext מופו ל-'X' — ומכיוון שהמיפוי חד-חד-ערכי, כולן חייבות להיות <b>אותה אות מקור</b>. יש 28 אותיות אפשריות לאות המקור הזו, ולכן 28 plaintexts. הטעות הנפוצה: לחשוב 28⁷ (כאילו כל תו עצמאי) — אבל האילוץ ״כולם זהים ב-ciphertext״ כובל את כולם יחד."},
+    {src:"02/11/2025 · ש׳10", q:"בצופן החלפה מונואלפבתי של השפה האנגלית (בה יש 26 אותיות), תוקף יודע שב-ciphertext מסויים האות X ב-ciphertext מחליפה את האות Y ב-plaintext. כמה מפתחות ישנם שיכולים להתאים (מתוך מרחב המפתחות שהיה אם התוקף לא היה יודע את המידע הזה)?",
+     correct:"25!", opts:["26!","26","26!-2"],
+     ex:"מרחב מלא = 26!. אם קבענו מיפוי אחד (X→Y), נשארות 25 אותיות למפות ל-25 → 25!.",
+     deeper:"מרחב המפתחות של צופן החלפה הוא מספר הדרכים לסדר 26 אותיות = 26! (עצום, ~4×10²⁶). הידיעה ש-X→Y ״נועלת״ זוג אחד, ומצמצמת את הבעיה למיפוי של 25 האותיות הנותרות → 25 היעדים הנותרים = 25!. זה עדיין ענק, אבל ממחיש למה גודל מרחב מפתחות גדול <b>לא</b> מספיק לביטחון: צפני החלפה נשברים בקלות עם ניתוח תדירות אותיות (בעברית/אנגלית יש אותיות נפוצות מאוד), בלי לעבור על כל המפתחות."},
+    {src:"20/10/2024 · ש׳9", q:"אליס הצפינה בעזרת צופן DES (שגודל הבלוק שלו הוא 8 בתים) ושיטת הפעלה (mode of operation) של ECB, את ה-bytes של ה-plaintext הבא: <code>ABCDEFGHABCDEFGH</code> עם מפתח ההצפנה שמורכב מה-bytes של המחרוזת lemonlem. מה הייצוג ההקסדצימלי של ה-bytes של ה-ciphertext שיצא לה?",
+     correct:"437d7e60707604f3437d7e60707604f3",
+     opts:["618142157df60e232e6fea24db009df9","00112233445566778899aabbccddeeff","2e6fea24db009df9ced6000330c42994"],
+     ex:"ב-ECB כל בלוק מוצפן בנפרד. שני בלוקי plaintext זהים → שני בלוקי ciphertext זהים. רק תשובה זו חוזרת על עצמה.",
+     deeper:"הטקסט <code>ABCDEFGHABCDEFGH</code> הוא בדיוק שני בלוקים של 8 בתים, וזהים. ב-ECB, כל בלוק עובר את אותה פונקציית הצפנה עם אותו מפתח, בלי תלות בבלוקים אחרים — לכן שני בלוקים זהים בכניסה נותנים שני בלוקים זהים ביציאה. התשובה מראה <code>437d7e60707604f3</code> פעמיים. זו החולשה המפורסמת של ECB (״תמונת הפינגווין״: מצפינים תמונה ב-ECB ועדיין רואים את קווי המתאר). מצבים כמו CBC פותרים זאת ע״י XOR של כל בלוק עם ה-ciphertext הקודם."},
+    {src:"04/07/2024 · ש׳5", q:"איזו טענה <b>אינה</b> נכונה?",
+     correct:"בהינתן הודעה m ומפתחות k1,k2,k3 שונים, אין הבדל בפלט של 3DES אם ממומש ע״י הצפנה-הצפנה-הצפנה או הצפנה-פענוח-הצפנה",
+     opts:["בהינתן m ומפתח k, ניתן לייצר בעזרת 3DES את אותו הפלט ש-DES היה מוציא","AES הוא דוגמה לצופן בלוקים","גם ב-AES צריך להגדיר את ה-mode of operation"],
+     ex:"EEE (הצפנה×3) ו-EDE (הצפנה-פענוח-הצפנה) נותנים תוצאות שונות עבור מפתחות שונים. דווקא EDE הוא זה שתומך אחורה ב-DES.",
+     deeper:"3DES מריץ DES שלוש פעמים. יש שתי צורות: <b>EEE</b> (Encrypt-Encrypt-Encrypt) ו-<b>EDE</b> (Encrypt-Decrypt-Encrypt). למה בחרו EDE? כי הוא נותן <b>תאימות לאחור</b>: אם מציבים k1=k2=k3, אז <code>Enc(Dec(Enc(m)))</code> = <code>Enc(m)</code> — כלומר 3DES מתנהג בדיוק כמו DES רגיל. עם EEE זה לא היה עובד. ולכן הטענה ש״אין הבדל בין EEE ל-EDE״ שגויה — יש הבדל, וזה בדיוק העניין. (הבחירה של DES כבלוק ומצב ההפעלה הן החלטות נפרדות — נכון גם ל-AES.)"},
+    {src:"07/07/2023 · ש׳3", q:"איזה מהאלגוריתמים הוא אלגוריתם הצפנה (ופענוח) סימטרי?",
+     correct:"DES", opts:["RSA","Diffie-Hellman","SHA256"],
+     ex:"DES = צופן סימטרי. RSA ו-Diffie-Hellman א-סימטריים, ו-SHA256 היא פונקציית hash.",
+     deeper:"שאלת סיווג קלאסית שבודקת אם הבנת את המפה: <b>DES/3DES/AES</b> = סימטרי (אותו מפתח, מצפין ומפענח). <b>RSA</b> = א-סימטרי (זוג מפתחות, יכול גם להצפין וגם לחתום). <b>Diffie-Hellman</b> = א-סימטרי, אבל הוא בכלל לא ״מצפין הודעות״ — הוא פרוטוקול <b>החלפת מפתח</b> (נלמד בהמשך). <b>SHA256</b> = פונקציית hash חד-כיוונית, לא הצפנה ואי אפשר להפוך אותה. אם תזכור את הרביעייה הזו, פתרת כל שאלת ״איזה מהם X״."},
+  ]
+},
+
+/* ========== 2. פונקציות Hash ========== */
+{
+  rank:"2", phase:"יסודות", he:"פונקציות Hash ותכונותיהן",
+  en:"Hash Functions",
+  freq:"4 מבחנים", freqNote:"אבן בניין לחתימות, ביטקוין וסיסמאות",
+  analogy:"פונקציית hash היא כמו <b>טביעת אצבע דיגיטלית</b> של קובץ: כל קלט (גם ספר שלם) מקבל ״טביעה״ קצרה וקבועה באורכה. אי אפשר לשחזר את הספר מהטביעה, וכמעט בלתי אפשרי למצוא שני ספרים עם אותה טביעה. בזכות זה אפשר לבדוק אם משהו השתנה — בלי להחזיק את המקור.",
+  intro:`
+    <p><b>מה זו פונקציית hash?</b> פונקציה שמקבלת קלט בכל אורך ומחזירה פלט קצר וקבוע באורכו, שנקרא <b>digest</b> (או ״ערך hash״). למשל SHA256 תמיד מחזירה 256 ביט, בין אם הקלט הוא אות אחת או ספרייה שלמה.</p>
+    <p><b>שלוש התכונות שהופכות hash ל״בטוחה קריפטוגרפית״</b> — וזה בדיוק מה שהמבחן בודק, אז אל תתבלבל ביניהן:</p>
+    <ul>
+      <li><b>1. Pre-image resistance (עמידות למקור):</b> נתון לך <b>digest</b> d (של הודעה אקראית). קשה למצוא הודעה m כך ש-<code>h(m)=d</code>. במילים פשוטות: אי אפשר ״להפוך״ את ה-hash חזרה למקור.</li>
+      <li><b>2. Second pre-image resistance (עמידות למקור-שני / weak collision):</b> נתונה לך <b>הודעה m</b> ספציפית. קשה למצוא הודעה <b>אחרת</b> m′≠m עם אותו hash: <code>h(m)=h(m′)</code>. כלומר: אי אפשר לזייף הודעה חלופית שתתחזה למקור נתון.</li>
+      <li><b>3. Collision resistance (עמידות להתנגשות):</b> קשה למצוא <b>אילו שתי הודעות</b> m0≠m1 עם אותו hash. כאן אתה חופשי לבחור את <b>שתיהן</b> — וזו הדרישה החזקה ביותר.</li>
+    </ul>
+    <p><b>ההבדל שמפילים עליו:</b> ב-collision אתה בוחר את שתי ההודעות בעצמך. ב-second pre-image ההודעה הראשונה <b>ניתנת לך מראש</b> ואתה מחפש רק את השנייה. ב-pre-image נתון לך רק ה-<b>digest</b> ואתה מחפש מקור כלשהו.</p>
+    <p><b>למה זה חשוב?</b> hash הוא הבסיס לחתימות דיגיטליות (חותמים על ה-hash, לא על כל המסמך), לשמירת סיסמאות (שומרים hash במקום הסיסמה), ולביטקוין (proof of work ועצי מרקל). כל אלה נשענים על כך ש-hash קשה ל״זיוף״.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li><span class="k">Pre-image:</span> נתון <b>digest</b> → קשה למצוא מקור. (״לא להפוך את ה-hash״)</li>
+      <li><span class="k">Second pre-image:</span> נתונה <b>m</b> → קשה למצוא m′ אחר עם אותו hash. (weak collision)</li>
+      <li><span class="k">Collision:</span> קשה למצוא <b>אילו</b> m0≠m1 עם אותו hash. (חופשי בשתיהן = הכי חזק)</li>
+    </ul>
+    <div class="trap"><b>ההבחנה:</b> collision — בוחר שתיים. second pre-image — הראשונה נתונה. pre-image — נתון digest.</div>`,
+  questions:[
+    {src:"30/11/2025 · ש׳8", q:"מה מבין הבאים היא ההגדרה של תכונת ה-collision resistance? (שימו לב, השאלה מבקשת collision resistance ולא מבקשת weak collision resistance)",
+     correct:"It is hard to find messages m0 ≠ m1 such that h(m0) = h(m1)",
+     opts:["Given a digest d of a random message, it is hard to find a message m such that d = h(m)","Given a random message m0, it is hard to find a message m1 that is not equal to m0 such that h(m0) = h(m1)","It is hard to find messages m0 ≠ m1 such that h(m0) ≠ h(m1)"],
+     ex:"Collision = חופשי לבחור את שתי ההודעות. ״Given a random message m0״ = second pre-image.",
+     deeper:"שים לב לניסוח באנגלית: collision resistance מתחיל ב-<i>״It is hard to find messages m0 ≠ m1״</i> — בלי שום הודעה נתונה מראש, אתה בוחר את שתיהן. לעומת זאת second pre-image מתחיל ב-<i>״Given a random message m0״</i> — הראשונה כפויה עליך. התשובה הרביעית (h(m0)≠h(m1)) חסרת משמעות: קל מאוד למצוא שתי הודעות עם hash שונה. טיפ: המילה ״Given״ בתחילת ההגדרה מסמנת שמשהו נתון לך מראש — וזה אף פעם לא collision."},
+    {src:"02/11/2025 · ש׳8", q:"מה מבין הבאים היא ההגדרה של תכונת ה-second pre image resistance?",
+     correct:"Given a random message m0, it is hard to find a message m1 that is not equal to m0 such that h(m0) = h(m1)",
+     opts:["Given a digest d of a random message, it is hard to find a message m such that d = h(m)","It is hard to find messages m0 ≠ m1 such that h(m0) = h(m1)","It is hard to find messages m0 ≠ m1 such that h(m0) ≠ h(m1)"],
+     ex:"Second pre-image: m0 נתון, מחפשים m1 אחר עם אותו hash.",
+     deeper:"Second pre-image = ״Given a random message m0״ (הודעה נתונה) → מצא m1 שונה עם אותו hash. השווה: ״Given a digest d״ (רק ה-digest נתון, לא ההודעה) = pre-image. ו״find messages m0≠m1״ (כלום לא נתון) = collision. תרחיש מהחיים: יש לך חוזה חתום (m0); second pre-image resistance מבטיח שתוקף לא יוכל לייצר חוזה מזויף (m1) עם אותו hash, כך שהחתימה על m0 תיראה תקפה גם על m1."},
+    {src:"17/09/2024 · ש׳6", q:"תכונת ה-<b>pre-image resistance</b> מוגדרת כ: (h הינה פונק' hash)",
+     correct:"בהינתן digest d של הודעה אקראית, קשה למצוא הודעה m כך ש-h(m)=d",
+     opts:["בהינתן הודעה אקראית m, קשה למצוא הודעה m' ששונה מ-m, כך ש-h(m)=h(m')","בהינתן הודעה אקראית m, קשה למצוא הודעה m' ששונה מ-m, כך ש-h(m) שונה מ-h(m')","בהינתן digest d של הודעה אקראית, קשה למצוא digest d' כך ש-d שונה מ-d'"],
+     ex:"Pre-image: נתון digest d, ומחפשים מקור m שממופה אליו.",
+     deeper:"Pre-image resistance = חד-כיווניות. נתון לך רק הפלט (digest), ואתה מנסה למצוא קלט כלשהו שמייצר אותו. זו התכונה שמאפשרת לשמור סיסמאות כ-hash: גם אם תוקף גונב את קובץ ה-hashes, הוא לא יכול ״להפוך״ אותם חזרה לסיסמאות (הוא נאלץ לנחש — brute force). שים לב שההגדרה מדברת על ה-<b>digest</b> כנתון, לא על הודעה — זה מה שמבדיל אותה מ-second pre-image שבו ההודעה m נתונה."},
+    {src:"04/07/2024 · ש׳1", q:"תכונת <b>second pre-image resistance</b> מוגדרת כ:",
+     correct:"בהינתן הודעה אקראית m, קשה למצוא הודעה m' שונה מ-m כך ש-h(m)=h(m')",
+     opts:["בהינתן digest d של הודעה אקראית, קשה למצוא m כך ש-h(m)=d","בהינתן הודעה אקראית m, קשה למצוא m' כך ש-h(m) שונה מ-h(m')","בהינתן digest d, קשה למצוא d' שונה מ-d"],
+     ex:"Second pre-image: m נתון, מחפשים m' אחר עם אותו hash.",
+     deeper:"שים לב שזו אותה שאלה כמעט כמו הקודמת, רק שהפעם מבקשים second pre-image (והתשובה בעברית). זה ממחיש עד כמה הקורס ממחזר את אותם ארכיטיפים. ההבדל מ-pre-image: כאן <b>ההודעה m נתונה</b> ואתה מחפש חלופה m′; ב-pre-image נתון רק ה-digest. הקשר לחתימות: collision resistance (החזק) הוא מה שבאמת נדרש כדי שאף אחד לא יוכל לזייף שום זוג מסמכים — ולכן פונקציות hash ישנות כמו MD5/SHA1 ״נשברו״ כשמצאו בהן collisions."},
+  ]
+},
+
+/* ========== 3. MAC וחתימה דיגיטלית ========== */
+{
+  rank:"3", phase:"יסודות", he:"MAC וחתימה דיגיטלית",
+  en:"MAC & Digital Signatures",
+  freq:"9 מבחנים", freqNote:"מחבר בין hash להצפנה א-סימטרית",
+  analogy:"<b>הצפנה</b> = מעטפה אטומה (אף אחד לא רואה מה בפנים). <b>חתימה דיגיטלית</b> = חותמת שעווה אישית (כולם רואים מה כתוב, אבל יודעים בוודאות מי כתב ושאיש לא שינה). <b>MAC</b> = חותמת משותפת ששניכם יודעים לזייף — טובה לוודא שלא שובש, אבל לא מוכיחה מי מהשניים כתב.",
+  intro:`
+    <p>הבנו הצפנה (סודיות) ו-hash (טביעת אצבע). עכשיו מחברים אותם כדי להשיג <b>אמינות ושלמות</b> — לוודא שהודעה (א) לא שובשה בדרך, ו-(ב) הגיעה באמת ממי שאנחנו חושבים.</p>
+    <p><b>MAC (Message Authentication Code):</b> ״תג״ שמחשבים על הודעה בעזרת <b>מפתח סימטרי משותף</b>. השולח שולח את ההודעה + התג; המקבל מחשב את התג בעצמו ומשווה. אם תואם — ההודעה לא שובשה והגיעה ממישהו שיודע את המפתח. <span class="w">מגבלה:</span> כיוון ש<b>שני</b> הצדדים יודעים את המפתח, אף אחד לא יכול להוכיח מי מהשניים יצר את התג — <b>אין אי-הכחשה</b>.</p>
+    <p><b>חתימה דיגיטלית:</b> משתמשת בהצפנה א-סימטרית ״הפוך״. התהליך המדויק (שנשאל שוב ושוב):</p>
+    <ul>
+      <li>השולח מחשב <code>hash</code> של ההודעה.</li>
+      <li>מצפין את ה-hash עם ה<b>מפתח הפרטי שלו</b> → זו החתימה.</li>
+      <li>שולח את ההודעה + החתימה.</li>
+      <li>המקבל מפענח את החתימה עם ה<b>מפתח הציבורי של השולח</b>, ומשווה ל-hash שהוא מחשב בעצמו על ההודעה.</li>
+    </ul>
+    <p>מכיוון שרק לשולח יש את המפתח הפרטי — רק הוא יכול היה לחתום. זה נותן <b>אי-הכחשה (non-repudiation)</b>: השולח לא יכול להתכחש. זה ההבדל המרכזי מ-MAC.</p>
+    <p><b>הצפנה מול חתימה — לזכור:</b> הצפנה = <b>סודיות</b> (מי יכול לקרוא). חתימה = <b>אימות מקור + שלמות</b> (מי כתב, והאם שונה). הן פותרות בעיות שונות, ולרוב משלבים את שתיהן.</p>
+    <p><b>סדר הפעולות — Encrypt-then-MAC וחברים</b> (שאלת pseudo-code קבועה):</p>
+    <ul>
+      <li><b>Encrypt-then-MAC:</b> קודם מצפינים, ואז מחשבים MAC על ה-<b>ciphertext</b>. הכי בטוח. בקוד: קודם מאמתים את ה-MAC, ורק אז מפענחים.</li>
+      <li><b>MAC-then-Encrypt:</b> MAC על ה-<b>plaintext</b>, ואז מצפינים את שניהם יחד. בקוד: קודם מפענחים, ואז מחשבים MAC על ה-plaintext ומשווים.</li>
+      <li><b>Encrypt-and-MAC:</b> מצפינים את ה-plaintext, ובמקביל מחשבים MAC על ה-plaintext, ושולחים ciphertext + tag.</li>
+    </ul>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li><span class="k">חתימה:</span> hash → מצפינים עם <b>מפתח פרטי</b> של השולח. אימות: מפענחים עם ה<b>ציבורי</b> שלו ומשווים ל-hash.</li>
+      <li><span class="k">MAC</span> = מפתח סימטרי משותף → אמינות/שלמות, <span class="no">אין אי-הכחשה</span>. <span class="k">חתימה</span> = מפתח פרטי → יש אי-הכחשה.</li>
+      <li>הצפנה = סודיות · חתימה = מקור+שלמות. לשליחת M סודית+מאומתת: <code>EncPKB(M), SignSKA(hash(M))</code>.</li>
+      <li>Encrypt-then-MAC: MAC על ה-<b>ciphertext</b> (קוד: verify ואז decrypt). MAC-then-Encrypt: MAC על ה-<b>plaintext</b> (קוד: decrypt ואז compute MAC).</li>
+    </ul>`,
+  questions:[
+    {src:"30/11/2025 · ש׳1", q:"להלן פסאודו-קוד המציג פונק' המטפלת בצורה קריפטוגרפית במידע: <code>function foo(key_encryption, key_mac, ciphertext):<br>&nbsp;&nbsp;(plaintext, received_tag) = Decrypt(key_encryption, ciphertext)<br>&nbsp;&nbsp;computed_tag = ComputeMAC(key_mac, plaintext)<br>&nbsp;&nbsp;if computed_tag != received_tag:<br>&nbsp;&nbsp;&nbsp;&nbsp;return \"Invalid!\"<br>&nbsp;&nbsp;else:<br>&nbsp;&nbsp;&nbsp;&nbsp;return plaintext</code> מהי השיטה בשימוש על פי פסאדו-קוד זה?",
+     correct:"MAC then Encrypt", opts:["Encrypt then MAC","Encrypt and MAC","RSA"],
+     ex:"קודם מפענחים, ואז מחשבים MAC על ה-plaintext ומשווים — ה-MAC חושב על ה-plaintext והוצפן יחד איתו. זה MAC-then-Encrypt.",
+     deeper:"טכניקת פענוח הקוד: הסתכל על מה ה-MAC מחושב עליו. כאן הקוד קודם <code>Decrypt</code> (מקבל plaintext+tag), ואז <code>ComputeMAC(plaintext)</code>. זה אומר שבצד ההצפנה, ה-MAC חושב על ה-<b>plaintext</b> והוצפן יחד איתו — כלומר MAC-then-Encrypt. כלל אצבע: אם צריך לפענח <b>לפני</b> שאפשר לבדוק את ה-MAC → MAC-then-Encrypt. אם בודקים את ה-MAC על הטקסט המוצפן <b>לפני</b> פענוח → Encrypt-then-MAC."},
+    {src:"02/11/2025 · ש׳1", q:"להלן פסאודו-קוד המציג פונק' המטפלת בצורה קריפטוגרפית במידע: <code>function foo(key_encryption, key_mac, ciphertext, tag):<br>&nbsp;&nbsp;if VerifyMAC(key_mac, ciphertext) != tag:<br>&nbsp;&nbsp;&nbsp;&nbsp;return \"Invalid!\"<br>&nbsp;&nbsp;else:<br>&nbsp;&nbsp;&nbsp;&nbsp;return Decrypt(key_encryption, ciphertext)</code> מהי השיטה בשימוש על פי פסאדו-קוד זה?",
+     correct:"Encrypt then MAC", opts:["MAC then Encrypt","Encrypt and MAC","Salt and Pepper"],
+     ex:"מאמתים MAC על ה-ciphertext לפני הפענוח — Encrypt-then-MAC (המומלץ).",
+     deeper:"כאן הקוד בודק <code>VerifyMAC(ciphertext)</code> <b>לפני</b> ה-<code>Decrypt</code>. אימות ה-MAC על הטקסט המוצפן = ה-MAC חושב על ה-ciphertext = Encrypt-then-MAC. למה זו הגישה המומלצת? כי אפשר לזרוק הודעות מזויפות מיד, בלי בכלל לפענח אותן — מה שמונע התקפות מסוימות (padding oracle). ״Salt and Pepper״ בכלל לא רלוונטי לסדר MAC/הצפנה — זה מונח מעולם שמירת הסיסמאות (נלמד בהמשך)."},
+    {src:"17/09/2024 · ש׳5", q:"אליס רצתה להבטיח את שלמותה (אמינות/אותנטיות) ואת סודיותה של הודעה שהיא שולחת. ולכן, היא הצפינה את ההודעה וחישבה MAC על ה-ciphertext. באיזה שיטה עבדה אליס?",
+     correct:"Encrypt then MAC", opts:["MAC and Encrypt","Sign then Encrypt","MAC then Decrypt"],
+     ex:"MAC על ה-ciphertext (אחרי ההצפנה) = Encrypt-then-MAC.",
+     deeper:"הפעם השאלה מתארת במילים במקום ב-pseudo-code: ״הצפינה, ואז חישבה MAC על ה-ciphertext״ = Encrypt-then-MAC. ההצפנה נותנת סודיות; ה-MAC נותן שלמות ואמינות — ביחד מקבלים את כל השלושה. שים לב: ״MAC then Decrypt״ אינה שיטה אמיתית (זה סדר פעולות אצל המקבל, לא שיטת בנייה), וזו מלכודת ניסוח."},
+    {src:"31/05/2024 · ש׳1", q:"אליס לקחה plaintext והצפינה אותו, ואז חישבה MAC על ה-plaintext. אליס שלחה לבוב את ה-ciphertext ואת ה-tag. באיזה שיטה אליס עבדה?",
+     correct:"MAC and Encrypt", opts:["Diffie-Hellman","Encrypt then MAC","MAC then Encrypt"],
+     ex:"ה-MAC חושב על ה-plaintext בנפרד מההצפנה (לא על ה-ciphertext, ולא הוצפן יחד) — זה Encrypt-and-MAC.",
+     deeper:"שים לב להבדל הדק מהשאלה הקודמת! שם ה-MAC חושב על ה-<b>ciphertext</b> (Encrypt-then-MAC). כאן ה-MAC חושב על ה-<b>plaintext</b>, אבל שולחים אותו לצד ה-ciphertext בנפרד (לא מצפינים אותו יחד) — זה <b>Encrypt-and-MAC</b>. ההבדל מ-MAC-then-Encrypt: שם ה-tag היה מוצפן יחד עם ה-plaintext; כאן ה-tag נשלח גלוי. שלוש השיטות נבדלות בשתי שאלות: (1) על מה חושבים MAC — plaintext או ciphertext? (2) האם ה-tag מוצפן או גלוי?"},
+    {src:"21/07/2025 · ש׳10", q:"מה מהבאים מתאר בצורה הנכונה ביותר את ההבדל המרכזי בין הצפנה לחתימה דיגיטלית?",
+     correct:"הצפנה נועדה לשמור על סודיות המידע, בעוד שחתימה דיגיטלית נועדה לאמת את מקור ושלמות המידע",
+     opts:["הצפנה משתמשת תמיד במפתחות סימטריים, ואילו חתימה דיגיטלית תמיד משתמשת במפתחות א-סימטריים","הצפנה מונעת זיופים של המסר, בעוד שחתימה דיגיטלית מונעת גישה לא מורשית למידע","חתימה דיגיטלית היא תהליך הממיר טקסט קריא לטקסט מוצפן, בעוד שהצפנה מאמתת זהות שולח ההודעה"],
+     ex:"הצפנה = סודיות. חתימה = מקור + שלמות (+ אי-הכחשה).",
+     deeper:"ההבחנה היא לפי <b>המטרה</b>, לא לפי סוג המפתח. הצפנה = סודיות (מי יכול לקרוא). חתימה = אימות מקור ושלמות (מי כתב, והאם שונה). הטעות בסעיף השני: הצפנה יכולה להיות גם א-סימטרית (RSA), אז ״תמיד סימטרי״ שגוי. הסעיף האחרון הופך את ההגדרות (חתימה לא ממירה לטקסט מוצפן — היא מוסיפה תג אימות). זכור: אפשר לחתום בלי להצפין (מסמך גלוי אבל מאומת) ולהצפין בלי לחתום (סודי אבל בלי אימות מקור) — הן עצמאיות."},
+    {src:"20/10/2024 · ש׳6", q:"אליס ובוב רוצים לתקשר ביניהם בצורה מאובטחת, באופן כזה שאם x שולח הודעה, x לא יוכל לאחר מכן להתכחש שהוא שלח את ההודעה. בכדי להשיג תקשורת שכזאת, עליהם להשתמש ב:",
+     correct:"חתימות דיגיטליות", opts:["Message authentication codes (MAC)","צופן קיסר","CSRF"],
+     ex:"אי-הכחשה דורשת שרק השולח יכול היה לייצר את החתימה (מפתח פרטי). MAC משתמש במפתח משותף — אין אי-הכחשה.",
+     deeper:"״לא יוכל להכחיש״ = <b>אי-הכחשה (non-repudiation)</b>, וזו התכונה הבלעדית של חתימה דיגיטלית. הסיבה: החתימה נוצרת עם המפתח ה<b>פרטי</b> של השולח, שרק לו יש. לכן אם החתימה מתאמתת מול המפתח הציבורי שלו — <b>רק הוא</b> יכול היה לייצר אותה, והוא לא יכול להכחיש. MAC נכשל כאן: המפתח משותף לשני הצדדים, אז כל אחד מהם יכול היה לייצר את התג — ובוב לא יכול להוכיח לצד שלישי שדווקא אליס יצרה אותו. (CSRF וצופן קיסר בכלל לא קשורים.)"},
+    {src:"07/07/2023 · ש׳8", q:"אליס רוצה לשלוח M לבוב עם סודיות + אותנטיות + אמינות. בחרו את ההצעה היחידה שמקיימת זאת. (E=הצפנה א-סימטרית, S=חתימה, H=hash)",
+     correct:"אליס שולחת: EPKB(M), SSKA(H(M))",
+     opts:["מייצרת מפתח סימטרי סודי s ושולחת: EPKB(s), Encs(M)","מייצרת מפתח סימטרי סודי s ושולחת: EPKA(s), Encs(M)","אליס שולחת: EPKB(M), SSKB(H(M))"],
+     ex:"EPKB(M) = הצפנה עם המפתח הציבורי של בוב → סודיות. SSKA(H(M)) = חתימה עם המפתח הפרטי של אליס → אותנטיות ושלמות.",
+     deeper:"נפרק את הסימונים: <code>E<sub>PKB</sub>(M)</code> = הצפן את M עם המפתח הציבורי של <b>בוב</b> → רק בוב יפענח = <b>סודיות</b>. <code>S<sub>SKA</sub>(H(M))</code> = חתום על ה-hash של M עם המפתח הפרטי של <b>אליס</b> → בוב מאמת מול הציבורי של אליס = <b>אותנטיות + שלמות</b>. שים לב לטעויות: הסעיף האחרון חותם עם <code>SK<sub>B</sub></code> (המפתח הפרטי של בוב!) — אבל לאליס אין אותו, אז זה בלתי אפשרי. סעיף אחר משתמש ב-<code>E<sub>PKA</sub>(s)</code> (מצפין את המפתח עם הציבורי של אליס) — אז דווקא אליס לא תוכל לפענח. זה תרגיל קלאסי ב״לעקוב אחרי המפתחות״: תמיד שאל ״של מי המפתח, ומה זה נותן״."},
+  ]
+},
+
+/* ========== 4. Diffie-Hellman ========== */
+{
+  rank:"4", phase:"יסודות", he:"Diffie-Hellman — החלפת מפתח",
+  en:"Diffie-Hellman Key Exchange",
+  freq:"7 מבחנים", freqNote:"חישוב כמעט מובטח + בסיס הביטחון",
+  analogy:"דמיין ששני אנשים רוצים ליצור צבע סודי משותף, מול קהל שרואה הכל. כל אחד מתחיל מצבע ציבורי משותף, מוסיף לו צבע פרטי סודי, ומראה לשני את התערובת. עכשיו כל אחד מוסיף שוב את הצבע הפרטי שלו לתערובת של השני — ושניהם מגיעים לאותו צבע סופי. הקהל ראה את התערובות, אבל <b>לא יכול ״להפריד״ צבע בחזרה</b> כדי לגלות את הסוד. זו בדיוק בעיית הלוגריתם הדיסקרטי.",
+  intro:`
+    <p><b>הבעיה שזה פותר:</b> בהצפנה סימטרית שני הצדדים צריכים מפתח משותף — אבל איך מסכימים עליו כשמאזינים לכל הקו? Diffie-Hellman (1976) הוא פרוטוקול שמאפשר לשני צדדים ליצור <b>סוד משותף</b> על גבי ערוץ פתוח לגמרי, בלי להעביר את הסוד עצמו אף פעם.</p>
+    <p><b>איך זה עובד — צעד אחר צעד:</b></p>
+    <ul>
+      <li>מסכימים בפומבי על שני מספרים: <code>n</code> (ראשוני גדול) ו-<code>g</code> (בסיס). כולם רואים אותם.</li>
+      <li>אליס בוחרת סוד פרטי <code>a</code>, מחשבת <code>A = g^a mod n</code> ושולחת את A.</li>
+      <li>בוב בוחר סוד פרטי <code>b</code>, מחשב <code>B = g^b mod n</code> ושולח את B.</li>
+      <li>אליס מחשבת <code>B^a mod n</code>; בוב מחשב <code>A^b mod n</code>. שניהם מקבלים <code>g^(ab) mod n</code> — זה הסוד המשותף!</li>
+    </ul>
+    <p><b>הנקודה שמפילים עליה שוב ושוב:</b> מעלים את <b>g בחזקת הסוד</b> (<code>g^x</code>), <b>לא</b> את הסוד בחזקת g. אם תראה במבחן ״מעלים את x בחזקת g״ — זו התשובה השגויה.</p>
+    <p><b>למה זה בטוח?</b> מאזין רואה את <code>n, g, A, B</code> אבל <b>לא</b> את a או b. כדי לחלץ את a מתוך <code>A=g^a mod n</code> צריך לפתור את <b>בעיית הלוגריתם הדיסקרטי</b> — בעיה שאין לה פתרון יעיל ידוע למספרים גדולים. זה הבסיס לביטחון.</p>
+    <p><b>טיפ חישוב למבחן (משפט פרמה הקטן):</b> כשמחשבים <code>g^k mod n</code> ו-n ראשוני, אפשר לצמצם את המעריך: <code>k mod (n−1)</code>. למשל <code>5^90 mod 23</code> → <code>90 mod 22 = 2</code> → <code>5^2 = 25 ≡ 2</code>.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li>ציבורי: <code>n</code> (ראשוני), <code>g</code>. סוד: <code>x</code>. שולחים <code>y = g^x mod n</code>. <span class="w">g בחזקת x — לא הפוך!</span></li>
+      <li>סוד משותף = <code>g^(ab) mod n</code> (כל צד מעלה את מה שקיבל בחזקת הסוד שלו).</li>
+      <li>ביטחון = <b>בעיית הלוגריתם הדיסקרטי</b> (קושי לחלץ x מ-g^x mod n).</li>
+      <li>קיצור חישוב: n ראשוני → <code>g^k mod n = g^(k mod (n−1)) mod n</code>.</li>
+    </ul>`,
+  questions:[
+    {src:"30/11/2025 · ש׳6", q:"עבור n=23 ו-g=3, אליס ובוב הריצו את פרוטוקול דיפי הלמן. במהלך הרצת הפרוטוקול, אליס שלחה לבוב את המספר 13 ובוב שלח לה את המספר 4. מה מהבאים יכול להיות המספר הסודי המשותף שנבחר בסוף התהליך?",
+     correct:"12", opts:["18","17","10"],
+     ex:"3^5≡13 (a=5), 3^3≡4 (b=3). הסוד = 3^15 mod 23 = 12 (או 13³ mod 23 = 12).",
+     deeper:"שתי דרכים להגיע ל-12. הקצרה: הסוד המשותף שווה למה שאחד הצדדים שלח, בחזקת הסוד של הצד השני. אם בוב שלח 4, ואליס מחשבת <code>4^a mod 23</code> — צריך את a. מוצאים אותו מ-<code>3^a ≡ 13</code>: בדיקה נותנת a=5. ואז <code>4^5 mod 23 = 1024 mod 23 = 12</code>. אין צורך למצוא את שני הסודות — מספיק אחד. זו הסיבה שהמאזין תקוע: הוא רואה 13 ו-4 אבל בלי a או b אין לו קיצור דרך."},
+    {src:"24/11/2024 · ש׳5", q:"Alice ו-Bob, מחליפים מפתח באמצעות פרוטוקול Diffie-Hellman, כאשר נתון ש-n=23 ו-g=5. Alice בוחרת x=6 ו-Bob בוחר x=15. מהו המפתח הסודי המשותף של Alice ו-Bob בסוף התהליך?",
+     correct:"2", opts:["5","19","8"],
+     ex:"5^(6·15) mod 23 = 5^90. לפי פרמה: 90 mod 22 = 2, אז 5^90 ≡ 5^2 = 25 ≡ 2.",
+     deeper:"כאן נתונים <b>שני הסודות</b> ישירות (6 ו-15), אז הסוד המשותף = <code>g^(a·b) mod n = 5^(6·15) = 5^90 mod 23</code>. במקום לחשב 5^90 (מספר ענק), משתמשים בפרמה הקטן: כיוון ש-23 ראשוני, <code>5^90 mod 23 = 5^(90 mod 22) = 5^2 = 25 ≡ 2</code>. שים לב: 90 mod 22 = 2 (כי 22·4=88, ו-90−88=2). הטריק הזה הופך חישוב ״בלתי אפשרי״ בעט לחישוב של שנייה — שווה לתרגל אותו."},
+    {src:"04/07/2024 · ש׳2", q:"n=19, g=3. אליס שלחה לבוב 15, בוב שלח לאליס 5. מה יכול להיות הסוד המשותף?",
+     correct:"9", opts:["4","12","11"],
+     ex:"3^5≡15 (a=5), 3^4≡5 (b=4). הסוד = 3^20 mod 19. פרמה: 20 mod 18 = 2, אז 3^2 = 9.",
+     deeper:"אותו ארכיטיפ כמו השאלה הראשונה, רק מספרים אחרים — שים לב כמה הקורס ממחזר. מוצאים את הסודות מהערכים ששלחו: <code>3^a ≡ 15 mod 19</code> נותן a=5, ו-<code>3^b ≡ 5 mod 19</code> נותן b=4. הסוד = <code>3^(5·4) = 3^20 mod 19</code>. פרמה (19 ראשוני): <code>20 mod 18 = 2</code> → <code>3^2 = 9</code>. אם תזהה שזו ״שאלת DH חישובית״, השיטה תמיד זהה: מצא סוד אחד (או שניהם), הכפל/העלה בחזקה, וצמצם עם פרמה."},
+    {src:"20/10/2024 · ש׳10", q:"הבטיחות של מנגנון החלפת המפתחות של דיפי-הלמן מתבססת על?",
+     correct:"בעיית הלוגריתם הדיסקרטי", opts:["צופן ויז׳נר","אמון (trust)","בעיית ה-51%"],
+     ex:"הקושי לחלץ x מ-g^x mod n (הלוגריתם הדיסקרטי) הוא מה שמגן על הסוד.",
+     deeper:"שאלה קונספטואלית קבועה. הביטחון של DH נשען כולו על כך ש<b>קל</b> לחשב <code>g^x mod n</code> אבל <b>קשה מאוד</b> ללכת אחורה ולמצוא x — זו בעיית הלוגריתם הדיסקרטי. השווה: הביטחון של RSA נשען על קושי הפירוק לגורמים. ״בעיית ה-51%״ שייכת לביטקוין (התקפת רוב). ״אמון״ שייך ל-PKI/תעודות. לכל מנגנון בקורס יש ״בעיה קשה״ אחת שמגנה עליו — כדאי לזכור את ההצמדה: DH↔לוגריתם דיסקרטי, RSA↔פירוק לגורמים, ביטקוין↔51%."},
+    {src:"07/07/2023 · ש׳7", q:"בחרו את הסעיף ש<b>אינו</b> נכון לגבי Diffie-Hellman:",
+     correct:"אליס ובוב (כל אחד בנפרד) מעלים את x בחזקת g (מודולו n) וכך מחשבים y, ושולחים את התוצאה זה לזה",
+     opts:["אליס מקבלת מבוב את y ומעלה אותו בחזקת x (מודולו n). התוצאה היא המפתח המשותף","אליס ובוב מעלים את g בחזקת x (מודולו n) וכך מחשבים y, ושולחים זה לזה","תוקף מאזין אינו יכול לגלות את המפתח המשותף בגלל קושי בעיית הלוגריתם הדיסקרטי"],
+     ex:"הנוסחה היא g^x mod n — מעלים את g בחזקת הסוד x, ולא להיפך.",
+     deeper:"זו בדיוק המלכודת שהוזכרה ב-intro. הסעיף השגוי אומר ״מעלים את <b>x בחזקת g</b>״ — כלומר <code>x^g</code>. הנוסחה הנכונה היא <code>g^x</code> (g, הבסיס הציבורי, בחזקת x, הסוד). שים לב שהסעיף הנכון השני אומר במפורש ״מעלים את g בחזקת x״ — הוא הניסוח התקין. כשרואים שתי אפשרויות שנראות כמעט זהות אבל אחת הופכת את הסדר, זה כמעט תמיד המוקד של השאלה."},
+  ]
+},
+
+/* ========== 5. RSA ========== */
+{
+  rank:"5", phase:"יסודות", he:"RSA — הצפנה וחתימה א-סימטרית",
+  en:"RSA",
+  freq:"5 מבחנים", freqNote:"שאלת חישוב כמעט מובטחת",
+  analogy:"RSA כמו <b>מנעול תלייה ציבורי</b>: אתה מפזר בעולם מנעולים פתוחים (המפתח הציבורי) שכל אחד יכול לנעול איתם קופסה וישלח אליך. אבל רק לך יש את המפתח הפיזי שפותח (המפתח הפרטי). לחתימה זה הפוך: אתה נועל בסוד, וכולם יכולים לוודא שרק אתה יכולת לנעול.",
+  intro:`
+    <p>RSA הוא ה-workhorse של ההצפנה הא-סימטרית: הוא יכול גם <b>להצפין</b> (סודיות) וגם <b>לחתום</b> (אימות). הביטחון שלו נשען על כך ש<b>קל</b> להכפיל שני ראשוניים גדולים, אבל <b>קשה מאוד</b> לפרק את המכפלה בחזרה לגורמים.</p>
+    <p><b>בניית המפתחות — שנן את הנוסחאות:</b></p>
+    <ul>
+      <li>בוחרים שני ראשוניים <code>p, q</code>. מחשבים <code>n = p·q</code> (המודולוס).</li>
+      <li>מחשבים את פונקציית אוילר: <code>φ(n) = (p−1)(q−1)</code>.</li>
+      <li>בוחרים <code>e</code> (מעריך ציבורי) הזר ל-φ(n).</li>
+      <li>מוצאים <code>d</code> (מעריך פרטי) כך ש-<code>e·d ≡ 1 (mod φ(n))</code> — d הוא ההופכי הכפלי של e.</li>
+      <li>המפתח הציבורי = <code>(n, e)</code>. המפתח הפרטי = <code>(n, d)</code>.</li>
+    </ul>
+    <p><b>פעולות:</b></p>
+    <ul>
+      <li><b>הצפנה:</b> <code>c = m^e mod n</code> (עם המפתח הציבורי של הנמען). <b>פענוח:</b> <code>m = c^d mod n</code> (עם הפרטי).</li>
+      <li><b>חתימה:</b> <code>s = m^d mod n</code> (עם המפתח ה<b>פרטי</b> של החותם). <b>אימות:</b> <code>m = s^e mod n</code> (עם הציבורי). שים לב: חתימה משתמשת ב-d, בדיוק הפוך מהצפנה.</li>
+    </ul>
+    <p><b>איך מוצאים d במבחן?</b> צריך <code>e·d ≡ 1 (mod φ)</code>. עם מספרים קטנים פשוט מנסים ערכים: אם φ=24 ו-e=11, מחפשים d כך ש-<code>11d mod 24 = 1</code>; בדיקה: 11·11=121, ו-121 mod 24 = 1 ✓, אז d=11.</p>
+    <p>(״textbook RSA״ = הגרסה הבסיסית ללא padding, שנלמדת לצורך החישוב. בפועל משתמשים ב-padding כמו OAEP.)</p>`,
+  material:`
+    <h4>הנוסחאות — שנן</h4>
+    <ul>
+      <li><span class="key">n = p·q</span> · <span class="key">φ(n) = (p−1)(q−1)</span> · <span class="key">e·d ≡ 1 (mod φ(n))</span>.</li>
+      <li>הצפנה: <code>c = m^e mod n</code> · פענוח: <code>m = c^d mod n</code>.</li>
+      <li>חתימה: <code>s = m^d mod n</code> (פרטי!) · אימות: <code>m = s^e mod n</code>.</li>
+    </ul>`,
+  questions:[
+    {src:"02/11/2025 · ש׳6", q:"בהקשר של textbook RSA (כלומר ללא hash), בחרו את שני המספרים הראשוניים הבאים: p=5, q=7. מהערכים הללו, יצרו את המפתח הפומבי הבא: n=35, e=11. מה מבין הבאים הינו מפתח פרטי מתאים?",
+     correct:"n = 35, d = 11", opts:["n = 35, d = 12","n = 35, d = 13","n = 5, d = 12"],
+     ex:"φ(35)=24. 11·d ≡ 1 mod 24 → 11·11=121≡1. d=11.",
+     deeper:"שלב 1: <code>φ(35)=(5−1)(7−1)=4·6=24</code>. שלב 2: מחפשים d כך ש-<code>11d ≡ 1 (mod 24)</code>. מנסים: 11·11=121=5·24+1 → 121 mod 24 = 1 ✓. אז d=11 (במקרה זה e=d, שקורה לפעמים). שים לב שהמפתח הפרטי כולל את n (שהוא ציבורי) יחד עם d — לכן ״n=5״ פסול מיד (n=35, לא 5). כשמחפשים d ידנית, טריק: <code>11·11 = 121</code> קל לבדוק, ו-121 קרוב לכפולה של 24."},
+    {src:"21/07/2025 · ש׳2", q:"אליס רוצה להשתמש ב-textbook RSA. לשם כך, היא מריצה את אלגוריתם ה-Gen. אליס התחילה את הרצת ה-Gen ולכן בחרה שני מספרים ראשוניים, p=3, q=17, ובעזרתם חישבה: n=51. על בסיס נתונים אלו, מהי התוצאה של φ(n)? כאשר הפונקציה φ (האות היוונית phi) היא כפי שלמדנו בכיתה עבור אלגוריתם ה-Gen.",
+     correct:"32", opts:["50","1","11"],
+     ex:"φ(n)=(3−1)(17−1)=2·16=32.",
+     deeper:"שאלה ישירה על הנוסחה: <code>φ(n)=(p−1)(q−1)=(3−1)(17−1)=2·16=32</code>. הטעות הנפוצה: לחשב <code>n−1 = 50</code> (זה לא φ אלא סתם n פחות 1). φ סופר כמה מספרים מתחת ל-n זרים ל-n, ולראשוני p זה p−1. עבור מכפלת שני ראשוניים, זו מכפלת שני הגורמים פחות 1 כל אחד. זהו הצעד הראשון בכל שאלת RSA — בלי φ נכון, כל השאר נופל."},
+    {src:"21/07/2025 · ש׳3", q:"בהקשר של חתימה דיגיטלית לפי textbook RSA (כלומר ללא hash), אם ידוע שה-private key הוא: n=33, d=7. מהי החתימה הדיגיטלית על ההודעה m כאשר m=5?",
+     correct:"14", opts:["26","5","61"],
+     ex:"5^7 mod 33: 25,26,31,23,16,→80≡14.",
+     deeper:"חתימה = <code>m^d mod n = 5^7 mod 33</code>. מחשבים בהדרגה כדי לא לפוצץ מספרים: 5^2=25, 5^3=125 mod 33=26, 5^4=26·5=130 mod 33=31, 5^5=31·5=155 mod 33=23, 5^6=23·5=115 mod 33=16, 5^7=16·5=80 mod 33=14. הטריק: אחרי כל כפל, קח mod 33 מיד — ככה אף פעם לא עוברים 165. שים לב: חתימה משתמשת ב-<b>d</b> (הפרטי), ולכן ״5״ (הודעה כמו שהיא) פסול."},
+    {src:"24/11/2024 · ש׳6", q:"Alice משתמשת ב-RSA כדי ליצור חתימה דיגיטלית עבור הודעה שהיא שולחת ל-Bob. היא בוחרת שני מספרים ראשוניים, p=13 ו-q=17 ובעזרתם מחשבת את n. Alice בוחרת מפתח פרטי d=5 ומפתח פומבי e=77. ההודעה m שהיא רוצה לחתום עליה היא m=7. מהי החתימה שאותה Alice תשלח לבוב?",
+     correct:"11", opts:["21","12","193"],
+     ex:"n=221. 7^5 mod 221 = 16807 mod 221 = 11.",
+     deeper:"החתימה = <code>m^d mod n</code>. קודם n: <code>13·17=221</code>. אז <code>7^5 mod 221</code>: 7^2=49, 7^3=343 mod 221=122, 7^4=122·7=854 mod 221=854−663=191, 7^5=191·7=1337 mod 221=1337−1326=11. שים לב שנתנו גם e=77 — זה מסיח דעת; לחתימה צריך רק את d ואת n. תמיד שאל את עצמך: ״חתימה או הצפנה, ואיזה מעריך זה דורש?״ (חתימה→d, הצפנה→e)."},
+    {src:"17/09/2024 · ש׳8", q:"בהקשר של חתימה דיגיטלית לפי textbook RSA (כלומר ללא hash), יצא ש-n=33. לוקחים את ההודעה 20 והחתימה הדיגיטלית שיצאה על הודעה זו הינה 26. באיזה ערכי d ו-e השתמשו?",
+     correct:"e=3, d=7", opts:["e=3, d=11","e=7, d=11","e=5, d=7"],
+     ex:"n=33→φ=20. חתימה = 20^d mod 33 = 26 → d=7. בדיקה: 3·7=21≡1 mod 20 → e=3.",
+     deeper:"שאלה ״הפוכה״ — נתונה התוצאה ומחפשים את המפתחות. n=33=3·11, אז <code>φ=(3−1)(11−1)=2·10=20</code>. החתימה <code>20^d mod 33 = 26</code>; בודקים d מהאפשרויות: d=7 נותן 20^7 mod 33=26 ✓. עכשיו e חייב לקיים <code>e·d ≡ 1 (mod 20)</code>: <code>3·7=21 ≡ 1 (mod 20)</code> ✓. שילוב שתי הבדיקות (החתימה נכונה + e·d≡1) פוסל את שאר הזוגות. טכניקה: כשנתונה תוצאה, הצב את האפשרויות במקום לפתור מאפס."},
+  ]
+},
+
+/* ========== 6. שמירת סיסמאות ========== */
+{
+  rank:"6", phase:"נבנה על היסודות", he:"שמירת סיסמאות — salt · pepper · hash",
+  en:"Password Storage",
+  freq:"5 מבחנים", freqNote:"יישום ישיר של hash",
+  analogy:"אם אתר שומר את הסיסמה שלך כמו שהיא, זה כמו להשאיר את המפתח מתחת לשטיח. במקום זה שומרים <b>hash</b> של הסיסמה (טביעת אצבע חד-כיוונית). ה-<b>salt</b> הוא כמו לתת לכל אחד שטיח בצבע ייחודי — כך אותה סיסמה אצל שני אנשים תיראה שונה לגמרי, וגנב לא יכול להכין מראש ״ספר פתרונות״ אחד לכולם.",
+  intro:`
+    <p><b>הבעיה:</b> אתר צריך לבדוק סיסמאות בכניסה, אבל אסור לו לשמור אותן כטקסט גלוי — אם הדליפו את מסד הנתונים, כל הסיסמאות חשופות. הפתרון בנוי בשכבות:</p>
+    <ul>
+      <li><b>שכבה 1 — hash:</b> שומרים <code>hash(password)</code> במקום הסיסמה. בזכות <b>pre-image resistance</b>, גנב שרואה את ה-hash לא יכול להפוך אותו לסיסמה. באימות: מבצעים hash לסיסמה שהוקלדה ומשווים.</li>
+      <li><b>הבעיה שנשארת:</b> אנשים בוחרים סיסמאות נפוצות. תוקף יכול להכין מראש טבלת ענק של <code>hash → סיסמה</code> (<b>rainbow table</b>) ולחפש בה. גם: שני משתמשים עם אותה סיסמה יקבלו אותו hash.</li>
+      <li><b>שכבה 2 — salt:</b> מוסיפים לכל משתמש ערך אקראי ייחודי (למשל 256 ביט), ושומרים <code>hash(salt || password)</code> יחד עם ה-<b>salt בגלוי</b>. עכשיו אותה סיסמה נותנת hash שונה לכל משתמש, ו-rainbow tables מוכנות מראש מתות — התוקף חייב לתקוף כל משתמש בנפרד. <span class="w">חשוב:</span> חייבים לשמור את ה-salt <b>עצמו</b> (לא hash שלו!), אחרת אי אפשר לחזור על החישוב באימות.</li>
+      <li><b>שכבה 3 — pepper:</b> ערך סודי <b>נוסף</b> שמשותף לכל המערכת ונשמר <b>בנפרד</b> (לא במסד הנתונים). גם אם הדליפו את ה-DB, בלי ה-pepper אי אפשר לתקוף.</li>
+      <li><b>שכבה 4 — key stretching:</b> מריצים את ה-hash <b>i פעמים ברצף</b> (בכל פעם כוללים את הפלט הקודם). זה מייקר כל ניחוש פי i — למשתמש הלגיטימי זה זניח, לתוקף שמנסה מיליארד ניחושים זה הרסני. זה הרעיון מאחורי PBKDF2/bcrypt.</li>
+    </ul>
+    <p><b>העיקרון המנחה לכל השאלות כאן:</b> הסיסמה וה-salt חייבים להיות <b>מעורבבים יחד בתוך אותו hash</b> (<code>hash(password || salt)</code>). כל הצעה ש<b>מפרידה</b> אותם (למשל <code>hash(password)</code> בנפרד מ-<code>hash(salt)</code>) — מפספסת את המטרה, כי אפשר לתקוף את חלק הסיסמה לבד.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li>שומרים <code>hash(password || salt)</code> + את ה-<b>salt בגלוי</b>. חייבים את ה-salt עצמו (לא hash שלו).</li>
+      <li><span class="no">שגוי:</span> להפריד — <code>hash(password)</code> נפרד מ-<code>hash(salt)</code>. מבטל את היתרון.</li>
+      <li><b>pepper</b> = סוד כלל-מערכתי שנשמר בנפרד מה-DB. <b>key stretching</b> = hash חוזר i פעמים (מייקר brute-force).</li>
+      <li>גנבו קובץ hashes → התקפת <b>brute force</b>/מילון (מנחשים, מבצעים hash, משווים).</li>
+    </ul>`,
+  questions:[
+    {src:"21/07/2025 · ש׳1", q:"להלן מספר שיטות לשמירת סיסמאות ב-DB, כאשר כל שיטה מתארת את מבנה הטבלה (המידע שישמר בכל עמודה מופרד בפסיקים, והסימן || מסמל שירשור). Hash הינה פונק' hash בטוחה קריפטוגרפית. Salt הינה מחרוזת בגודל 256 ביט הנבחרת באקראי. איזה מבין השיטות הבאות אינה פרקטית? כלומר, האפליקציה שמנסה לאמת את המשתמשים בעזרת הטבלה הזאת לא תוכל לעשות זאת בזמן סביר אם הטבלה תיושם לפי השיטה הספציפית?",
+     correct:"Username, hash(salt), hash(password || salt)",
+     opts:["Username, salt, hash(password || salt || username)","Username, salt, hash(hash(password || salt))","Username, salt, hash(password || salt)"],
+     ex:"שמירת hash(salt) במקום ה-salt עצמו → אי אפשר לשחזר את ה-salt כדי לחשב hash(password||salt) באימות.",
+     deeper:"המפתח כאן: מה נשמר במקום ה-salt? באפשרות השגויה שומרים <code>hash(salt)</code> ולא את ה-salt עצמו. אבל באימות צריך לחשב מחדש <code>hash(password || salt)</code> — וזה דורש את ה-<b>salt המקורי</b>. אם רק ה-hash של ה-salt שמור, כדי לשחזר את ה-salt צריך לשבור את ה-hash שלו (brute-force על 256 ביט אקראיים — בלתי אפשרי בזמן סביר). לכן אי אפשר לאמת משתמשים. שלוש האפשרויות האחרות שומרות את ה-salt בגלוי — כולן פרקטיות. ה-salt לא צריך להיות סודי, רק ייחודי."},
+    {src:"04/07/2024 · ש׳3", q:"איזו הצעה מציגה שימוש <b>לא נכון</b> ב-salt ו/או pepper? (h=hash, ||=שרשור)",
+     correct:"username, salt, h(password) || h(salt || pepper)",
+     opts:["username, salt, h(password || salt || pepper)","username, salt, h(password || salt)","username, h(password || pepper)"],
+     ex:"הפרדת ה-hash של הסיסמה מה-salt מבטלת את היתרון — אפשר לתקוף את h(password) ישירות עם rainbow table.",
+     deeper:"התבונן במבנה: <code>h(password) || h(salt || pepper)</code>. הסיסמה עברה hash <b>לבד</b>, בלי שום salt מעורבב פנימה. זה אומר ש-<code>h(password)</code> חשוף לבדיוק ההתקפה שה-salt אמור למנוע — rainbow table על סיסמאות נפוצות. העובדה שיש חלק שני עם salt+pepper לא עוזרת, כי החלק הראשון כבר מדליף. הכלל: ה-salt (וה-pepper) חייבים להיכנס <b>לתוך אותו hash של הסיסמה</b>, לא ב-hash נפרד. שאר ההצעות מערבבות הכל יחד בתוך hash אחד — נכון."},
+    {src:"17/09/2024 · ש׳9", q:"מחליטים לשנות מנגנון הזדהות מול אתר אינטרנט, כך שימשיכו להשתמש בפונק' hash בטוחה קריפטוגרפית אך שבמקום להשתמש ב-salt & pepper, יבצעו את אחד מהשינויים הבאים. איזה מהשינויים הבאים הכי יתרום לבטיחות (ויתרום יותר ביחס לשימוש רק ב-salt) ועדיין יאפשר אימות מול אתר האינטרנט? (לאורך השאלה, כאשר מתייחסים ל-i מתכוונים למספר שלם חיובי גדול מ-1)",
+     correct:"כאשר משתמש נרשם למערכת, מחשבים hash על שרשור של ה-salt (שהינו אקראי וארוך) והסיסמא של המשתמש, אך במקום ביצוע hash פעם אחת - עושים hash שוב ושוב i פעמים (בכל פעם שעושים שוב hash כוללים בקלט את הפלט שיצא בפעם הקודמת של הפעלת ה-hash), ושומרים ב-db את ה-username, את ה-salt ואת תוצאת ביצוע ה-hash אחרי הפעם ה-i",
+     opts:["כאשר משתמש נרשם למערכת, מגרילים salt (שהינו אקראי וארוך) שוב ושוב i פעמים, כלומר, מגרילים פעם אחת ומתעלמים מהתוצאה, מגרילים פעם נוספת ומתעלמים מהתוצאה, ורק על ה-salt שיוצא בפעם ה-i מחשבים hash פעם אחת על שרשור של ה-salt והסיסמא של המשתמש ושומרים ב-db את ה-username, את ה-salt ואת תוצאת ביצוע ה-hash","כאשר משתמש נרשם למערכת, מגרילים ערך i אקראי, ומחשבים hash פעם אחת על שרשור של ערך ה-i שיצא והסיסמא של המשתמש ושומרים ב-db את ה-username, את ערך ה-i ואת תוצאת ביצוע ה-hash","כאשר משתמש נרשם למערכת, מגרילים salt (שהינו אקראי וארוך) שוב ושוב i פעמים, כלומר, מגרילים פעם אחת ומתעלמים מהתוצאה, מגרילים פעם נוספת ומתעלמים מהתוצאה. לוקחים את ה-salt שיוצא בפעם ה-i ומחשבים hash על ה-salt (שיצא בפעם ה-i), אך במקום ביצוע hash פעם אחת - עושים hash שוב ושוב i פעמים (בכל פעם שעושים שוב hash כוללים בקלט את הפלט שיצא בפעם הקודמת של הפעלת ה-hash), ושומרים ב-db את ה-username, את ה-salt ואת תוצאת ביצוע ה-hash אחרי הפעם ה-i"],
+     ex:"Key stretching (PBKDF): חזרה על ה-hash i פעמים מייקרת מאוד תקיפת brute-force, ועדיין מאפשרת אימות.",
+     deeper:"זהו <b>key stretching</b>, הרעיון מאחורי PBKDF2/bcrypt/scrypt. במקום hash אחד, מריצים אלפי (או מיליוני) חזרות: <code>x₀=hash(salt||password)</code>, <code>x₁=hash(x₀)</code>, ... עד <code>x_i</code>. למשתמש הלגיטימי החישוב קורה פעם אחת בכניסה (זניח). לתוקף שמנסה מיליארד ניחושים, כל ניחוש עכשיו יקר פי i — מה שהופך brute-force ללא כדאי. שאר ההצעות שגויות כי הן ״מגרילות salt ומתעלמות״ (חסר משמעות) או עושות hash על ה-salt בלבד בלי הסיסמה. הנקודה: הסיסמה חייבת להישאר בלב החישוב, ורק להוסיף עלות."},
+    {src:"דוגמה 2 · ש׳1", q:"תוקף גנב קובץ המכיל סיסמאות לאימות (שמורות כ-hash, לא בגלוי). איזו התקפה ינסה כדי להשיג את הסיסמאות המקוריות?",
+     correct:"התקפת brute force", opts:["התקפת spoofing","התקפת sql injection","התקפת csrf"],
+     ex:"בהינתן ה-hashes, הדרך לשחזר סיסמאות היא לנחש סיסמאות, ל-hash אותן ולהשוות — brute force (או מילון).",
+     deeper:"כיוון ש-hash הוא חד-כיווני (pre-image resistance), אי אפשר ״לפענח״ אותו. הדרך היחידה לתוקף היא לנחש: לוקח סיסמה מועמדת, מחשב את ה-hash שלה (עם ה-salt הידוע), ומשווה לערך השמור. עוברים על מילון סיסמאות נפוצות או על כל הצירופים — זה <b>brute force</b> (או ״התקפת מילון״). שאר האפשרויות לא רלוונטיות: spoofing=התחזות, SQL injection=תקיפת מסד נתונים דרך קלט, CSRF=זיוף בקשות בדפדפן. זו בדיוק הסיבה ל-salt ו-key stretching — להפוך את ה-brute force הזה ליקר מדי."},
+  ]
+},
+
+/* ========== 7. TLS, chain of trust ו-MitM ========== */
+{
+  rank:"7", phase:"נבנה על היסודות", he:"TLS, chain of trust ו-MitM",
+  en:"TLS · Certificates · Chain of Trust",
+  freq:"10 מבחנים", freqNote:"כמעט בכל מבחן — מחבר הכל יחד",
+  analogy:"תעודה דיגיטלית היא כמו <b>דרכון</b>: היא מצהירה ״אני google.com״ וחתומה ע״י גורם שסומכים עליו (ה-CA, כמו משרד הפנים). <b>chain of trust</b> = הדרכון חתום ע״י נציגות, שחתומה ע״י המשרד הראשי, שאת חתימתו הדפדפן מכיר מראש. אם מישהו מציג לך דרכון אמיתי של אדם <b>אחר</b> — הוא תקף, אבל השם עליו לא מתאים למי שביקשת, וכאן התרמית מתגלה.",
+  intro:`
+    <p>עכשiv מרכיבים הכל: הצפנה, חתימות, hash ותעודות — לתוך פרוטוקול <b>TLS</b> (מה שנותן את ה-https). המטרה: ליצור ערוץ מוצפן ומאומת מול שרת, גם מול תוקף שיושב באמצע (MitM).</p>
+    <p><b>תעודה (certificate):</b> מסמך ציבורי שקושר <b>שם</b> (למשל google.com) ל<b>מפתח ציבורי</b>, וחתום ע״י <b>CA</b> (Certificate Authority). היא מכילה: שם ה-subject, המפתח הציבורי, תאריכי תוקף, שם ה-CA וחתימתו. <span class="w">לעולם לא</span> מכילה מפתח פרטי.</p>
+    <p><b>chain of trust:</b> הדפדפן מכיר מראש קומץ <b>Root CAs</b>. Root חותם על המפתח הציבורי של <b>Intermediate CA</b>, וזה חותם על תעודת השרת. הדפדפן עוקב אחר השרשרת עד לשורש שהוא סומך עליו. שים לב: כל חוליה חותמת על ה<b>מפתח הציבורי</b> של החוליה שמתחתיה.</p>
+    <p><b>ה-handshake (בקצרה):</b></p>
+    <ul>
+      <li><b>ClientHello</b> — הלקוח פותח, מציע cipher suites.</li>
+      <li><b>ServerHello + Certificate</b> — השרת בוחר cipher ושולח את התעודה שלו. כאן הלקוח <b>מיד בודק</b>: שרשרת אמון תקינה, ה-subject תואם לדומיין שביקש, והתוקף לא פג.</li>
+      <li><b>ClientKeyExchange</b> — הלקוח יוצר <b>pre-master secret</b>, מצפין אותו עם ה<b>מפתח הציבורי של השרת</b> (מהתעודה) ושולח. רק השרת יכול לפענח. משני הצדדים נגזרים מפתחות סימטריים.</li>
+      <li><b>Finished</b> (משני הצדדים) — כל צד שולח הצפנה+MAC על ה-<b>hash של כל הודעות ה-handshake עד כה</b>. זה מאמת שאף הודעה קודמת לא שובשה.</li>
+    </ul>
+    <p><b>איפה MitM מתגלה — שתי הנקודות הקריטיות:</b></p>
+    <ul>
+      <li>אם התוקף <b>מחליף את התעודה</b> בתעודה תקינה של דומיין <b>אחר</b> → מתגלה <b>מיד עם ServerHello</b>, כי ה-subject לא תואם לדומיין שהלקוח ביקש.</li>
+      <li>אם התוקף <b>משנה תו ב-ClientHello</b> (הודעה שאינה מאומתת בזמן אמת) → מתגלה רק ב-<b>Finished</b>, כי ה-MAC על ה-hash המצטבר של ה-handshake כבר לא יסתדר.</li>
+    </ul>
+    <p><b>גניבת המפתח הפרטי של שרת</b> מאפשרת לתוקף להתחזות לשרת ולפענח תעבורה ישנה (ב-RSA), אבל <b>לא</b> נותנת את מפתח ה-CA — ולכן הוא לא יכול לחתום על CRL או להנפיק תעודות.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li>תעודה = שם + מפתח <b>ציבורי</b> + חתימת CA. <span class="no">אף פעם מפתח פרטי.</span></li>
+      <li>chain: Root חותם על ה-public key של Intermediate; CA חותם על ה-public key של השרת.</li>
+      <li>pre-master secret מוצפן עם <b>המפתח הציבורי של השרת</b>.</li>
+      <li>MitM שמחליף תעודה (domain אחר) → מתגלה ב-<b>ServerHello</b>. MitM שמשנה ClientHello → מתגלה ב-<b>ClientFinish</b>.</li>
+      <li>גניבת מפתח שרת → התחזות + פענוח תעבורה ישנה, אבל <span class="no">לא</span> חתימה על CRL של ה-CA.</li>
+    </ul>`,
+  questions:[
+    {src:"30/11/2025 · ש׳2", q:"ב-TLS, נתון כי תוקף Man in the middle החליף את תעודת השרת שנשלחה אל הלקוח בתעודה חוקית, אך של אתר אחר (כלומר עם דומיין שונה מהדומיין של השרת), וצירף chain of trust תקין. מה השלב המוקדם ביותר שזה יתגלה?",
+     correct:"מיד לאחר ש-ServerHello הגיע ללקוח",
+     opts:["מיד לאחר ש-ClientHello הגיע לשרת","מיד לאחר ש-ClientFinish הגיע לשרת","מיד לאחר ש-ClientKeyExchange הגיע לשרת"],
+     ex:"התעודה מגיעה עם ה-ServerHello. הלקוח מיד בודק שה-subject תואם לדומיין — וכאן רואה domain שונה.",
+     deeper:"התעודה מגיעה ללקוח בשלב ServerHello (השרת שולח את התעודה שלו). ברגע שהיא מגיעה, הלקוח מבצע שלוש בדיקות: (1) שרשרת אמון תקינה — <b>כאן זה עובר</b>, כי התעודה חוקית; (2) ה-subject תואם לדומיין המבוקש — <b>כאן זה נכשל</b>, כי זה domain אחר; (3) תוקף לא פג. מכיוון שהתעודה חוקית לגמרי (רק של אתר לא נכון), הבדיקה של התאמת הדומיין היא זו שתופסת אותה — וזה קורה מיד עם ServerHello. הטעות היא לחשוב שזה יתגלה מאוחר יותר; למעשה, זו הבדיקה הכי מוקדמת."},
+    {src:"02/11/2025 · ש׳2", q:"ב-TLS, נתון כי תוקף Man in the middle החליף תו בהודעת ה-ClientHello שהלקוח שלח לשרת. מה השלב המוקדם ביותר שזה יתגלה?",
+     correct:"מיד לאחר ש-ClientFinish הגיע לשרת",
+     opts:["מיד לאחר ש-ClientHello הגיע לשרת","מיד לאחר ש-ServerHello הגיע ללקוח","מיד לאחר ש-ClientKeyExchange הגיע לשרת"],
+     ex:"ClientHello עצמו לא מאומת בזמן קבלתו. הודעת Finished מכילה MAC על כל ה-handshake — שם מתגלה השינוי.",
+     deeper:"נקודה עדינה: ClientHello נשלח <b>בתחילת</b> ה-handshake, לפני שיש מפתחות או MAC — אז בזמן קבלתו אין דרך לאמת אותו, והשינוי עובר בשקט. אבל הודעת ה-<b>Finished</b> (בסוף) מכילה MAC על ה-<b>hash של כל הודעות ה-handshake, כולל ClientHello המקורי</b>. הלקוח מחשב את ה-hash לפי מה ש<b>הוא</b> שלח; השרת מחשב לפי מה ש<b>הוא</b> קיבל (המשובש). ה-hashים לא יתאימו → ה-MAC ב-ClientFinish ייכשל → שם זה מתגלה. זה בדיוק ההפך מהשאלה הקודמת: שם התוכן (תעודה) נבדק מיד; כאן שלמות ההודעות נבדקת רק בסוף."},
+    {src:"דוגמה 1 · ש׳9", q:"בפרוטוקול TLS, ה-pre master secret מוצפן באמצעות?",
+     correct:"המפתח הציבורי של השרת", opts:["המפתח הסימטרי של ה-CA","המפתח הציבורי של הלקוח","המפתח הפרטי של הלקוח"],
+     ex:"הלקוח מצפין את ה-pre-master secret עם המפתח הציבורי של השרת (מהתעודה), כך שרק השרת יכול לפענח.",
+     deeper:"הלקוח יוצר את ה-pre-master secret ורוצה שרק השרת יקבל אותו. לכן הוא מצפין אותו עם ה<b>מפתח הציבורי של השרת</b> — שהגיע בתעודה. בזכות הצפנה א-סימטרית, רק מי שיש לו את המפתח הפרטי של השרת (=השרת) יכול לפענח. מכאן שני הצדדים גוזרים את המפתחות הסימטריים. הטעות ״המפתח הפרטי של הלקוח״: RSA-encryption לא משתמש במפתח הפרטי של השולח; ו״הציבורי של הלקוח״ היה מאפשר לכל אחד לפענח. זה גם ממחיש למה גניבת המפתח הפרטי של השרת מאפשרת לפענח תעבורה ישנה שהוקלטה."},
+    {src:"21/07/2025 · ש׳5", q:"איזה מבין הטענות הבאות אינה נכונה בהקשר של TLS?",
+     correct:"ב-ClientHello השרת מעביר ללקוח את ה-cipher suite שהוא רוצה שהשרת והלקוח ישתמשו בו",
+     opts:["ב-TLS handshake השרת שולח ללקוח את תעודת השרת, אשר מכילה את מפתח ההצפנה הציבורי של השרת","השרת מעביר ללקוח את התעודה של השרת, והלקוח צריך לוודא את התקינות של התעודה, בין השאר, לוודא שה-subject שכתוב בתעודה (שעבורו הונפקה התעודה) הוא אכן השרת שהלקוח רוצה להקים איתו חיבור TLS","השרת מעביר ללקוח את התעודה של השרת, והלקוח צריך לוודא את התקינות של התעודה, בין השאר, לוודא שתוקף התעודה לא פג"],
+     ex:"ClientHello נשלח ע״י הלקוח, לא ע״י השרת.",
+     deeper:"טעות בשמות ההודעות: <b>Client</b>Hello נשלח ע״י ה<b>לקוח</b> (זה בשם!), לא ע״י השרת. הלקוח הוא זה שפותח את ה-handshake ומציע רשימת cipher suites; השרת <b>בוחר</b> אחד ומודיע ב-ServerHello. שאר הסעיפים נכונים ומתארים את בדיקות הלקוח על התעודה (מפתח ציבורי, התאמת subject, תוקף). טיפ: בכל שאלת ״איזו אינה נכונה״ על TLS, חפש היפוך תפקידים בין client ל-server — זו המלכודת הכי נפוצה."},
+    {src:"21/07/2025 · ש׳8", q:"תוקף הצליח לגנוב את המפתח הפרטי של שרת אינטרנט מסוים. לקוחות מתקשרים מול שרת האינטרנט הזה בעזרת חיבורי TLS מבוססי RSA. שרת האינטרנט לא יודע שהמפתח הפרטי נגנב והתעודה הנוכחית שהונפקה עבורו היא התעודה היחידה שאי פעם היה לו. איזה מבין הטענות הבאות אינה נכונה?",
+     correct:"התוקף יכול לחתום על ה-CRL של ה-CA שהנפיק את התעודה של שרת האינטרנט, ולקבוע איזה תעודות יכללו ב-CRL הזה",
+     opts:["אם לתוקף יש יכולת Man in the Middle כאשר לקוח מקים חיבור TLS מול שרת האינטרנט הנ\"ל, התוקף יכול כעת להשלים חיבור מול הלקוח תוך התחזות אל שרת האינטרנט והלקוח יחשוב שהוא הקים חיבור TLS עם שרת האינטרנט האמיתי כשבפועל החיבור הוקם מול התוקף","אם לתוקף יש עותק של תעבורת https ישנה של השרת אינטרנט הנ\"ל מול לקוחות, התוקף יכול כעת לפענח את התעבורה הזו ולראות את ה-plaintext שנשלח בה","התוקף יכול לחתום על מידע כלשהו בשם שרת האינטרנט, כך שהמידע יראה ככזה שבאמת נחתם על ידי שרת האינטרנט"],
+     ex:"גניבת המפתח של השרת לא נותנת את המפתח של ה-CA. חתימה על CRL דורשת את מפתח ה-CA.",
+     deeper:"קריטי להבחין בין <b>מפתח השרת</b> ל<b>מפתח ה-CA</b> — הם שונים לגמרי. עם המפתח הפרטי של השרת, התוקף יכול: להתחזות לשרת (הוא יכול לפענח את ה-pre-master secret), לפענח תעבורת https ישנה שהוקלטה (ב-RSA classic אין forward secrecy), ולחתום בשם השרת. מה שהוא <b>לא</b> יכול: לגעת ב-CRL, שהיא רשימת התעודות המבוטלות של ה-CA — היא חתומה במפתח ה-<b>CA</b>, שהתוקף לא גנב. חתימה על CRL = סמכות של ה-CA בלבד. זה מדגיש שהיררכיית האמון מפרידה בין רמות הרשאה."},
+    {src:"20/10/2024 · ש׳4", q:"איזו מבין הטענות הבאות נכונה?",
+     correct:"שרת Root CA חותם על המפתח הפומבי של intermediate CA",
+     opts:["ב-TLS, לא משתמשים ב-chain of trust","לקוח הגולש לשרת foo.com מוודא את תקינות התעודה שקיבל מהשרת ע\"י וידוא שהתעודה נחתמה באופן קריפטוגרפי חוקי ע\"י foo.com","שרת אינטרנט ניגש ל-Root CA ומבקש ממנו לחתום על המפתח הפרטי של שרת האינטרנט"],
+     ex:"chain of trust: Root חותם על ה-public key של Intermediate. ה-CA חותם על המפתח הציבורי של השרת.",
+     deeper:"שני עקרונות בתשובה הנכונה: (1) יש chain of trust, ו-(2) כל חוליה חותמת על ה<b>מפתח הציבורי</b> של החוליה שמתחתיה — Root על Intermediate, Intermediate על השרת. הטעויות: ״לא משתמשים ב-chain of trust״ — שגוי, זה הלב של PKI. ״נחתמה ע״י foo.com עצמו״ — תעודה שחותמת על עצמה (self-signed) לא נותנת אמון; צריך CA חיצוני. ״Root חותם על המפתח ה<b>פרטי</b>״ — שגוי פעמיים: חותמים על הציבורי, ואף אחד לא חושף מפתח פרטי ל-CA. הכלל: תמיד חותמים על מפתח <b>ציבורי</b>."},
+    {src:"31/05/2024 · ש׳7", q:"איזה טענה נכונה?",
+     correct:"בהודעת ה-client finish הלקוח שולח לשרת את תוצאת הפעלת הצפנה ו-MAC על ה-hash של ההודעות שנשלחו עד כה ב-handshake והשרת מפענח ומוודא תקינות עם אותם מפתחות שהקליינט השתמש בהם כדי להצפין ולבצע MAC",
+     opts:["בהודעת ה-server finish השרת שולח ללקוח את תוצאת הפעלת הצפנה ו-MAC על ה-hash של ההודעות שנשלחו עד כה ב-handshake והלקוח מפענח ומוודא תקינות עם ה-public key מהתעודה","לאחר הקמת חיבור ה-TLS, ההודעות שהלקוח שולח לשרת לאורך החיבור מוצפנות בעזרת מפתח X (מסויים), והשרת מפענח אותן בעזרת מפתח Y (ששונה מ-X)","לאחר הקמת חיבור ה-TLS, ההודעות שהלקוח שולח לשרת לאורך החיבור מוצפנות בעזרת ה-public key של השרת בהצפנה א-סימטרית"],
+     ex:"הודעת Finished = הצפנה+MAC על ה-hash המצטבר של ההודעות. שני הצדדים משתמשים באותו מפתח סימטרי שנגזר.",
+     deeper:"הודעת Finished היא ״חותמת האימות״ של כל ה-handshake: הצפנה+MAC על ה-<b>hash של כל ההודעות שהוחלפו</b>. אם מישהו שיבש הודעה כלשהי בדרך, ה-hash לא יתאים וה-MAC ייכשל. הטעויות: ״public key מהתעודה״ — אחרי ה-handshake עוברים ל<b>הצפנה סימטרית</b> (המפתח שנגזר מה-pre-master secret), לא לפענוח א-סימטרי. ״מפתח X שונה מ-Y״ — בהצפנה סימטרית שני הצדדים משתמשים ב<b>אותו</b> מפתח. ״מוצפנות עם המפתח הציבורי של השרת״ — אסימטרי איטי מדי לתעבורה; משתמשים בו רק להעברת ה-secret הראשוני, ואז עוברים לסימטרי."},
+  ]
+},
+
+/* ========== 8. Certificate Transparency, OCSP, CRL ========== */
+{
+  rank:"8", phase:"נבנה על היסודות", he:"שקיפות וביטול תעודות — CT · OCSP · CRL",
+  en:"Certificate Transparency · Revocation",
+  freq:"11 מבחנים", freqNote:"הכי נפוץ! כמעט בכל מבחן",
+  analogy:"נניח שיש דרכונים (תעודות). שתי בעיות: (1) איך יודעים שלא הונפק דרכון מזויף בשמך? <b>CT</b> = פנקס ציבורי שכל דרכון חייב להירשם בו, כך שאפשר לתפוס זיופים. (2) מה קורה אם דרכון נגנב וצריך לבטל אותו? <b>CRL/OCSP</b> = רשימות ה״דרכונים המבוטלים״ שכל שוער בודק מולן.",
+  intro:`
+    <p>תעודות פותרות ״למי שייך המפתח״, אבל נשארות שתי בעיות בעולם האמיתי: <b>תעודות מזויפות</b> (CA שנפרץ מנפיק תעודה כוזבת), ו<b>תעודות שצריך לבטל</b> (מפתח פרטי נגנב). לכל אחת יש מנגנון — ואל תבלבל ביניהם, זו המלכודת המרכזית.</p>
+    <p><b>Certificate Transparency (CT) — שקיפות:</b></p>
+    <ul>
+      <li>המטרה: לאתר תעודות <b>מזויפות</b> ע״י חשיפה ציבורית. כל CA חייב לרשום כל תעודה שהוא מנפיק ב<b>לוג ציבורי</b> (public log).</li>
+      <li><b>שלושת התפקידים:</b> <b>Loggers (לוגרים)</b> — מתחזקים את הלוג הציבורי של התעודות שה-CAים הנפיקו. <b>Monitors (מוניטורים)</b> — <b>מנטרים את הלוגרים</b> ומחפשים תעודות חשודות. <b>CAים</b> — <b>רושמים את התעודות אצל הלוגרים</b>.</li>
+      <li>הזרימה: <b>CA → רושם ב-Logger → Monitor מנטר את ה-Logger</b>. (מלכודת נפוצה: להפוך את הכיוונים.)</li>
+      <li><b>SCT (Signed Certificate Timestamp):</b> ״קבלה״ חתומה מהלוג שמוכיחה שהתעודה נרשמה. הדפדפן <b>אוכף CT</b> ע״י דרישה שלתעודה יהיו כמה SCTs חתומים ע״י לוגים שהוא סומך עליהם.</li>
+      <li><span class="w">מלכודת קבועה:</span> SCT <b>אינו</b> פותר בעיית פרטיות — הוא שייך ל-CT (איתור זיופים). בעיית הפרטיות שייכת ל-OCSP.</li>
+    </ul>
+    <p><b>ביטול תעודות (Revocation):</b></p>
+    <ul>
+      <li><b>CRL (Certificate Revocation List):</b> רשימה חתומה ע״י ה-CA של כל התעודות שבוטלו. הדפדפן מוריד ובודק מולה.</li>
+      <li><b>OCSP:</b> במקום להוריד רשימה שלמה, הדפדפן שואל שרת בזמן אמת ״האם התעודה הזו בוטלה?״. <span class="w">בעיית פרטיות:</span> שרת ה-OCSP רואה אילו אתרים אתה מבקר.</li>
+      <li><b>OCSP Stapling:</b> פותר את בעיית הפרטיות — ה<b>שרת</b> עצמו מביא מראש תשובת OCSP חתומה ו״מדביק״ אותה ללקוח. הלקוח לא פונה ל-CA כלל, אז אף אחד לא עוקב אחריו.</li>
+      <li><b>Soft fail:</b> אם בדיקת הביטול נכשלת (השרת לא זמין) הדפדפן ממשיך בכל זאת — זו <b>חולשה</b>, לא הגנה. תוקף שחוסם את בדיקת הביטול מנצל את זה.</li>
+    </ul>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li><span class="k">CT</span> = איתור תעודות מזויפות. <b>CA → Logger</b> (רושם), <b>Monitor</b> מנטר לוגרים. <b>SCT</b> = הוכחת רישום.</li>
+      <li><span class="no">SCT ≠ פרטיות!</span> בעיית הפרטיות שייכת ל-OCSP; פותר אותה = <b>OCSP Stapling</b>.</li>
+      <li><span class="k">CRL/OCSP/CRLsets</span> = מנגנוני <b>ביטול</b>. <span class="no">Soft fail</span> = ממשיך למרות כישלון בדיקה (חולשה, לא הגנה).</li>
+      <li>הלוגים חייבים להיות <b>גלויים לציבור</b> — אחרת אין דרך לזהות זיופים.</li>
+    </ul>`,
+  questions:[
+    {src:"30/11/2025 · ש׳7", q:"איזה טענה אינה נכונה?",
+     correct:"מנגנון Signed Certificate Timestamp (SCT) נועד לפתור בעיית פרטיות הקיימת במנגנון ה-OCSP",
+     opts:["מנגנון CT ומנגנון CRL פותרים בעיות שונות","מנגנון CT ומנגנון OCSP פותרים בעיות שונות","מנגנון CT בא לידי ביטוי בתעודות על ידי ערכי ה-SCT"],
+     ex:"SCT הוא חלק מ-CT ומטרתו לאמת רישום בלוג — לא קשור לפרטיות. בעיית הפרטיות שייכת ל-OCSP, ופותר אותה הוא OCSP Stapling.",
+     deeper:"המלכודת המרכזית של כל הנושא. <b>SCT</b> שייך ל-<b>CT</b> ותפקידו להוכיח שתעודה נרשמה בלוג ציבורי (איתור זיופים). <b>בעיית הפרטיות</b> — ששרת OCSP רואה אילו אתרים אתה מבקר — שייכת ל-<b>OCSP</b>, והפתרון שלה הוא <b>OCSP Stapling</b>, לא SCT. הטענות האחרות נכונות: CT (זיופים) ו-CRL (ביטול) הם אכן בעיות שונות; CT ו-OCSP גם; ו-SCT אכן מופיע בתוך התעודות. אם תזכור את המשפט ״SCT=שקיפות, Stapling=פרטיות״, פתרת חצי מהשאלות בנושא."},
+    {src:"02/11/2025 · ש׳7", q:"כיצד דפדפנים אוכפים את השימוש ב-Certificate Transparency (CT)?",
+     correct:"הדפדפן דורש שלתעודה תקינה יהיה מספר SCTs שנחתמו על ידי לוגרים שהדפדפן סומך עליהם",
+     opts:["הדפדפן בודק את התעודה מול ה-CRL של ה-CA שהנפיק את התעודה","הדפדפן דורש שהתעודה תוצפן בעזרת המפתח הסימטרי של הלוגרים","הדפדפן בודק האם המוניטורים הצפינו את התעודה ואחסנו את תוצאת ההצפנה אצל הלוגרים"],
+     ex:"אכיפת CT = הדפדפן מוודא שקיימים SCTs (הוכחות רישום בלוג) חתומים ע״י לוגים מהימנים.",
+     deeper:"אכיפת CT עובדת כך: הדפדפן מסרב לתעודה שאין לה מספיק <b>SCTs</b> — קבלות חתומות שמוכיחות שהתעודה נרשמה בלוגים ציבוריים שהדפדפן סומך עליהם. ככה, כל תעודה (גם מזויפת) חייבת ״להשאיר עקבות״ בלוג ציבורי, ומוניטורים יכולים לתפוס אותה. הטעות ״מול CRL״ מערבבת נושאים: CRL הוא <b>ביטול</b>, לא שקיפות. ״הצפנה עם מפתח סימטרי של לוגים״ חסר משמעות — SCT הוא חתימה, לא הצפנה. שוב חוזרת ההבחנה CT↔זיופים מול revocation↔ביטול."},
+    {src:"17/09/2024 · ש׳1", q:"איזו מהטענות הבאות נכונה בהקשר של Certificate Transparency (CT)?",
+     correct:"CT מחייב את ה-CAים לרשום כל תעודה דיגיטלית אצל Logger, כך שניתן יהיה לזהות ולחקור תעודות לא תקינות (תעודות שהן Fraudulent)",
+     opts:["CT מחייב את ה-CAים לרשום כל תעודה דיגיטלית אצל Monitor, כך שניתן יהיה לזהות ולחקור תעודות לא תקינות (תעודות שהן Fraudulent)","CT מחייב את ה-Loggerים לרשום כל תעודה דיגיטלית אצל Monitor, כך שניתן יהיה לזהות ולחקור תעודות לא תקינות (תעודות שהן Fraudulent)","CT מחייב את ה-Monitorים לרשום כל תעודה דיגיטלית אצל ה-CAים, כך שניתן יהיה לזהות ולחקור תעודות לא תקינות (תעודות שהן Fraudulent)"],
+     ex:"הזרימה: CA רושם תעודה אצל Logger. Monitors רק מנטרים את הלוגים — לא רושמים אליהם.",
+     deeper:"זכור את שלושת התפקידים ואת כיווני החצים: <b>CA</b> רושם תעודות אצל <b>Logger</b>. ה-<b>Logger</b> מתחזק את הלוג הציבורי. ה-<b>Monitor</b> מנטר את הלוגרים כדי לתפוס תעודות חשודות. כל הטעויות בשאלה מחליפות את היעד או הכיוון: ״CA→Monitor״ (לא, CA רושם אצל Logger), ״Logger→Monitor״, ״Monitor→CA״. טיפ ויזואלי: חשוב על שרשרת <b>CA → Logger ← Monitor</b>: ה-CA דוחף פנימה ללוג, המוניטור מסתכל על הלוג מבחוץ."},
+    {src:"דוגמה 2 · ש׳10", q:"איזו מהטענות נכונה (CT)?",
+     correct:"ב-CT, המוניטורים מנטרים את הלוגרים, והלוגרים מתחזקים לוג של תעודות שהונפקו ע״י ה-CAים",
+     opts:["המוניטורים מנטרים את ה-CAים, והלוגרים מנטרים את המוניטורים","המוניטורים מנטרים את הלוגרים, והלוגרים מתחזקים לוג של המוניטורים","הלוגרים מתחזקים לוג של תעודות, והמוניטורים מנטרים את ה-CAים"],
+     ex:"Loggers = מתחזקים את הלוג הציבורי של תעודות. Monitors = מנטרים את הלוגרים.",
+     deeper:"אותה מפה, ניסוח אחר. שני החלקים הנכונים: (1) <b>מוניטורים מנטרים לוגרים</b>, (2) <b>לוגרים מתחזקים לוג של תעודות</b> (שה-CAים הנפיקו). כל טעות מחליפה אחד מהחלקים: ״לוגרים מתחזקים לוג של מוניטורים״ (לא — של תעודות), ״מוניטורים מנטרים CAים״ (לא — מנטרים לוגרים). שים לב שהקורס אוהב לתת את אותה עובדה בכמה ניסוחים; אם קיבעת את המשולש CA/Logger/Monitor, כל הווריאציות קלות."},
+    {src:"24/11/2024 · ש׳4", q:"איזו מהטענות הבאות על Certificate Transparency היא לא נכונה?",
+     correct:"CA חייב להשתמש ב-CT logs כדי לרשום את כל התעודות שהוא מנפיק, אך לא כל רשומה ב-log חייבת להיות גלויה לציבור",
+     opts:["Certificate Transparency מבוססת על שימוש ב-public logs כדי לאפשר מעקב אחרי תעודות שניתנו על ידי CAים, ובכך לזהות בהקדם תעודות לא מורשות או מזויפות","Certificate Transparency מאפשרת לבצע קריאות לשירותי CT logs כדי לבדוק אם תעודה נרשמה בלוגים פומביים","Certificate Transparency כוללת את השימוש ב-SCT (Signed Certificate Timestamp), והדפדפן בודק את תקינות ה-SCT לפני שמאשר שימוש בתעודה"],
+     ex:"כל הרעיון של CT הוא שהלוגים גלויים לציבור — אחרת אי אפשר לזהות תעודות מזויפות.",
+     deeper:"הטענה השגויה סותרת את עצם מהות CT: ״לא כל רשומה חייבת להיות גלויה לציבור״. אבל <b>public logs</b> = גלויים לציבור זו כל הנקודה — רק שקיפות מלאה מאפשרת למוניטורים (ולבעלי דומיינים) לתפוס תעודות מזויפות שהונפקו בשמם. אם רשומות היו נסתרות, זייפן יכול היה להסתיר את התעודה הכוזבת שלו. שאר הסעיפים מתארים נכונה: לוגים ציבוריים, אפשרות שאילתה, ובדיקת SCT ע״י הדפדפן. הכלל: כל דבר ש״מסתיר״ מידע ב-CT הוא כמעט תמיד הטעות."},
+    {src:"21/07/2025 · ש׳6", q:"מה תפקידו של מנגנון OCSP stapling?",
+     correct:"לאפשר לשרת אינטרנט לשלוח ללקוח את הסטטוס המעודכן של התעודה של השרת (אם בוטלה או לא), בלי שהלקוח יצטרך לפנות בעצמו לשרת ה-OCSP",
+     opts:["לאחסן רשימה של כל התעודות שה-CA ביטל","לייתר את הצורך לבדוק את ה-chain of trust","מדובר במנגנון challenge הנועד לוודא ששרת אינטרנט שפנה ל-CA בטענה לבעלים של דומיין מסויים הוא אכן הבעלים של הדומיין הזה"],
+     ex:"Stapling = השרת ״מדביק״ את תשובת ה-OCSP החתומה ומצרף אותה ללקוח, חוסך פנייה נפרדת.",
+     deeper:"ב-OCSP רגיל הלקוח פונה ישירות לשרת ה-OCSP לשאול אם התעודה בוטלה — מה שמדליף לשרת ה-OCSP אילו אתרים הוא מבקר (בעיית פרטיות), וגם מוסיף השהיה. <b>OCSP Stapling</b> הופך את זה: ה<b>שרת</b> (של האתר) מביא מראש תשובת OCSP חתומה מה-CA, ו״מדביק״ (staples) אותה בתוך ה-handshake. הלקוח מקבל את הסטטוס בלי לפנות לאף אחד — פרטיות נשמרת. הטעות ״לאחסן רשימת תעודות מבוטלות״ מתארת CRL, לא Stapling. ״לייתר chain of trust״ — לא קשור. שוב: Stapling פותר <b>פרטיות</b>."},
+    {src:"20/10/2024 · ש׳3", q:"אליס גלשה לאתר של בוב ב-HTTPS, ונתון תוקף Man in the Middle נמצא בין אליס לאתר. נתון שהתוקף השיג את המפתחות הפרטיים של בוב המשמשים את בוב לתקשורת HTTPS ושבוב גילה שהמפתחות שלו הגיעו לידיו של התוקף. איזה מהסעיפים הבאים לא יסייעו לעצירת התקפות אפשריות של התוקף?",
+     correct:"Soft fail", opts:["Certificate Revocation List (CRL)","Online certificate status protocol (OCSP)","CRLsets"],
+     ex:"CRL, OCSP ו-CRLsets כולם מנגנוני ביטול. Soft fail הוא ההיפך — אם בדיקת הביטול נכשלת, הדפדפן ממשיך.",
+     deeper:"אם המפתח של שרת נגנב, הדרך לעצור את התוקף היא ל<b>בטל</b> את התעודה — כדי שלקוחות ידעו לא לסמוך עליה יותר. שלושה מנגנוני ביטול: <b>CRL</b> (רשימה), <b>OCSP</b> (שאילתה בזמן אמת), ו-<b>CRLsets</b> (רשימת ביטול מקוצרת של הדפדפן). לעומתם, <b>Soft fail</b> הוא לא מנגנון ביטול אלא <b>מדיניות כישלון</b>: אם בדיקת הביטול לא זמינה, המשך בכל זאת. זה דווקא <b>עוזר לתוקף</b> — הוא יכול לחסום את בדיקת הביטול, והדפדפן ״ייכנע״ וימשיך. לכן Soft fail היא התשובה: היא לא מסייעת לעצור, אלא להיפך."},
+    {src:"17/09/2024 · ש׳4", q:"איזו מהטענות הבאות אינה נכונה?",
+     correct:"אם CA הנפיק תעודה עבור שרת אינטרנט כלשהו (לא מדובר על שרת האינטרנט של הארגון שאליו שייך ה-CA), ה-CA הזה יכול לפענח תעבורת TLS בין שרת האינטרנט והלקוחות של שרת האינטרנט",
+     opts:["בהינתן MAC של הודעה שחושב על ידי בוב, אליס אינה יכולה להוכיח לאחרים על בסיס MAC זה שההודעה נשלחה בהכרח על ידי בוב","תוקף מעוניין לגנוב cookie של סטודנטים באתר colman.ac.il. לשם כך הוא בונה אתר שלו בכתובת evil.co.il ושם סקריפט בעמוד הראשי של evil.co.il שניגש ל-cookie של הלקוח באתר colman.ac.il ושולח את ה-cookie לתוקף. התקפה זו תיחסם על ידי הדפדפן","מתקפת XSS עשויה להיות תולדה של מתקפת SQL injection"],
+     ex:"CA חותם על התעודה אבל לא מחזיק את המפתח הפרטי של השרת — ולכן לא יכול לפענח את תעבורת ה-TLS שלו.",
+     deeper:"מלכודת על גבולות היכולת של CA. ה-CA <b>חותם</b> על תעודת השרת (מאמת את הקשר שם↔מפתח ציבורי), אבל <b>לעולם לא רואה את המפתח הפרטי של השרת</b> — השרת מייצר אותו ושומר אצלו. בלי המפתח הפרטי, ה-CA לא יכול לפענח את תעבורת ה-TLS. שאר הסעיפים נכונים: MAC לא נותן אי-הכחשה (בוב יכול להתכחש — מפתח משותף); ניסיון גישה חוצה-מקור ל-cookie מאתר אחר נחסם ע״י מדיניות same-origin של הדפדפן; ו-XSS יכולה אכן לנבוע מ-SQL injection (הזרקה למסד שמוגשת אח״כ כ-script). זכור: CA = רשות חתימה, לא מחזיק סודות של אחרים."},
+    {src:"08/08/2023 · ש׳5", q:"איזה מידע <b>אסור</b> שיופיע בתעודה?",
+     correct:"מפתח פרטי", opts:["התאריך שממנו התעודה בתוקף","החתימה הדיגיטלית של ה-CA שחתם על התעודה","שם ה-CA שחתם על התעודה"],
+     ex:"תעודה היא ציבורית ומכילה את המפתח הציבורי. מפתח פרטי לעולם אינו נכלל בה.",
+     deeper:"תעודה היא מסמך <b>ציבורי</b> שכל אחד יכול לקבל בזמן ה-handshake. לכן היא מכילה רק מידע שמותר לחשוף: המפתח ה<b>ציבורי</b>, תאריכי תוקף, שם ה-subject, שם ה-CA וחתימתו. ה<b>מפתח הפרטי</b> חייב להישאר סודי אצל בעל התעודה בלבד — אם הוא היה בתעודה, כל העולם היה יכול להתחזות לשרת. זו טעות שקל לתפוס אם זוכרים את העיקרון: ״ציבורי בתעודה, פרטי בכספת״. כל שאר האפשרויות (תאריך, חתימת CA, שם CA) הן חלק לגיטימי וסטנדרטי של כל תעודה."},
+  ]
+},
+/* ========== 9. ביטקוין ========== */
+{
+  rank:"9", phase:"נבנה על היסודות", he:"ביטקוין, בלוקצ׳יין ועץ מרקל",
+  en:"Bitcoin · Blockchain · Merkle Tree",
+  freq:"12 מבחנים", freqNote:"בכל מבחן! מיישם hash, חתימות וקונצנזוס",
+  analogy:"בלוקצ׳יין הוא כמו <b>מחברת חשבונות ציבורית</b> שכולם מחזיקים עותק ממנה, וכל דף חתום ומקושר לדף הקודם. כדי לזייף עמוד אחד צריך לכתוב מחדש את כל העמודים אחריו — מהר יותר מכל שאר העולם ביחד. לכן ״לשנות היסטוריה״ דורש יותר כוח מכל הרשת (התקפת 51%), וזה מה שהופך את זה לבטוח בלי בנק מרכזי.",
+  intro:`
+    <p>ביטקוין מרכיב את כל מה שלמדנו — hash, חתימות דיגיטליות, ומנגנון קונצנזוס — למערכת כסף מבוזרת בלי גורם מרכזי שסומכים עליו.</p>
+    <p><b>בלוקצ׳יין:</b> שרשרת של <b>בלוקים</b>, כשכל בלוק מכיל עסקאות + ה-<b>hash של הבלוק הקודם</b>. הקישור הזה הופך את השרשרת ל״עמידה לשינוי״: לשנות בלוק ישן משנה את ה-hash שלו, מה ששובר את כל הבלוקים אחריו.</p>
+    <p><b>עסקאות וחתימות:</b> כל עסקה חתומה במפתח הפרטי של השולח, ומאומתת עם הציבורי. ביטקוין משתמש ב<b>הצפנה א-סימטרית</b> לזהות בעלות על מטבעות.</p>
+    <p><b>Proof of Work (PoW) — כריית בלוקים:</b></p>
+    <ul>
+      <li>כדי להוסיף בלוק, ה<b>כורה (miner)</b> צריך למצוא <b>hash של הבלוק שמתחיל במספיק אפסים</b>. אין דרך חכמה — רק ניחוש.</li>
+      <li>הכורה משנה שוב ושוב שדה בשם <b>nonce</b> ומחשב hash, עד שיוצא ערך עם מספיק אפסים בהתחלה. זה ה״חיפוש אחר בלוק חדש״.</li>
+      <li>זה יקר חישובית בכוונה — מה שמגן על הרשת מזיוף (צריך המון כוח כדי לשכתב).</li>
+    </ul>
+    <p><b>קונצנזוס — השרשרת הארוכה ביותר:</b> כשיש התנגשות (fork), הרשת <b>תמיד מאמצת את השרשרת הארוכה ביותר</b> (זו עם הכי הרבה עבודה מושקעת). זה מה ש<b>מונע double spending</b>: כדי לבזבז מטבע פעמיים ולזייף היסטוריה, תוקף צריך לבנות שרשרת ארוכה יותר מכל השאר — כלומר להחזיק <b>רוב כוח החישוב (51%)</b>. לא ריאלי.</p>
+    <p><b>עץ מרקל (Merkle Tree):</b> מבנה שבו עלים = עסקאות, וכל צומת = hash של שני ילדיו, עד שורש אחד. יתרונות:</p>
+    <ul>
+      <li>מאפשר <b>הוכחת הכללה יעילה</b> — להוכיח שעסקה בבלוק בלי לשלוח את כל הבלוק (רק <span class="mono">O(log n)</span> hashים בנתיב לשורש).</li>
+      <li>אם משתנה עלה אחד — משתנים <b>רק הצמתים בנתיב מהעלה לשורש</b>, לא כל העץ.</li>
+      <li><span class="w">מלכודת:</span> עץ מרקל <b>אינו</b> מנגנון פרטיות! הבלוקצ׳יין ציבורי לחלוטין. מרקל נותן יעילות ושלמות, לא סודיות.</li>
+    </ul>
+    <p><b>Fork:</b> <b>Hard fork</b> = שינוי כלל ליבה שאינו תואם לאחור (למשל החלפת פונקציית ה-hash) — בלוקים ישנים וחדשים לא מתאימים. <b>Soft fork</b> = שינוי תואם לאחור.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li>Double spending נמנע ע״י <b>קונצנזוס שרשרת ארוכה</b> + עלות כרייה. שכתוב היסטוריה דורש <b>51%</b>.</li>
+      <li>PoW = מחפשים <b>hash עם מספיק אפסים</b>; משנים <b>nonce</b> שוב ושוב. מקבל בלוק רק <span class="no">מאמת</span> — לא חותם עליו.</li>
+      <li>Merkle: שינוי עלה → רק הנתיב לשורש משתנה (O(log n)). <span class="no">לא פרטיות</span> — הכל ציבורי.</li>
+      <li>שינוי פונקציית hash ב-PoW = <b>hard fork</b>. ביטקוין = מפתחות א-סימטריים.</li>
+    </ul>`,
+  questions:[
+    {src:"02/11/2025 · ש׳5", q:"מה בביטקוין מונע Double spending?",
+     correct:"לתוקף אין מספיק משאבים חישוביים כי בביטקוין יש קונצנזוס סביב הבלוקצ׳יין בו מאמצים תמיד את השרשרת הארוכה ביותר, ולכן המתנה של מספיק בלוקים תפתור forkים שיכלו לשמש ל-double spending",
+     opts:["הביטקוין צמוד למשאב יציב (ספציפית, לערכו של הזהב), ולכן לתוקף אין מספיק זהב כדי לגרום שיתבצע double spending גם בביטקוין וגם בזהב","מנגנון ה-escrow transactions בו כל משתמש ביטקוין חייב \"לנעול\" בערבון מספיק ביטקוין מראש כך שאם ייתפס ינכו את הקנס מהערבון","מנגנון ה-escrow transactions בו כל miner חייב \"לנעול\" בערבון מספיק ביטקוין מראש כך שאם ייתפס שה-miner אפשר לתוקף לבצע double spending ינכו את הקנס מהערבון של ה-miner"],
+     ex:"ההגנה על double spending היא הקונצנזוס על השרשרת הארוכה ביותר + עלות הכרייה. ביטקוין לא צמוד לזהב.",
+     deeper:"double spending = לנסות לבזבז אותו מטבע פעמיים (לשלוח אותו לשניים במקביל, ואז לזייף היסטוריה כדי לבטל אחד). ההגנה בנויה משני חלקים: (1) <b>קונצנזוס שרשרת ארוכה</b> — הרשת מקבלת רק את השרשרת עם הכי הרבה עבודה; (2) <b>עלות הכרייה</b> — לבנות שרשרת מתחרה ארוכה יותר דורש רוב כוח החישוב. לכן מחכים ״מספיק בלוקים״ (אישורים) לפני שסומכים על עסקה. הטעויות: ביטקוין <b>לא</b> צמוד לזהב (אין לו גיבוי פיזי), ואין בו מנגנון escrow/ערבונות. זכור: ביטקוין נשען על <b>עבודה</b> ו<b>קונצנזוס</b>, לא על ערבון או נכס."},
+    {src:"08/08/2023 · ש׳7", q:"לאליס יש 1 ביטקוין (X1 בבלוק B1). ביזבזה אותו ב-X2 (B2), ואז טעתה ומשנה את העותק המקומי של הבלוקצ׳יין. איזו טענה נכונה?",
+     correct:"כל עוד הבלוקצ׳יין המעודכן שאליס מציעה אינו ארוך יותר מהמקורי, סיכויי ההצלחה שלה אינם גבוהים",
+     opts:["אליס תמיד תצליח לתקן את הטעות","אליס תלויה בבנקאי שיאשר את הבקשה","כדי שתצליח, עליה לכרות על השרשרת המקומית לפחות 100 בלוקים"],
+     ex:"הרשת מאמצת את השרשרת הארוכה ביותר. כדי לשכתב היסטוריה אליס צריכה שרשרת ארוכה יותר מהמוסכמת — דורש 51%.",
+     deeper:"אליס רוצה ״לבטל״ עסקה שכבר נכנסה לשרשרת — כלומר לשכתב היסטוריה. אבל הרשת מאמצת תמיד את השרשרת ה<b>ארוכה ביותר</b>. כדי שהגרסה שלה תתקבל, היא צריכה להריץ שרשרת ארוכה יותר מהמוסכמת — ובשביל זה לכרות מהר יותר מכל שאר הרשת ביחד (רוב כוח החישוב, 51%). בלי זה, סיכוייה נמוכים. הטעויות: אין ״בנקאי״ בביטקוין (מבוזר); ו-״100 בלוקים״ הוא מספר שרירותי — מה שקובע זה להיות ה<b>ארוך יותר</b>, לא מספר קסם."},
+    {src:"17/09/2024 · ש׳3", q:"איזו מהטענות הבאות אינה נכונה לגבי מנגנון הבלוקצ'יין בביטקוין?",
+     correct:"הבלוקצ'יין משתמש ב-Merkle Tree כדי להבטיח את פרטיות העסקאות, כך שרק המשתתפים הישירים בעסקה יכולים לראות את פרטי העסקה המלאים",
+     opts:["ביטקוין משתמש במנגנון של hash, כדי לחשב את ה-digest של בלוקים בבלוקצ׳יין","ביטקוין משתמש במנגנון של Proof of Work, שבו כורים מתחרים בפתרון חידה קריפטוגרפית מורכבת על מנת להוסיף בלוקים חדשים לשרשרת","ביטקוין מאפשר לכורים לבחור את העסקאות שיופיעו בבלוקים, ולכן, אם כורה רוצה, הוא יכול להרכיב בלוק של עסקאות שנותנות עמלות נמוכות, למרות שיש עסקאות אחרות שהכורה יכל לבחור בהן שנותנות עמלות גבוהות יותר"],
+     ex:"עץ מרקל נותן הוכחת הכללה יעילה — לא קשור לפרטיות. הבלוקצ׳יין ציבורי לחלוטין.",
+     deeper:"המלכודת הקבועה של ביטקוין: לייחס ל-Merkle Tree <b>פרטיות</b>. עץ מרקל נותן <b>יעילות ושלמות</b> — הוכחה קומפקטית שעסקה נכללה בבלוק, ואיתור מהיר של שינויים. אבל הוא <b>לא</b> מסתיר כלום: הבלוקצ׳יין ציבורי, וכל אחד רואה את כל העסקאות. שאר הטענות נכונות: ביטקוין משתמש ב-hash לחישוב digest של בלוקים, ב-PoW (תחרות כרייה), ומאפשר לכורים לבחור עסקאות לפי עמלה. כלל: אם רואים ״Merkle״ + ״פרטיות״ באותו משפט — זו כמעט תמיד הטעות."},
+    {src:"30/11/2025 · ש׳10", q:"נתון עץ מרקל המכיל 1000 עלים. אם נשנה רק עלה אחד בעץ, כמה קודקודים (צמתים) שאינם עלים ישתנו כתוצאה מכך?",
+     correct:"רק הצמתים בנתיב מהעלה שהשתנה ועד לשורש העץ (כולל) ישתנו",
+     opts:["רק הצומת אב (הישירה בלבד) של העלה שהשתנה","כל הצמתים בעץ (שאינם עלים) חוץ מהשורש","כל הצמתים בעץ (שאינם עלים) כולל השורש"],
+     ex:"שינוי עלה מחלחל כלפי מעלה: כל hash-אב על הנתיב לשורש מחושב מחדש. שאר העץ לא מושפע — O(log n).",
+     deeper:"בעץ מרקל, כל צומת = hash של שני ילדיו. אם עלה משתנה, ה-hash של אביו הישיר משתנה (כי אחד הקלטים שלו השתנה), וזה מחלחל כלפי מעלה: אב-האב, וכן הלאה עד השורש. אבל <b>רק לאורך הנתיב</b> — כל שאר הענפים בעץ לא נגעו בהם, כי ה-hashים שלהם לא תלויים בעלה שהשתנה. ל-1000 עלים, גובה העץ הוא ~<span class=mono>log₂(1000)≈10</span>, אז רק ~10 צמתים משתנים, לא מאות. זו בדיוק היעילות של מרקל: עדכון וזיהוי שינוי ב-<span class=mono>O(log n)</span> במקום <span class=mono>O(n)</span>."},
+    {src:"04/07/2024 · ש׳6", q:"מחליטים לשנות את פונקציית ה-hash בתהליך ה-proof of work. איזו טענה נכונה?",
+     correct:"זו דוגמה ל-hard fork", opts:["זו דוגמה ל-hashing fork","זו דוגמה ל-proof of work fork","זו דוגמה ל-soft fork"],
+     ex:"שינוי כלל הליבה (פונקציית ה-hash) אינו תואם לאחור — בלוקים ישנים לא יתקבלו בכללים החדשים. זה hard fork.",
+     deeper:"ההבחנה: <b>soft fork</b> = שינוי כללים <b>תואם לאחור</b> (בלוקים שנוצרו לפי הכללים הישנים עדיין תקפים). <b>hard fork</b> = שינוי <b>לא תואם לאחור</b> — הכללים החדשים והישנים מתנגשים. החלפת פונקציית ה-hash היא שינוי ליבה עמוק: בלוקים שנכרו עם ה-hash הישן לא יעברו את הכללים החדשים ולהיפך, ולכן הרשת מתפצלת לשתי שרשראות — זה hard fork קלאסי. ״hashing fork״ ו-״proof of work fork״ הם מונחים מומצאים (מסיחי דעת). רק soft/hard fork הם אמיתיים."},
+    {src:"דוגמה 1 · ש׳5", q:"היכן ביטקוין משתמש ב-nonce?",
+     correct:"בתהליך החיפוש אחר בלוק חדש (הבלוק הבא שיצטרף לבלוקצ׳יין)",
+     opts:["כאשר miner מצטרף אל הרשת","ב-hard fork","ב-soft fork"],
+     ex:"ה-nonce הוא המספר שה-miner משנה שוב ושוב בחיפוש אחר hash שמתחיל במספיק אפסים — לב ה-proof of work.",
+     deeper:"ה-<b>nonce</b> (״number used once״) הוא שדה בבלוק שהכורה חופשי לשנות. תהליך ה-PoW: הכורה קובע את תוכן הבלוק, ואז מנסה nonce=0, מחשב hash; nonce=1, מחשב hash; וכן הלאה — עד שיוצא hash שמתחיל במספיק אפסים (לפי רמת הקושי הנוכחית). זה ה״חיפוש אחר בלוק חדש״, והוא כל העבודה ב-Proof of Work. הטעויות מנסות לקשר nonce לאירועים אחרים (הצטרפות לרשת, forks) שאין להם קשר. אם רואים ״nonce״ — חשוב מיד ״כרייה / PoW / חיפוש hash״."},
+    {src:"24/11/2024 · ש׳9", q:"מחשב סטנדרטי ברשת ביטקוין שמריץ תוכנת ביטקוין סטנדרטית מקבל בלוק חדש והוסיף אותו לעותק המקומי של הבלוקצ׳יין (בתור הבלוק הבא בתור). איזו מבין הטענות הבאות אינה נכונה?",
+     correct:"המחשב מוסיף חתימה משלו לבלוק",
+     opts:["ה-hash של הבלוק מתחיל עם מספיק אפסים בהתאם לכמות הנדרשת כעת","הבלוק אינו מכיל double spending של טרנזקציה אחרת שקיימת באחד מהבלוקים שקודמים לו בבלוקצ׳יין","הבלוק מכיל טרנזקציה אחת לפחות"],
+     ex:"מחשב שמקבל בלוק רק <b>מאמת</b> אותו — הוא לא חותם עליו. חתימה משלו אינה חלק מהפרוטוקול.",
+     deeper:"כשצומת מקבל בלוק חדש, תפקידו <b>לאמת</b> אותו לפני שהוא מוסיף לעותק שלו — ולא לשנות אותו. הבדיקות שהוא מבצע (וכולן נכונות בשאלה): שה-hash מתחיל במספיק אפסים (ה-PoW תקף), שאין double spending, ושיש לפחות עסקה אחת. מה שהוא <b>לא</b> עושה: להוסיף חתימה משלו — זה בכלל לא חלק מהפרוטוקול, וכל צומת שהיה עושה זאת היה משנה את ה-hash ושובר את הבלוק. עסקאות בודדות חתומות ע״י בעליהן, אבל הבלוק כולו לא ״נחתם״ ע״י כל מי שמאמת אותו."},
+    {src:"20/10/2024 · ש׳1", q:"להלן רשימה של סקריפטים המייצגים ביצוע של טרנזקציה בביטקוין (כל סקריפט כבר מכיל את השילוב של ה-input script עם ה-output script). רק סקריפט אחד הינו חוקי ותקני. סמנו אותו.",
+     correct:"[Signature] [Public Key] DUP HASH160 [Key Hash] EQUALVERIFY CHECKSIG",
+     opts:["[Signature] [Public Key] DUP HASH160 [Key Hash] EQUALVERIFY","[Public Key] [Signature] HASH160 DUP [Key Hash] EQUALVERIFY CHECKSIG","CHECKSIG [Public Key] [Signature] HASH160 DUP [Key Hash] EQUALVERIFY"],
+     ex:"מבנה P2PKH תקני: sig, pubkey, DUP, HASH160, keyhash, EQUALVERIFY, ואז CHECKSIG בסוף לאימות החתימה.",
+     deeper:"זה סקריפט P2PKH (Pay to Public Key Hash), שפת מחסנית של ביטקוין. הסדר התקני: מניחים <code>Signature</code> ו-<code>Public Key</code>, <code>DUP</code> משכפל את המפתח, <code>HASH160</code> עושה עליו hash, משווים ל-<code>Key Hash</code> הצפוי עם <code>EQUALVERIFY</code>, ולבסוף <code>CHECKSIG</code> מאמת שהחתימה תואמת למפתח. הטעויות: אחת חסרה את <code>CHECKSIG</code> בסוף (בלי זה החתימה לא נבדקת!); אחרת הופכת את הסדר ל-HASH160 לפני DUP (אין מה לשכפל); ואחרת מתחילה ב-CHECKSIG (אין עדיין חתימה על המחסנית). המפתח: CHECKSIG תמיד בסוף, ו-DUP לפני HASH160."},
+  ]
+},
+
+/* ========== 10. אבטחת Web ========== */
+{
+  rank:"10", phase:"נושאים עצמאיים", he:"אבטחת Web — XSS · CSRF · SQL Injection",
+  en:"Web Security",
+  freq:"11 מבחנים", freqNote:"נפוץ מאוד · עצמאי מהקריפטו",
+  analogy:"אתר הוא כמו בית עם דלתות. <b>XSS</b> = מישהו מדביק פתק עם הוראות זדוניות שהבית מציג לאורחים אחרים והם מבצעים. <b>CSRF</b> = מישהו מזייף פתק בשמך ומגיש אותו לבנק שלך, כשאתה עדיין מחובר, והבנק מבצע כי הוא ״מזהה״ אותך. <b>SQL Injection</b> = לוחשים לפקיד הבית משפט שמבלבל אותו לפתוח כספת.",
+  intro:`
+    <p>נושא עצמאי לגמרי מהקריפטוגרפיה — התקפות על אפליקציות אינטרנט. שלוש התקפות הליבה + מנגנוני ההגנה:</p>
+    <p><b>XSS (Cross-Site Scripting):</b> תוקף מזריק <b>קוד JavaScript</b> לאתר, שירוץ בדפדפן של קורבנות אחרים (וירש את ההרשאות שלהם). שלושה סוגים:</p>
+    <ul>
+      <li><b>Stored</b> — הקוד נשמר בשרת (למשל בתגובה) ומוגש לכל מבקר.</li>
+      <li><b>Reflected</b> — הקוד ״מוחזר״ מהשרת בתוך התגובה (למשל דרך פרמטר ב-URL).</li>
+      <li><b>DOM-based</b> — החולשה כולה ב-<b>JavaScript שרץ בדפדפן</b> (בצד הלקוח), לא בשרת ולא ב-DB. <span class="w">נקודה שנשאלת:</span> DOM-based XSS רץ ב<b>דפדפן</b>.</li>
+    </ul>
+    <p><b>הגנות מפני XSS:</b> <b>חיטוי (Sanitization)</b> — ניקוי קלט מסוכן. <b>קידוד (Encoding)</b> — הפיכת תווים מסוכנים ל״לא-פעילים״. <b>CSP (Content Security Policy)</b> — האתר מגדיר מאילו כתובות מותר לטעון ולהריץ משאבים (JS), וכך חוסם קוד זר.</p>
+    <p><b>CSRF (Cross-Site Request Forgery):</b> תוקף גורם לדפדפן של הקורבן (שמחובר לאתר) לשלוח בקשה זדונית. הדפדפן <b>מצרף אוטומטית את ה-cookies</b>, אז הבקשה נראית לגיטימית. <span class="w">חשוב:</span> <b>Same Origin Policy לא מונע CSRF</b> — הבקשה יוצאת עם הרשאות הקורבן ונראית תקינה.</p>
+    <p><b>הגנות מפני CSRF:</b></p>
+    <ul>
+      <li><b>SameSite=Strict cookie</b> — הדפדפן לא מצרף את ה-cookie בבקשות שמקורן באתר אחר (חוסם בדיוק את הווקטור).</li>
+      <li><b>Anti-CSRF token</b> — האתר מטמיע token סודי בטופס, שהתוקף לא יכול לנחש. שקוף למשתמש (לא מזין ידנית).</li>
+    </ul>
+    <p><b>SQL Injection:</b> תוקף מזריק קוד SQL דרך שדה קלט, ומשנה את השאילתה. הקלאסי: <code>' or 1=1 --</code> — סוגר את המחרוזת, מוסיף תנאי שתמיד אמת, ומעיר (<code>--</code>) את שאר השאילתה (כולל בדיקת הסיסמה). <b>הגנה:</b> חיטוי/סינון קלט, parameterized queries, ו-WAF (חומת אש אפליקטיבית). <span class="w">שים לב:</span> IDS רק <b>מזהה</b> — לא <b>מונע</b>.</p>
+    <p><b>מנגנוני הגנה נוספים לזכור:</b> <b>x-frame-options</b> מגן מפני <b>clickjacking</b> (לא SQLi). <b>SOP (Same Origin Policy)</b> מבודד אתרים זה מזה, אבל לא מכסה CSRF.</p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li><span class="k">DOM-based XSS</span> רץ ב<b>דפדפן</b> (לא שרת, לא DB). <b>CSP</b> = מגביל מאילו כתובות מריצים JS (הגנת XSS).</li>
+      <li><span class="no">SOP לא מונע CSRF.</span> הגנות CSRF: <b>SameSite=Strict</b>, <b>anti-CSRF token</b> (שקוף למשתמש).</li>
+      <li>SQLi: <code>' or 1=1 --</code>. הגנה: חיטוי/סינון + WAF. <span class="no">IDS מזהה, לא מונע.</span></li>
+      <li><b>x-frame-options</b> = נגד clickjacking (לא SQLi). XSS יכולה לנבוע מ-SQL injection.</li>
+    </ul>`,
+  questions:[
+    {src:"30/11/2025 · ש׳3", q:"מהי הטענה הנכונה?",
+     correct:"מנגנון ה-Same Origin Policy לא מונע התקפות CSRF (כלומר, עדיין ייתכנו התקפות CSRF)",
+     opts:["ב-Dom based XSS הקוד הפגיע (הקוד עם החולשה) מורץ ב-database","ב-Dom based XSS הקוד הפגיע (הקוד עם החולשה) מורץ בשרת","מנגנון ה-Same Origin Policy מונע Reflected XSS אך לא מונע Dom based XSS"],
+     ex:"SOP לא מכסה CSRF — הבקשה יוצאת עם ה-cookies של הקורבן ונראית לגיטימית. DOM-based XSS רץ בדפדפן.",
+     deeper:"שתי עובדות ליבה נבדקות כאן. (1) <b>SOP לא מונע CSRF</b>: SOP מונע מ-script באתר A לקרוא נתונים מאתר B, אבל CSRF לא ״קורא״ כלום — הוא רק <b>שולח</b> בקשה, והדפדפן מצרף את ה-cookies של הקורבן אוטומטית. הבקשה נראית לגיטימית לחלוטין. (2) <b>DOM-based XSS רץ בדפדפן</b> — לא ב-DB ולא בשרת; החולשה היא ב-JavaScript צד-לקוח שמעבד קלט לא בטוח. הטעויות מנסות למקם את DOM-XSS בשרת/DB, או לייחס ל-SOP הגנה מפני XSS מסוים. זכור: SOP≠הגנת CSRF, ו-DOM-XSS=בדפדפן."},
+    {src:"02/11/2025 · ש׳3", q:"מהי הטענה הנכונה?",
+     correct:"ב-Dom based XSS הקוד הפגיע (הקוד עם החולשה) מורץ בדפדפן",
+     opts:["מנגנון ה-Same Origin Policy מונע Dom based XSS אך לא מונע Reflected XSS","ב-Dom based XSS הקוד הפגיע (הקוד עם החולשה) מורץ בשרת","מנגנון ה-Same Origin Policy מונע Reflected XSS אך לא מונע Dom based XSS"],
+     ex:"DOM-based XSS = החולשה בקוד ה-JavaScript שרץ בצד הלקוח (דפדפן).",
+     deeper:"אותה עובדה כמו הקודמת, מנוסחת חיובית: DOM-based XSS = הקוד הפגיע רץ ב<b>דפדפן</b>. ההבדל בין שלושת סוגי ה-XSS הוא <b>איפה</b> החולשה: ב-Stored/Reflected השרת מחזיר קלט לא-מחוטא בתוך ה-HTML; ב-DOM-based השרת בכלל לא מעורב — ה-JavaScript בצד הלקוח לוקח קלט (למשל מה-URL) ומזריק אותו ל-DOM בלי חיטוי. הטעויות תולות את DOM-XSS בשרת, או מייחסות ל-SOP הגנה מפני XSS (SOP מבודד origins, לא חוסם הזרקת סקריפט לאותו origin)."},
+    {src:"24/11/2024 · ש׳1", q:"נתון שרת אשר בונה שאילתא בעזרת המחרוזת הבאה על בסיס ערכי המשתנים InputUsername, InputPassword, אשר נשלחים לשרת מהדפדפן: <code>\"SELECT * FROM users WHERE username = '\" + InputUsername + \"' AND password = '\" + InputPassword + \"'\"</code> אילו ערכים יהוו sql injection תקין? (בכל האופציות הבאות, הפסיק מפריד בין שני המשתנים ואינו חלק מהערך של המשתנה והערך של המשתנה מופיע אחרי הנקודותיים)",
+     correct:"InputUsername: ' or 1=1 --, InputPassword: ' and '1' = '1",
+     opts:["InputUsername: or 1=1, InputPassword: foo\"","InputUsername: and 1=1, InputPassword: ' and \"1\" = \"1","InputUsername: 'Alice', InputPassword: ' or 1 = 1"],
+     ex:"<code>' or 1=1 --</code> סוגר את המחרוזת, מוסיף תנאי שתמיד אמת, ומעיר (--) את שאר השאילתה כולל בדיקת הסיסמה.",
+     deeper:"נראה מה קורה כשמציבים <code>' or 1=1 --</code> ל-username. השאילתה הופכת ל: <code>...username='' or 1=1 --' AND password='...'</code>. פירוק: ה-<code>'</code> הראשון <b>סוגר</b> את מחרוזת ה-username; <code>or 1=1</code> מוסיף תנאי ש<b>תמיד אמת</b> (אז השורה תמיד תחזור); ו-<code>--</code> הופך את כל השאר ל<b>הערה</b> — כולל את בדיקת הסיסמה! התוצאה: התחברות בלי סיסמה נכונה. הטעויות חסרות את ה-<code>'</code> הפותח (אז המחרוזת לא נסגרת והתחביר נשבר) או משתמשות בגרשיים כפולים (SQL משתמש בגרש בודד). המפתח: לסגור מחרוזת, להוסיף תנאי-אמת, ולהעיר את השאר."},
+    {src:"04/07/2024 · ש׳8", q:"איזו מבין הטענות נכונה?",
+     correct:"הגדרת same-site cookie להיות strict מסייעת בהגנה מפני התקפת CSRF",
+     opts:["CSRF בנויה על כך שהדפדפן מצרף XSS לבקשות","ב-DOM-based XSS החולשה בקוד שרץ ב-DB","anti-CSRF token מבקש מהמשתמש להזין ידנית קוד מיוחד לשדה"],
+     ex:"SameSite=Strict מונע מהדפדפן לצרף את ה-cookie בבקשות שמקורן באתר אחר — בדיוק הווקטור של CSRF.",
+     deeper:"<b>SameSite=Strict</b> חוסם CSRF בשורש: התקפת CSRF מסתמכת על כך שהדפדפן מצרף אוטומטית את ה-cookie של הקורבן לבקשה שנשלחת מאתר התוקף. עם SameSite=Strict, הדפדפן <b>לא</b> מצרף את ה-cookie אם הבקשה מקורה באתר אחר — אז הבקשה של התוקף מגיעה בלי הרשאות ונכשלת. הטעויות: CSRF לא ״מצרף XSS״ (מבלבל בין שתי התקפות שונות); DOM-XSS רץ בדפדפן לא ב-DB; ו-anti-CSRF token הוא <b>שקוף למשתמש</b> (מוטמע בטופס אוטומטית) — לא דורש הקלדה ידנית."},
+    {src:"04/07/2024 · ש׳10", q:"תוקף ניצל גרסת דפדפן שאפשרה לטעון ב-iframe את view-source של דפים, הציג לקורבנות אזור HTML וביקש שיזינו וישלחו לו את הטקסט — וכך עקף מנגנון הגנה. באיזה מנגנון מדובר?",
+     correct:"Anti CSRF token", opts:["קידוד (Encoding)","חיטוי (Sanitization)","Certificate Transparency"],
+     ex:"ה-anti-CSRF token היה גלוי ב-view-source. בגרימת הקורבן לחשוף אותו, התוקף השיג token תקף ועקף את הגנת ה-CSRF.",
+     deeper:"שאלת תרחיש. הגנת ה-anti-CSRF token עובדת רק כל עוד התוקף <b>לא יכול לנחש/לקרוא</b> את ה-token הסודי שבטופס. כאן התוקף ניצל באג שאיפשר לו לראות את <b>view-source</b> של הדף (ובו ה-token מופיע), ואז הערים על הקורבן להעתיק ולשלוח לו את התוכן — וכך השיג token תקף. עם token בידיו, הוא יכול לזייף בקשה שתעבור את בדיקת ה-CSRF. לכן המנגנון שנעקף הוא anti-CSRF token. ״קידוד״ ו״חיטוי״ הם הגנות XSS (לא רלוונטי כאן), ו-CT שייך לתעודות."},
+    {src:"24/11/2024 · ש׳10", q:"איזו מבין הטענות הבאות אינה נכונה?",
+     correct:"שימוש ב-x-frame-options מיועד להגנה מפני sql injection",
+     opts:["ב-TLS, משתמשים ב-chain of trust","בקריפטוגרפיה, MAC המיושם נכון מספק אמינות המידע","בעיה גדולה ב-One Time Pad היא העברת המפתחות"],
+     ex:"x-frame-options מגן מפני clickjacking, לא מפני SQL injection.",
+     deeper:"<b>x-frame-options</b> קובע אם מותר להטמיע את האתר בתוך <code>iframe</code> — הגנה מפני <b>clickjacking</b> (תוקף מטעין את האתר שקוף מעל כפתור מזויף). זה לא קשור כלל ל-SQL injection, שמתגוננים מפניו בחיטוי/סינון קלט בצד השרת. שאר הטענות נכונות: TLS אכן משתמש ב-chain of trust; MAC נכון נותן אמינות/שלמות; ו-OTP אכן סובל מבעיית הפצת מפתחות. השאלה בודקת אם אתה מצמיד כל מנגנון להתקפה הנכונה — טעות נפוצה היא ״לזרוק״ מנגנון הגנה ידוע על התקפה לא קשורה."},
+    {src:"31/05/2024 · ש׳9", q:"איזו מבין הטענות הבאות נכונה?",
+     correct:"אתר אינטרנט יכול להשתמש ב-Content Security Policy (CSP) כדי להגדיר מאיזה כתובות מותר לטעון משאבים כמו קבצי JS שירצו באתר האינטרנט על ידי הדפדפן של הלקוח",
+     opts:["ב-PKI, שרת אינטרנט X שקיבל תעודה חתומה מ-CA על ה-public key שלו, חייב ש-ה-CA שנתן לו (ל-X) את התעודה יהיה ב-root store של הלקוחות","ב-TLS, שרת האינטרנט מייצר את התעודה עבור חיבור ה-TLS","על מנת לבצע התקפת ARP poisoning, התוקף זקוק ליכולת Man in the Middle"],
+     ex:"CSP מגביל את מקורות המשאבים שהדפדפן יטען וירוץ — הגנה מרכזית מפני XSS.",
+     deeper:"<b>CSP</b> הוא כותרת HTTP שבה האתר מכריז ״מותר לטעון ולהריץ JS/משאבים רק מהכתובות הבאות״. הדפדפן אוכף זאת וחוסם כל סקריפט ממקור לא-מאושר — הגנה חזקה מפני XSS. הטעויות: ב-PKI ה-<b>Root</b> חייב להיות ב-root store, לא ה-CA שהנפיק ישירות (שרשרת אמון). ב-TLS השרת <b>לא מייצר</b> את התעודה — CA מנפיק אותה. ARP poisoning <b>לא</b> דורש MitM (התוקף פשוט משדר תשובות ARP מזויפות, off-path). שים לב שהשאלה מערבבת נושאים מכל הקורס — צריך לזהות את הטענה הנכונה מבין ארבעה תחומים שונים."},
+    {src:"דוגמה 2 · ש׳4", q:"מניעת התקפת injection <b>לא</b> תתבצע על ידי?",
+     correct:"IDS", opts:["חיטוי הקלט בצד השרת","סינון קלט המשמש לשאילתת SQL","חומת אש אפליקטיבית"],
+     ex:"IDS רק מזהה/מתריע — לא מונע. מניעת injection נעשית בחיטוי/סינון קלט (ו-WAF אפליקטיבי).",
+     deeper:"הבחנה חשובה: <b>IDS</b> (Intrusion Detection System) הוא <b>מגלה</b>, לא <b>מונע</b> — הוא מזהה פעילות חשודה ומתריע, אבל לא חוסם אותה בזמן אמת (לעומת IPS, שהוא Prevention — מגיב וחוסם). מניעת SQL injection נעשית ב<b>מקור החולשה</b>: חיטוי/סינון קלט בצד השרת, parameterized queries, ו-<b>WAF</b> (Web Application Firewall / חומת אש אפליקטיבית) שחוסמת בקשות זדוניות. אז IDS הוא היחיד שלא <b>מונע</b>. הכלל שכדאי לזכור: <b>IDS = Detection (מזהה), IPS = Prevention (מונע/מגיב)</b>."},
+  ]
+},
+
+/* ========== 11. התקפות רשת ========== */
+{
+  rank:"11", phase:"נושאים עצמאיים", he:"התקפות רשת — ARP · DNS · DDoS · Firewall",
+  en:"Network Attacks",
+  freq:"8 מבחנים", freqNote:"נפוץ 2023-2024, ירד ב-3 מבחני 2025 האחרונים",
+  analogy:"רשת מקומית היא כמו בניין משרדים. <b>ARP poisoning</b> = מישהו מחליף את שלט השמות ליד המעליות, כך שדואר לחדר 12 מגיע אליו. <b>DNS poisoning</b> = מזייף את ספר הטלפונים כך ש״הבנק״ מפנה למספר של הרמאי. <b>DDoS</b> = שולחים אלף אנשים לחסום את הכניסה כדי שאף לקוח אמיתי לא ייכנס. <b>Firewall</b> = השומר בכניסה עם רשימת מי מותר.",
+  intro:`
+    <p>נושא עצמאי — התקפות על תשתית הרשת. ארבע משפחות:</p>
+    <p><b>ARP poisoning:</b> ARP ממפה כתובת <b>IP</b> לכתובת <b>MAC</b> ברשת המקומית. התוקף משדר תשובות ARP מזויפות (״ה-IP של בוב שייך ל-MAC שלי״), וכך תעבורה לבוב מגיעה אליו.</p>
+    <ul>
+      <li><span class="w">נקודה קריטית:</span> אחרי ARP poisoning, כשאליס שולחת לבוב — היעד הוא עדיין <b>ה-IP של בוב</b>, אבל ה-<b>MAC של התוקף</b>. (ה-IP לא משתנה; רק המיפוי ל-MAC מורעל.)</li>
+      <li>ARP poisoning <b>לא דורש</b> MitM או האזנה מוקדמת — מספיק <b>off-path</b> (רק לשדר לרשת).</li>
+      <li>ב-ARP, ה-cache מתעדכן בכל תשובה → <b>התשובה האחרונה גוברת</b>.</li>
+    </ul>
+    <p><b>DNS poisoning:</b> זיוף תשובת DNS כדי להפנות שם דומיין ל-IP של התוקף.</p>
+    <ul>
+      <li>ב-DNS, הרשומה ה<b>ראשונה</b> נכנסת ל-cache למשך ה-<b>TTL</b> שלה, ותשובות מאוחרות מתעלמות (הפוך מ-ARP!).</li>
+      <li>הגנות: <b>transaction ID אקראי</b> ו-<b>פורט מקור אקראי</b> — מקשים על התוקף לנחש ולזייף תשובה תקפה. (התקפת קמינסקי היא DNS poisoning.)</li>
+    </ul>
+    <p><b>DoS / DDoS:</b> הצפת הקורבן כדי למנוע שירות. <b>DDoS</b> (Distributed) משתמש בהמון מקורות — <b>botnet</b>.</p>
+    <ul>
+      <li>ב-<b>HTTP flood</b> על אותו קורבן: <b>Destination IP+Port זהים</b> (כולם לאותו שרת), <b>Source IP+Port שונים</b> (מקורות מגוונים/מזויפים).</li>
+      <li><b>SYN flood:</b> התוקף מזייף כתובות source ש<b>לא יענו</b> — כדי שה-SYN+ACK מהשרת יישאר תלוי (חצי-פתוח) ולא ייסגר ב-RST. (ניסוח נפוץ ושגוי: ״כדי שיישלח RST״ — ההיפך.)</li>
+    </ul>
+    <p><b>Firewall:</b> טבלת חוקים שמתירה/חוסמת תעבורה לפי IP/פורט/דגלים. <b>whitelist</b> = מתירים רק מה שברשימה, וחוסמים כל השאר (חוק Drop כללי בסוף). אפשר לחזק עם עמודת <b>flags</b> (חוקים לפי דגלי TCP). <b>DMZ</b> = אזור מפורז לשרתים חשופים. <span class="w">IDS מזהה, IPS מונע.</span></p>`,
+  material:`
+    <h4>תמצית לזכירה מהירה</h4>
+    <ul>
+      <li>ARP poisoning: יעד = <b>IP של בוב + MAC של התוקף</b>. <span class="no">לא דורש MitM</span> (off-path). האחרונה גוברת.</li>
+      <li>DNS: ה<b>ראשונה</b> קובעת ל-TTL. הגנה: <b>transaction ID + פורט מקור אקראיים</b>. קמינסקי = DNS poisoning.</li>
+      <li>HTTP flood: <b>Dest IP+Port זהים</b>, <b>Source IP+Port שונים</b>. DDoS = botnet.</li>
+      <li>SYN flood: source מזויף ש<b>לא יענה</b> (למנוע RST). Firewall whitelist = חוק Drop כללי בסוף.</li>
+    </ul>`,
+  questions:[
+    {src:"20/10/2024 · ש׳8", q:"נתון: כתובת ה-ip של אליס היא 192.168.0.1 וכתובת ה-MAC שלה היא AA:AA:AA:AA:AA:AA; כתובת ה-ip של בוב היא 192.168.0.2 וכתובת ה-MAC שלו היא BB:BB:BB:BB:BB:BB; כתובת ה-ip של התוקף היא 192.168.0.6 וכתובת ה-MAC שלו היא 66:66:66:66:66:66. לאחר שהתוקף ביצע בהצלחה התקפת ARP poisoning, כאשר אליס שולחת הודעה לבוב, לאיזה כתובת ip היא תשלח ולאיזה כתובת MAC?",
+     correct:"לכתובת ip של 192.168.0.2 ולכתובת MAC של 66:66:66:66:66:66",
+     opts:["לכתובת ip של 192.168.0.6 ולכתובת MAC של 66:66:66:66:66:66","לכתובת ip של 192.168.0.2 ולכתובת MAC של BB:BB:BB:BB:BB:BB","לכתובת ip של 192.168.0.6 ולכתובת MAC של BB:BB:BB:BB:BB:BB"],
+     ex:"אליס עדיין מכוונת ל-IP של בוב, אבל ה-ARP המורעל שולח ל-MAC של התוקף (66:...) — כך התוקף מיירט.",
+     deeper:"הנקודה העדינה: ARP poisoning משבש רק את המיפוי <b>IP→MAC</b>, לא את ה-IP עצמו. אליס עדיין רוצה להגיע ל-<b>IP של בוב</b> (192.168.0.2) — מבחינתה שום דבר לא השתנה. אבל טבלת ה-ARP שלה הורעלה, אז היא שולחת את המסגרת ל-<b>MAC של התוקף</b> (66:...) במקום ל-MAC של בוב. התוקף מקבל, קורא (ואולי מעביר הלאה לבוב). לכן: IP=של בוב, MAC=של התוקף. הטעויות מחליפות את ה-IP ל-IP של התוקף (שגוי — אליס לא יודעת על התוקף) או משאירות את ה-MAC של בוב (אז אין יירוט). זכור: <b>IP נשאר של היעד, MAC הופך לתוקף</b>."},
+    {src:"17/09/2024 · ש׳7", q:"איזו טענה היא הנכונה?",
+     correct:"כדי לבצע התקפת ARP poisoning מספיק יכולת off-path",
+     opts:["כדי לבצע התקפת ARP poisoning חייבים יכולת Eavesdropper","כדי לבצע התקפת ARP poisoning חייבים יכולת Man-in-the-Middle","כדי לבצע התקפת DNS poisoning חייבים יכולת Man-in-the-Middle"],
+     ex:"ARP poisoning לא דורש MitM/האזנה מראש — התוקף פשוט משדר תשובות ARP מזויפות (off-path).",
+     deeper:"מדרג יכולות התוקף: <b>off-path</b> (יכול רק לשלוח חבילות, לא רואה תעבורה), <b>eavesdropper</b> (יכול להאזין), <b>MitM</b> (יכול גם להאזין וגם לשנות בזמן אמת). ARP poisoning דורש רק <b>off-path</b>: התוקף פשוט משדר לרשת תשובות ARP מזויפות (״ה-IP הזה שייך ל-MAC שלי״), והקורבנות מעדכנים את ה-cache שלהם. הוא לא צריך לראות תעבורה קודמת או להתמקם באמצע. למעשה, ARP poisoning הוא <b>אמצעי להשיג MitM</b> — לא דורש MitM כתנאי מוקדם. זו מלכודת נפוצה: לחשוב שהתקפה דורשת יכולת חזקה יותר ממה שהיא באמת."},
+    {src:"08/08/2023 · ש׳8", q:"בהתקפת DDoS מסוג HTTP flood — אילו שדות בחבילות שהקורבן קיבל היו שונים ואילו זהים?",
+     correct:"שונים: Source IP, Source Port · זהים: Destination IP, Destination Port",
+     opts:["שונים: Destination IP, Source Port · זהים: Source IP, Destination Port","שונים: Source IP, Destination Port · זהים: Destination IP, Source Port","שונים: Source IP, Source Port · זהים: Destination IP, Destination Port"],
+     ex:"כל החבילות מכוונות לאותו קורבן (Destination IP+port זהים). המקורות מזויפים/מגוונים (Source IP+port שונים).",
+     deeper:"חשוב על מבנה ההתקפה: אלפי בוטים תוקפים <b>שרת אחד</b>. לכן ה-<b>Destination</b> (IP+פורט של הקורבן) <b>זהה</b> בכל החבילות — כולן הולכות לאותו יעד. לעומת זאת ה-<b>Source</b> (IP+פורט) <b>שונה</b> — כל בוט/חבילה מגיע ממקור אחר (ולעיתים מזויף), מה שגם מקשה על סינון. זו החתימה של flood מבוזר: יעד יחיד, מקורות רבים. הטעויות מערבבות את החלוקה (למשל ״Destination שונה״ — לא הגיוני, זה שרת אחד). כלל: ב-DDoS על יעד יחיד, Destination קבוע, Source מגוון."},
+    {src:"04/07/2024 · ש׳9", q:"איזו טענה נכונה לגבי ARP מול DNS poisoning?",
+     correct:"ב-ARP התשובה האחרונה דורסת את הראשונה; ב-DNS אם הגיעו שתי תשובות עם TTL ארוך — הראשונה קובעת ולא נדרסת ע״י הבאות למשך ה-TTL",
+     opts:["בשניהם האחרונה דורסת את הראשונה","בשניהם הראשונה קובעת ולא נדרסת","ב-ARP הראשונה קובעת; ב-DNS האחרונה דורסת"],
+     ex:"ARP: cache מתעדכן בכל תשובה → האחרונה גוברת. DNS: הרשומה הראשונה נכנסת ל-cache ל-TTL ותשובות מאוחרות מתעלמות.",
+     deeper:"הבדל התנהגותי מהותי בין שני ה-caches. ב-<b>ARP</b>: כל תשובת ARP <b>מעדכנת</b> את הרשומה — אז ה<b>אחרונה גוברת</b>. זה מה שמאפשר לתוקף ״לדרוס״ בהצפת תשובות. ב-<b>DNS</b>: ברגע שרשומה נכנסת ל-cache, היא <b>נעולה</b> למשך ה-<b>TTL</b> שלה, ותשובות מאוחרות יותר <b>מתעלמות</b> — אז ה<b>ראשונה קובעת</b>. המשמעות התקפית: ב-DNS poisoning התוקף חייב להקדים את השרת הלגיטימי (מרוץ), כי אם התשובה האמיתית תגיע ראשונה, הזיוף יידחה עד שיפוג ה-TTL. זכור: <b>ARP=אחרונה, DNS=ראשונה</b>."},
+    {src:"07/07/2023 · ש׳5", q:"איזו מבין הטענות <b>אינה</b> נכונה?",
+     correct:"ב-syn-flood תוקף יעדיף IP מזויף כ-source, בעיקר כאלה שלא יענו, כדי לשפר את הסיכוי שיישלח בחזרה RST על ה-syn+ack",
+     opts:["IDS אינו מונע התקפות DNS poisoning","תוקף עם eavesdropping בין קורבן לשרת DNS לא תמיד יצליח ב-DNS poisoning","כדי לבצע ARP poisoning, התוקף אינו זקוק ליכולת MITM"],
+     ex:"התוקף מזייף IP שלא יענה דווקא כדי <b>שלא</b> יישלח RST (שהיה סוגר את החיבור). הניסוח ״לשפר סיכוי ל-RST״ הפוך.",
+     deeper:"ההיגיון של SYN flood: התוקף שולח המון SYN עם כתובות source מזויפות, השרת עונה ב-SYN+ACK ומחזיק חיבור ״חצי-פתוח״ בהמתנה ל-ACK שלא יגיע — וכך מתמלאת טבלת החיבורים. התוקף בוחר כתובות ש<b>לא יענו</b> בכוונה, כי אם המכונה בכתובת המזויפת <b>הייתה</b> עונה, היא הייתה שולחת <b>RST</b> (״לא פתחתי חיבור״) — וזה היה <b>משחרר</b> את החיבור החצי-פתוח ומקלקל את ההתקפה. הטענה השגויה הופכת את זה: ״כדי לשפר סיכוי ל-RST״ — בדיוק ההפך ממה שהתוקף רוצה. שאר הטענות נכונות (IDS לא מונע, ARP לא דורש MitM)."},
+    {src:"07/07/2023 · ש׳9", q:"טבלת firewall ל-SSH (פורט 22) עם חוק Drop כללי בסוף. איזו טענה <b>אינה</b> נכונה?",
+     correct:"תוקף מחוץ לרשת אינו יכול להקים חיבור TCP מול שרת הפרוקסי שבתוך הרשת",
+     opts:["ניתן לשפר את בטיחות הטבלה בעזרת עמודת flags (חוקים לפי דגלי TCP)","החוקים כתובים כ-whitelist","הטבלה מאפשרת תנועת SSH נכנסת ויוצאת מחוץ/אל תוך הרשת"],
+     ex:"הטבלה מתירה SSH נכנס (פורט 22), אז חיבור נכנס אל השרת אפשרי — הטענה שתוקף חיצוני ״אינו יכול״ שגויה.",
+     deeper:"מכיוון שהטבלה <b>מתירה</b> תעבורת SSH (פורט 22) נכנסת אל שרת הפרוקסי, תוקף חיצוני <b>כן יכול</b> להקים חיבור TCP אליו על פורט 22 — ולכן הטענה ש״אינו יכול״ שגויה. שאר הטענות נכונות: אפשר לחזק את הטבלה עם עמודת <b>flags</b> (למשל להתיר רק חבילות עם דגל ACK בכיוון מסוים, כדי למנוע פתיחת חיבורים לא רצויה); החוקים אכן בסגנון <b>whitelist</b> (מתירים מפורשות, וה-Drop הכללי בסוף חוסם כל השאר); והטבלה מאפשרת SSH דו-כיווני. הרעיון: whitelist עם Drop בסוף עדיין <b>פותח</b> את מה שהתרת במפורש — וזה כולל את התוקף."},
+    {src:"דוגמה 1 · ש׳4", q:"איזו מבין הטענות נכונה?",
+     correct:"הכוח של ההמונים, למשל באמצעות botnet, הוא הכוח המניע מאחורי התקפת DDoS",
+     opts:["התקפת קמינסקי היא בראש ובראשונה התקפת DoS","התקפות DoS נעשות אך ורק בשכבות הפיזית/קישור/תעבורה/רשת","ראשי התיבות DoS = Disk on Stack"],
+     ex:"DDoS = Distributed Denial of Service, מבוסס ריבוי מקורות (botnet). קמינסקי = DNS poisoning, DoS = Denial of Service.",
+     deeper:"<b>DDoS</b> (Distributed Denial of Service) שואב את עוצמתו מ<b>ריבוי מקורות</b> — לרוב <b>botnet</b>, רשת של מכונות נגועות שהתוקף שולט בהן ומפנה יחד נגד הקורבן. הטעויות: <b>התקפת קמינסקי</b> היא DNS <b>poisoning</b> (זיוף/הרעלה), לא DoS. DoS לא מוגבל לשכבות נמוכות — HTTP flood למשל הוא בשכבת <b>האפליקציה</b>. ו-<b>DoS = Denial of Service</b> (מניעת שירות), לא ״Disk on Stack״ (המצאה). שאלת הגדרות בסיסית שבודקת אם אתה מזהה מה כל ראשי-תיבות אומרים ולאיזו משפחה כל התקפה שייכת."},
+    {src:"08/08/2023 · ש׳6", q:"איזו מבין הטענות נכונה?",
+     correct:"שולחים בקשת DNS עם פורט אקראי כדי להקשות על ניחוש הפורט ע״י תוקף",
+     opts:["כדי ש-SSL/TLS יגן, חובה שגם הלקוח וגם השרת יצוידו בתעודה תקנית","אפשר להשתמש בבוטים רק למטרות DDoS","משתמשים ב-DMZ כאשר לא ניתן להשתמש בחומת אש"],
+     ex:"פורט מקור אקראי (בנוסף ל-transaction ID אקראי) מקשה על תוקף לנחש ולזייף תשובת DNS. ב-TLS רק השרת חייב תעודה.",
+     deeper:"הגנת DNS מפני זיוף: כדי שתוקף (off-path) יזייף תשובת DNS מוצלחת, עליו לנחש נכון גם את ה-<b>transaction ID</b> וגם את ה-<b>פורט המקור</b> של הבקשה. הוספת <b>פורט מקור אקראי</b> (בנוסף ל-ID אקראי) מגדילה דרמטית את מרחב הניחוש ומקשה עליו. הטעויות: ב-TLS <b>רק השרת</b> חייב תעודה (הלקוח לרוב לא — למעט mutual TLS); בוטים משמשים גם למטרות אחרות (spam, כרייה, גניבה) לא רק DDoS; ו-DMZ הוא <b>משלים</b> לחומת אש (אזור מבודד לשרתים חשופים), לא תחליף כשאין firewall. הרעיון המרכזי: <b>אקראיות = הגנה מפני ניחוש</b>."},
+  ]
+},
+];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const HEB=['א','ב','ג','ד','ה'];
+
+// frequency bars
+const maxN=Math.max(...FREQ.map(f=>f.n));
+document.getElementById('bars').innerHTML=FREQ.map(f=>{
+  const tc=f.tier===1?'':(f.tier===2?'p2':'p3');
+  const tt=f.tier===1?'t1':(f.tier===2?'t2':'t3');
+  const tl=f.tier===1?'חובה':(f.tier===2?'חשוב':'רענון');
+  return `<div class="bar-row">
+    <div class="bar-top">
+      <span class="bar-name">${f.he} <span class="en">${f.en}</span> <span class="tier-tag ${tt}">${tl}</span></span>
+      <span class="bar-count">${f.n} מבחנים</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill ${tc}" data-w="${Math.round(f.n/maxN*100)}"></div></div>
+  </div>`;
+}).join('');
+
+// topics
+let totalQ=0;
+TOPICS.forEach(t=>totalQ+=t.questions.length);
+document.getElementById('qtotal').textContent=totalQ;
+
+let answered=0, correctCount=0;
+const pbar=document.getElementById('pbar'), pscore=document.getElementById('pscore');
+document.getElementById('pscore').textContent=`0 / ${totalQ}`;
+
+function updateProgress(){
+  pbar.style.width=(answered/totalQ*100)+'%';
+  pscore.textContent=`${correctCount} / ${totalQ} נכונות`;
+}
+
+const container=document.getElementById('topics');
+TOPICS.forEach((t,ti)=>{
+  const topic=document.createElement('div');
+  topic.className='topic';
+  const qHTML=t.questions.map((q,qi)=>{
+    const opts=shuffle([{txt:q.correct,ok:true},...q.opts.map(o=>({txt:o,ok:false}))]);
+    const optHTML=opts.map((o,oi)=>`<button class="opt" data-ok="${o.ok}" data-ti="${ti}" data-qi="${qi}">
+      <span class="mark">${HEB[oi]}.</span><span>${o.txt}</span></button>`).join('');
+    const deeperHTML=q.deeper?`<button class="deeper-btn" type="button">רוצה להעמיק?<span class="dchev">▾</span></button>
+      <div class="deeper-panel"><div class="deeper-inner">${q.deeper}</div></div>`:'';
+    return `<div class="q">
+      <div class="q-meta">שאלה מקורית · ${q.src}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts">${optHTML}</div>
+      <div class="explain"><b>הסבר קצר:</b> ${q.ex}</div>
+      ${deeperHTML}
+    </div>`;
+  }).join('');
+  topic.innerHTML=`
+    <div class="topic-head">
+      <span class="topic-rank">${t.rank}</span>
+      <div class="topic-titles"><div class="he">${t.he}</div><div class="en">${t.en}</div><div class="phase-tag">${t.phase}</div></div>
+      <div class="topic-freq">${t.freq}<br>${t.freqNote}</div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="analogy"><span class="analogy-tag">אנלוגיה</span>${t.analogy}</div>
+      <div class="intro"><h4>מ־0 — כל מה שצריך להבין</h4>${t.intro}</div>
+      <div class="material">${t.material}</div>
+      <div class="quiz-label">◆ תרגול — שאלות מקוריות מהמבחנים</div>
+      ${qHTML}
+    </div></div>`;
+  container.appendChild(topic);
+
+  const head=topic.querySelector('.topic-head');
+  const body=topic.querySelector('.topic-body');
+  head.addEventListener('click',()=>{
+    const open=topic.classList.toggle('open');
+    body.style.maxHeight=open?body.scrollHeight+'px':'0';
+  });
+});
+
+// "want to go deeper?" toggle
+container.addEventListener('click',e=>{
+  const db=e.target.closest('.deeper-btn');
+  if(!db)return;
+  const panel=db.nextElementSibling;
+  const open=db.classList.toggle('open');
+  panel.style.maxHeight=open?panel.scrollHeight+'px':'0';
+  // resync the parent accordion so content isn't clipped
+  const body=db.closest('.topic-body');
+  if(body&&body.style.maxHeight&&body.style.maxHeight!=='0px'){
+    setTimeout(()=>{body.style.maxHeight=body.scrollHeight+'px';},open?0:450);
+  }
+});
+
+// answer handling
+container.addEventListener('click',e=>{
+  const btn=e.target.closest('.opt');
+  if(!btn||btn.disabled)return;
+  const q=btn.closest('.q');
+  const opts=q.querySelectorAll('.opt');
+  const already=[...opts].some(o=>o.disabled);
+  if(already)return;
+  const isOk=btn.dataset.ok==='true';
+  opts.forEach(o=>{
+    o.disabled=true;
+    if(o.dataset.ok==='true')o.classList.add('correct');
+  });
+  if(!isOk)btn.classList.add('wrong');
+  q.querySelector('.explain').classList.add('show');
+  answered++; if(isOk)correctCount++;
+  updateProgress();
+  // keep the accordion height in sync after explanation appears
+  const body=q.closest('.topic-body');
+  if(body&&body.style.maxHeight&&body.style.maxHeight!=='0px'){
+    body.style.maxHeight=body.scrollHeight+'px';
+  }
+});
+
+// animate bars when scrolled into view
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      en.target.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w+'%');
+      io.disconnect();
+    }
+  });
+},{threshold:.2});
+io.observe(document.getElementById('bars'));
+
+// open first topic by default
+window.addEventListener('load',()=>{
+  const first=document.querySelector('.topic');
+  if(first){first.classList.add('open');const b=first.querySelector('.topic-body');b.style.maxHeight=b.scrollHeight+'px';}
+});
+</script>
+</body>
+</html>
