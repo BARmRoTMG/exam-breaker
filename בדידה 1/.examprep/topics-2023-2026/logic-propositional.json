@@ -5,232 +5,232 @@
     "he":  "לוגיקה פסוקית (תחשיב הפסוקים)",
     "en":  "Propositional Logic",
     "freqApprox":  4,
-    "analogy":  "לוגיקה פסוקית היא ה\"דקדוק\" של המתמטיקה - בדיוק כמו שיש כללי תחביר שקובעים אילו משפטים תקינים בעברית, יש כללים שקובעים מתי טיעון מתמטי \"תקף\". קשרים לוגיים (וגם/או/לא/אם-אז) הם \"אבני הבניין\" שמהם בונים פסוקים מורכבים, וטבלת אמת היא כלי ה\"מחשבון\" שמחשב את ערך האמת של כל פסוק כזה מתוך ערכי האמת של חלקיו - בדיוק כמו שמחשבון מחשב ביטוי אריתמטי מתוך המספרים והפעולות שבו.",
-    "intro":  "<p>לוגיקה פסוקית (תחשיב הפסוקים) היא הבסיס לכל הקורס: היא מגדירה מהו \"פסוק\" (משפט בעל ערך אמת יחיד <code>- T</code> או <code>F),</code> מהם הקשרים הלוגיים שמחברים פסוקים לפסוקים מורכבים, ואיך קובעים את ערך האמת של פסוק מורכב באמצעות טבלת אמת. זהו נושא שחוזר כמעט בכל מבחן - הן כשאלה עצמאית (טבלאות אמת, שקילות<code>, DNF/CNF,</code> תוקף טיעונים) והן כ\"שפה\" שמשמשת בכל שאר נושאי הקורס (קבוצות, יחסים, כמתים).</p><ul><li>קשרים לוגיים בסיסיים<code>: ¬ (</code>לא<code>), ∧ (</code>וגם<code>), ∨ (</code>או<code>), ⊕ (xor), → (</code>גרירה/אם-אז<code>), ↔ (</code>שקילות/אם-ורק-אם), וכן <code>NAND (</code>↑) ו<code>-NOR (</code>↓).</li><li>סיווג פסוקים: טאוטולוגיה (תמיד <code>T),</code> סתירה (תמיד <code>F),</code> פסוק ספיק <code>(satisfiable -</code> יש לפחות השמה אחת שמקיימת <code>T).</code></li><li>שקילות לוגית <code>(≡)</code> ו<code>-13</code> כללי השקילות הבסיסיים - הכלי המרכזי לפישוט/הוכחת שקילות בלי טבלת אמת.</li><li>תנאי מספיק/הכרחי/הכרחי-ומספיק - התרגום המילולי של <code>→</code> ו<code>-↔.</code></li><li>ארבעת הכיוונים של גרירה: מקורי <code>(p→q),</code> הופכי<code>/converse (q→p),</code> הפוך<code>/inverse (¬p→¬q),</code> ניגוד<code>/contrapositive (¬q→¬p) -</code> רק הניגוד שקול למקור!</li><li>צורות נורמליות <code>DNF (</code>או של וגם-ים) ו<code>-CNF (</code>וגם של או-ים), ובניית הצורה השלמה מטבלת אמת.</li><li>קבוצות קשרים שלמות <code>(functionally complete): {¬,∧,∨}, {¬,∧}, {¬,∨},</code> וכן {↑} ו-{↓} כל אחת לבד.</li><li>כללי היסק <code>(Modus Ponens, Modus Tollens, Hypothetical/Disjunctive Syllogism, Addition, Simplification, Resolution)</code> ותוקף טיעונים.</li></ul>",
-    "material":  "<h4>תמצית לזכירה מהירה</h4><ul><li><b>הגדרות יסוד:</b> פסוק = משפט בעל ערך אמת יחיד <code>(T/F,</code> לא שניהם, לא \"בערך\"). פסוק אטומי = ללא קשרים לוגיים. פסוק מורכב = מכיל קשר לוגי אחד או יותר.</li></ul><table><tr><th><code>p</code></th><th><code>q</code></th><th><code>¬p</code></th><th><code>p∧q</code></th><th><code>p∨q</code></th><th><code>p⊕q</code></th><th><code>p→q</code></th><th><code>p↔q</code></th><th><code>p</code>↑<code>q (NAND)</code></th><th><code>p</code>↓<code>q (NOR)</code></th></tr><tr><td><code>T</code></td><td><code>T</code></td><td><code>F</code></td><td><code>T</code></td><td><code>T</code></td><td><code>F</code></td><td><code>T</code></td><td><code>T</code></td><td><code>F</code></td><td><code>F</code></td></tr><tr><td><code>T</code></td><td><code>F</code></td><td><code>F</code></td><td><code>F</code></td><td><code>T</code></td><td><code>T</code></td><td><code>F</code></td><td><code>F</code></td><td><code>T</code></td><td><code>F</code></td></tr><tr><td><code>F</code></td><td><code>T</code></td><td><code>T</code></td><td><code>F</code></td><td><code>T</code></td><td><code>T</code></td><td><code>T</code></td><td><code>F</code></td><td><code>T</code></td><td><code>F</code></td></tr><tr><td><code>F</code></td><td><code>F</code></td><td><code>T</code></td><td><code>F</code></td><td><code>F</code></td><td><code>F</code></td><td><code>T</code></td><td><code>T</code></td><td><code>T</code></td><td><code>T</code></td></tr></table><ul><li><b>מלכודת קריטית:</b> <code>→</code> שקרי רק במקרה היחיד <code>p=T,q=F. \"</code>שקר גורר כל דבר<code>\" (F→</code>כל דבר<code>=T) - Vacuous truth.</code></li></ul><h4>סדר קדימות של קשרים (מהגבוה לנמוך)</h4><table><tr><th>קשר</th><th>סימון</th><th>כיוון קריאה כשיש כמה מאותו סוג</th></tr><tr><td>סוגריים</td><td>( )</td><td>מהפנים לחוץ</td></tr><tr><td>שלילה</td><td><code>¬</code></td><td>מימין לשמאל</td></tr><tr><td>וגם</td><td><code>∧</code></td><td>משמאל לימין</td></tr><tr><td>או</td><td><code>∨</code></td><td>משמאל לימין</td></tr><tr><td>גרירה</td><td><code>→</code></td><td>משמאל לימין</td></tr><tr><td>שקילות ו<code>-xor</code></td><td><code>↔, ⊕</code></td><td>משמאל לימין</td></tr></table><p>קשר <code>NAND/NOR</code> אין לו סדר קדימות מוגדר - יש להקפיד לכתוב אותו תמיד בסוגריים.</p><h4><code>13</code> כללי השקילות הלוגיים (הכלי המרכזי בפרק)</h4><table><tr><th>#</th><th>שם</th><th>הזהות</th></tr><tr><td><code>1</code></td><td>טאוטולוגיה בסיסית</td><td><code>p∨¬p ≡ T</code></td></tr><tr><td><code>2</code></td><td>סתירה בסיסית</td><td><code>p∧¬p ≡ F</code></td></tr><tr><td><code>3</code></td><td>כלל הזהות</td><td><code>p∨F ≡ p ≡ p∧T</code></td></tr><tr><td><code>4</code></td><td>כללי השליטה</td><td><code>p∨T ≡ T , p∧F ≡ F</code></td></tr><tr><td><code>5</code></td><td>כללי הכפילות (אידמפוטנטיות)</td><td><code>p∨p ≡ p ≡ p∧p</code></td></tr><tr><td><code>6</code></td><td>שלילה כפולה</td><td><code>¬(¬p) ≡ p</code></td></tr><tr><td><code>7</code></td><td>כללי החילוף (קומוטטיביות)</td><td><code>p∨q ≡ q∨p , p∧q ≡ q∧p</code></td></tr><tr><td><code>8</code></td><td>כללי הקיבוץ (אסוציאטיביות)</td><td><code>p∨(q∨r) ≡ (p∨q)∨r , p∧(q∧r) ≡ (p∧q)∧r</code></td></tr><tr><td><code>9</code></td><td>כללי הפילוג (דיסטריבוטיביות)</td><td><code>p∨(q∧r) ≡ (p∨q)∧(p∨r) , p∧(q∨r) ≡ (p∧q)∨(p∧r)</code></td></tr><tr><td><code>10</code></td><td>כלל הבליעה</td><td><code>p∨(p∧q) ≡ p ≡ p∧(p∨q)</code></td></tr><tr><td><code>11</code></td><td>כללי דה-מורגן <code>(D.M)</code></td><td><code>¬(p∨q) ≡ ¬p∧¬q , ¬(p∧q) ≡ ¬p∨¬q</code></td></tr><tr><td><code>12</code></td><td>כלל הגרירה</td><td><code>p→q ≡ ¬p∨q</code></td></tr><tr><td><code>13</code></td><td>כלל השקילות <code>(↔)</code></td><td><code>p↔q ≡ (p→q)∧(q→p) ≡ (p∧q)∨(¬p∧¬q)</code></td></tr></table><p><b>עקרון הדואליות:</b> מזהות המערבת רק <code>∨,∧,¬,T,F</code> ניתן להפיק זהות נוספת ע\"י החלפת <code>∨↔∧</code> ו<code>-T↔F (</code>רק על אלו - לא על <code>→</code> או <code>↔</code> ישירות; יש קודם להמיר גרירה לפי כלל <code>12).</code></p><h4>תנאי מספיק/הכרחי - טבלת התרגום</h4><ul><li><code>p→q: \"p</code> מספיק ל<code>-q\" ≡ \"q</code> הכרחי ל<code>-p\" -</code> <b>אותו משפט בדיוק</b>, לא שני משפטים שונים! הבלבול הנפוץ: לחשוב שצריך <code>p→q</code> במקום אחד ו<code>-q→p</code> במקום השני.</li><li><code>p↔q: p</code> ו<code>-q</code> הם תנאי הכרחי ומספיק זה לזה.</li><li><code>\"p</code> רק אם <code>q\" ≡ p→q (</code>ולא <code>q→p</code>!). \"רק אם <code>p</code> אז <code>q\" ≡ q→p.</code></li></ul><table><tr><th>תנאי</th><th>התנאי מתקיים</th><th>התנאי אינו מתקיים</th></tr><tr><td>תנאי מספיק</td><td>התוצאה מתקיימת</td><td>לא ידוע</td></tr><tr><td>תנאי הכרחי</td><td>לא ידוע</td><td>התוצאה אינה מתקיימת</td></tr></table><h4>מלכודת מרכזית: הופכי / הפוך / ניגוד</h4><table><tr><th>כיוון</th><th>ניסוח</th><th>שקול למקור <code>p→q</code>?</th></tr><tr><td>מקורי</td><td><code>p→q</code></td><td>-</td></tr><tr><td>הופכי <code>(Converse)</code></td><td><code>q→p</code></td><td>לא שקול</td></tr><tr><td>הפוך <code>(Inverse)</code></td><td><code>¬p→¬q</code></td><td>לא שקול (אך שקול להופכי)</td></tr><tr><td>ניגוד <code>(Contrapositive)</code></td><td><code>¬q→¬p</code></td><td><b>כן שקול! (היחיד)</b></td></tr></table><h4><code>DNF / CNF</code></h4><ul><li>ליטרל = אטום <code>(p)</code> או נגטום <code>(¬p).</code> פסוקית \"וגם\" = ליטרלים שונים מחוברים ב<code>-∧.</code> פסוקית \"או\" = ליטרלים שונים מחוברים ב<code>-∨.</code></li><li><b><code>DNF</code></b> = \"או\" של פסוקיות \"וגם\" - נבנה משורות הטבלה בהן ערך הפסוק <code>T (</code>כל משתנה <code>T</code> נלקח כמו שהוא, כל משתנה <code>F</code> נלקח כשלילתו).</li><li><b><code>CNF</code></b> = \"וגם\" של פסוקיות \"או\" - נבנה משורות הטבלה בהן ערך הפסוק <code>F (</code>הפוך: משתנה <code>T</code> נלקח כשלילתו, משתנה <code>F</code> נלקח כמו שהוא).</li><li>צורה נורמלית <b>שלמה</b> = כל פסוקית מכילה את כל המשתנים (אם חסר משתנה <code>X</code> בפסוקית, מכפילים ב<code>-(X∨¬X)</code> ל<code>-DNF</code> או מוסיפים <code>(X∧¬X)</code> ב-\"או\" ל<code>-CNF</code> ומפזרים לפי כלל הפילוג).</li><li>מעבר ישיר <code>CNF↔DNF</code> ללא טבלת אמת: שוללים את הפסוק, מפשטים בדה-מורגן, ורושמים את \"הפסוק המשלים\" (הפסוקיות שלא הופיעו).</li><li>מלכודת נפוצה: להתבלבל בין <code>T/F</code> ובין הפסוק <code>A</code> לשלילתו <code>¬A -</code> לוודא בדיוק על איזה פסוק מתבקשת הצורה (זו נקודת הטעות השכיחה ביותר בשאלות מסוג זה).</li></ul><h4>קבוצות קשרים שלמות <code>(Functionally Complete)</code></h4><ul><li><code>{¬,∧,∨}</code> שלמה (כי כל פסוק שאינו טאוטולוגיה/סתירה ניתן לכתיבה ב<code>-DNF/CNF</code> שמשתמשים רק בהם).</li><li><code>{¬,∧}</code> שלמה (כי <code>p∨q≡¬(¬p∧¬q)). {¬,∨}</code> שלמה (כי <code>p∧q≡¬(¬p∨¬q)) -</code> לפי דה-מורגן.</li><li>{↑<code>} (NAND</code> בלבד) שלמה. {↓<code>} (NOR</code> בלבד) שלמה. <b>אלו הקבוצות היחידות בנות-איבר-בודד שהן שלמות.</b></li><li><code>⊕ (xor)</code> ו<code>-→</code> לבדם <b>אינם</b> מספיקים ליצור קבוצה שלמה.</li><li>כל קבוצה שמכילה <code>NAND</code> או <code>NOR</code> לבד (גם עם עוד קשרים) היא אוטומטית שלמה.</li></ul><h4>כללי היסק ותוקף טיעונים</h4><table><tr><th>שם</th><th>כלל</th></tr><tr><td><code>Modus Ponens (M.P)</code></td><td><code>(p→q)∧p</code> ⟹ <code>q</code></td></tr><tr><td><code>Modus Tollens (M.T)</code></td><td><code>(p→q)∧¬q</code> ⟹ <code>¬p</code></td></tr><tr><td><code>Hypothetical Syllogism (H.S)</code></td><td><code>(p→q)∧(q→r)</code> ⟹ <code>p→r</code></td></tr><tr><td><code>Disjunctive Syllogism (D.S)</code></td><td><code>(p∨q)∧¬p</code> ⟹ <code>q</code></td></tr><tr><td><code>Addition</code></td><td><code>p</code> ⟹ <code>p∨q</code></td></tr><tr><td><code>Simplification</code></td><td><code>p∧q</code> ⟹ <code>p</code></td></tr><tr><td><code>Resolution</code></td><td><code>(p∨q)∧(¬p∨r)</code> ⟹ <code>q∨r</code></td></tr></table><ul><li>טיעון תקף ⟺ צירוף ההנחות גורר טאוטולוגית את המסקנה ⟺ (צירוף ההנחות<code>)→(</code>מסקנה) הוא טאוטולוגיה.</li><li>מלכודת<code>: \"affirming the consequent\" - (p→q)∧q</code>⟹<code>p</code> <b>אינו</b> כלל תקף! (בלבול נפוץ עם <code>Modus Ponens/Tollens).</code></li><li>הבחנה חשובה<code>: →</code> הוא קשר לוגי (יוצר פסוק חדש, יכול להיות <code>T</code> או <code>F);</code> ⟹ מייצג תקפות טיעון (לא פסוק - מתעניינים רק בהשמות בהן צירוף ההנחות אמת).</li><li>הוכחת תוקף אפשר גם באמצעות רזולוציה בלבד, לאחר הבאת ההנחות (ושלילת המסקנה) לצורת <code>CNF.</code></li></ul>",
+    "analogy":  "לוגיקה פסוקית היא ה\"דקדוק\" של המתמטיקה - בדיוק כמו שיש כללי תחביר שקובעים אילו משפטים תקינים בעברית, יש כללים שקובעים מתי טיעון מתמטי \"תקף\". קשרים לוגיים <bdi>(וגם/או/לא/אם-אז)</bdi> הם \"אבני הבניין\" שמהם בונים פסוקים מורכבים, וטבלת אמת היא כלי ה\"מחשבון\" שמחשב את ערך האמת של כל פסוק כזה מתוך ערכי האמת של חלקיו - בדיוק כמו שמחשבון מחשב ביטוי אריתמטי מתוך המספרים והפעולות שבו.",
+    "intro":  "<p>לוגיקה פסוקית <bdi>(תחשיב הפסוקים)</bdi> היא הבסיס לכל הקורס: היא מגדירה מהו \"פסוק<bdi>\" (משפט בעל ערך אמת יחיד - T או F),</bdi> מהם הקשרים הלוגיים שמחברים פסוקים לפסוקים מורכבים, ואיך קובעים את ערך האמת של פסוק מורכב באמצעות טבלת אמת. זהו נושא שחוזר כמעט בכל מבחן - הן כשאלה עצמאית <bdi>(טבלאות אמת, שקילות, DNF/CNF, תוקף טיעונים)</bdi> והן כ\"שפה\" שמשמשת בכל שאר נושאי הקורס <bdi>(קבוצות, יחסים, כמתים).</bdi></p><ul><li>קשרים לוגיים בסיסיים<bdi>: ¬ (לא), ∧ (וגם), ∨ (או), ⊕ (xor), → (גרירה/אם-אז), ↔ (שקילות/אם-ורק-אם),</bdi> וכן <bdi>NAND (↑)</bdi> ו<bdi>-NOR (↓).</bdi></li><li>סיווג פסוקים: טאוטולוגיה <bdi>(תמיד T),</bdi> סתירה <bdi>(תמיד F),</bdi> פסוק ספיק <bdi>(satisfiable - יש לפחות השמה אחת שמקיימת T).</bdi></li><li>שקילות לוגית <bdi>(≡)</bdi> ו<bdi>-13</bdi> כללי השקילות הבסיסיים - הכלי המרכזי לפישוט/הוכחת שקילות בלי טבלת אמת.</li><li>תנאי מספיק/הכרחי/הכרחי-ומספיק - התרגום המילולי של <bdi>→</bdi> ו<bdi>-↔.</bdi></li><li>ארבעת הכיוונים של גרירה: מקורי <bdi>(p→q),</bdi> הופכי<bdi>/converse (q→p),</bdi> הפוך<bdi>/inverse (¬p→¬q),</bdi> ניגוד<bdi>/contrapositive (¬q→¬p) -</bdi> רק הניגוד שקול למקור!</li><li>צורות נורמליות <bdi>DNF (או של וגם-ים)</bdi> ו<bdi>-CNF (וגם של או-ים),</bdi> ובניית הצורה השלמה מטבלת אמת.</li><li>קבוצות קשרים שלמות <bdi>(functionally complete): {¬,∧,∨}, {¬,∧}, {¬,∨},</bdi> וכן <bdi>{↑}</bdi> ו<bdi>-{↓}</bdi> כל אחת לבד.</li><li>כללי היסק <bdi>(Modus Ponens, Modus Tollens, Hypothetical/Disjunctive Syllogism, Addition, Simplification, Resolution)</bdi> ותוקף טיעונים.</li></ul>",
+    "material":  "<h4>תמצית לזכירה מהירה</h4><ul><li><b>הגדרות יסוד:</b> פסוק = משפט בעל ערך אמת יחיד <bdi>(T/F, לא שניהם, לא \"בערך\").</bdi> פסוק אטומי = ללא קשרים לוגיים. פסוק מורכב = מכיל קשר לוגי אחד או יותר.</li></ul><table><tr><th><bdi>p</bdi></th><th><bdi>q</bdi></th><th><bdi>¬p</bdi></th><th><bdi>p∧q</bdi></th><th><bdi>p∨q</bdi></th><th><bdi>p⊕q</bdi></th><th><bdi>p→q</bdi></th><th><bdi>p↔q</bdi></th><th><bdi>p</bdi>↑<bdi>q (NAND)</bdi></th><th><bdi>p</bdi>↓<bdi>q (NOR)</bdi></th></tr><tr><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>F</bdi></td></tr><tr><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>F</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td></tr><tr><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td></tr><tr><td><bdi>F</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>F</bdi></td><td><bdi>F</bdi></td><td><bdi>F</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td><td><bdi>T</bdi></td></tr></table><ul><li><b>מלכודת קריטית:</b> <bdi>→</bdi> שקרי רק במקרה היחיד <bdi>p=T,q=F. \"</bdi>שקר גורר כל דבר<bdi>\" (F→כל דבר=T) - Vacuous truth.</bdi></li></ul><h4>סדר קדימות של קשרים <bdi>(מהגבוה לנמוך)</bdi></h4><table><tr><th>קשר</th><th>סימון</th><th>כיוון קריאה כשיש כמה מאותו סוג</th></tr><tr><td>סוגריים</td><td><bdi>( )</bdi></td><td>מהפנים לחוץ</td></tr><tr><td>שלילה</td><td><bdi>¬</bdi></td><td>מימין לשמאל</td></tr><tr><td>וגם</td><td><bdi>∧</bdi></td><td>משמאל לימין</td></tr><tr><td>או</td><td><bdi>∨</bdi></td><td>משמאל לימין</td></tr><tr><td>גרירה</td><td><bdi>→</bdi></td><td>משמאל לימין</td></tr><tr><td>שקילות ו<bdi>-xor</bdi></td><td><bdi>↔, ⊕</bdi></td><td>משמאל לימין</td></tr></table><p>קשר <bdi>NAND/NOR</bdi> אין לו סדר קדימות מוגדר - יש להקפיד לכתוב אותו תמיד בסוגריים.</p><h4><bdi>13</bdi> כללי השקילות הלוגיים <bdi>(הכלי המרכזי בפרק)</bdi></h4><table><tr><th>#</th><th>שם</th><th>הזהות</th></tr><tr><td><bdi>1</bdi></td><td>טאוטולוגיה בסיסית</td><td><bdi>p∨¬p ≡ T</bdi></td></tr><tr><td><bdi>2</bdi></td><td>סתירה בסיסית</td><td><bdi>p∧¬p ≡ F</bdi></td></tr><tr><td><bdi>3</bdi></td><td>כלל הזהות</td><td><bdi>p∨F ≡ p ≡ p∧T</bdi></td></tr><tr><td><bdi>4</bdi></td><td>כללי השליטה</td><td><bdi>p∨T ≡ T , p∧F ≡ F</bdi></td></tr><tr><td><bdi>5</bdi></td><td>כללי הכפילות <bdi>(אידמפוטנטיות)</bdi></td><td><bdi>p∨p ≡ p ≡ p∧p</bdi></td></tr><tr><td><bdi>6</bdi></td><td>שלילה כפולה</td><td><bdi>¬(¬p) ≡ p</bdi></td></tr><tr><td><bdi>7</bdi></td><td>כללי החילוף <bdi>(קומוטטיביות)</bdi></td><td><bdi>p∨q ≡ q∨p , p∧q ≡ q∧p</bdi></td></tr><tr><td><bdi>8</bdi></td><td>כללי הקיבוץ <bdi>(אסוציאטיביות)</bdi></td><td><bdi>p∨(q∨r) ≡ (p∨q)∨r , p∧(q∧r) ≡ (p∧q)∧r</bdi></td></tr><tr><td><bdi>9</bdi></td><td>כללי הפילוג <bdi>(דיסטריבוטיביות)</bdi></td><td><bdi>p∨(q∧r) ≡ (p∨q)∧(p∨r) , p∧(q∨r) ≡ (p∧q)∨(p∧r)</bdi></td></tr><tr><td><bdi>10</bdi></td><td>כלל הבליעה</td><td><bdi>p∨(p∧q) ≡ p ≡ p∧(p∨q)</bdi></td></tr><tr><td><bdi>11</bdi></td><td>כללי דה-מורגן <bdi>(D.M)</bdi></td><td><bdi>¬(p∨q) ≡ ¬p∧¬q , ¬(p∧q) ≡ ¬p∨¬q</bdi></td></tr><tr><td><bdi>12</bdi></td><td>כלל הגרירה</td><td><bdi>p→q ≡ ¬p∨q</bdi></td></tr><tr><td><bdi>13</bdi></td><td>כלל השקילות <bdi>(↔)</bdi></td><td><bdi>p↔q ≡ (p→q)∧(q→p) ≡ (p∧q)∨(¬p∧¬q)</bdi></td></tr></table><p><b>עקרון הדואליות:</b> מזהות המערבת רק <bdi>∨,∧,¬,T,F</bdi> ניתן להפיק זהות נוספת ע\"י החלפת <bdi>∨↔∧</bdi> ו<bdi>-T↔F (רק על אלו - לא על → או ↔ ישירות; יש קודם להמיר גרירה לפי כלל 12).</bdi></p><h4>תנאי מספיק/הכרחי - טבלת התרגום</h4><ul><li><bdi>p→q: \"p</bdi> מספיק ל<bdi>-q\" ≡ \"q</bdi> הכרחי ל<bdi>-p\" -</bdi> <b>אותו משפט בדיוק</b>, לא שני משפטים שונים! הבלבול הנפוץ: לחשוב שצריך <bdi>p→q</bdi> במקום אחד ו<bdi>-q→p</bdi> במקום השני.</li><li><bdi>p↔q: p</bdi> ו<bdi>-q</bdi> הם תנאי הכרחי ומספיק זה לזה.</li><li><bdi>\"p</bdi> רק אם <bdi>q\" ≡ p→q (ולא q→p!). \"</bdi>רק אם <bdi>p</bdi> אז <bdi>q\" ≡ q→p.</bdi></li></ul><table><tr><th>תנאי</th><th>התנאי מתקיים</th><th>התנאי אינו מתקיים</th></tr><tr><td>תנאי מספיק</td><td>התוצאה מתקיימת</td><td>לא ידוע</td></tr><tr><td>תנאי הכרחי</td><td>לא ידוע</td><td>התוצאה אינה מתקיימת</td></tr></table><h4>מלכודת מרכזית: הופכי / הפוך / ניגוד</h4><table><tr><th>כיוון</th><th>ניסוח</th><th>שקול למקור <bdi>p→q</bdi>?</th></tr><tr><td>מקורי</td><td><bdi>p→q</bdi></td><td>-</td></tr><tr><td>הופכי <bdi>(Converse)</bdi></td><td><bdi>q→p</bdi></td><td>לא שקול</td></tr><tr><td>הפוך <bdi>(Inverse)</bdi></td><td><bdi>¬p→¬q</bdi></td><td>לא שקול <bdi>(אך שקול להופכי)</bdi></td></tr><tr><td>ניגוד <bdi>(Contrapositive)</bdi></td><td><bdi>¬q→¬p</bdi></td><td><b>כן שקול! <bdi>(היחיד)</bdi></b></td></tr></table><h4><bdi>DNF / CNF</bdi></h4><ul><li>ליטרל = אטום <bdi>(p)</bdi> או נגטום <bdi>(¬p).</bdi> פסוקית \"וגם\" = ליטרלים שונים מחוברים ב<bdi>-∧.</bdi> פסוקית \"או\" = ליטרלים שונים מחוברים ב<bdi>-∨.</bdi></li><li><b><bdi>DNF</bdi></b> = \"או\" של פסוקיות \"וגם\" - נבנה משורות הטבלה בהן ערך הפסוק <bdi>T (כל משתנה T נלקח כמו שהוא, כל משתנה F נלקח כשלילתו).</bdi></li><li><b><bdi>CNF</bdi></b> = \"וגם\" של פסוקיות \"או\" - נבנה משורות הטבלה בהן ערך הפסוק <bdi>F (הפוך: משתנה T נלקח כשלילתו, משתנה F נלקח כמו שהוא).</bdi></li><li>צורה נורמלית <b>שלמה</b> = כל פסוקית מכילה את כל המשתנים <bdi>(אם חסר משתנה X בפסוקית, מכפילים ב-(X∨¬X) ל-DNF או מוסיפים (X∧¬X) ב-\"או\" ל-CNF ומפזרים לפי כלל הפילוג).</bdi></li><li>מעבר ישיר <bdi>CNF↔DNF</bdi> ללא טבלת אמת: שוללים את הפסוק, מפשטים בדה-מורגן, ורושמים את \"הפסוק המשלים<bdi>\" (הפסוקיות שלא הופיעו).</bdi></li><li>מלכודת נפוצה: להתבלבל בין <bdi>T/F</bdi> ובין הפסוק <bdi>A</bdi> לשלילתו <bdi>¬A -</bdi> לוודא בדיוק על איזה פסוק מתבקשת הצורה <bdi>(זו נקודת הטעות השכיחה ביותר בשאלות מסוג זה).</bdi></li></ul><h4>קבוצות קשרים שלמות <bdi>(Functionally Complete)</bdi></h4><ul><li><bdi>{¬,∧,∨}</bdi> שלמה <bdi>(כי כל פסוק שאינו טאוטולוגיה/סתירה ניתן לכתיבה ב-DNF/CNF שמשתמשים רק בהם).</bdi></li><li><bdi>{¬,∧}</bdi> שלמה <bdi>(כי p∨q≡¬(¬p∧¬q)). {¬,∨}</bdi> שלמה <bdi>(כי p∧q≡¬(¬p∨¬q)) -</bdi> לפי דה-מורגן.</li><li><bdi>{↑} (NAND בלבד)</bdi> שלמה<bdi>. {↓} (NOR בלבד)</bdi> שלמה. <b>אלו הקבוצות היחידות בנות-איבר-בודד שהן שלמות.</b></li><li><bdi>⊕ (xor)</bdi> ו<bdi>-→</bdi> לבדם <b>אינם</b> מספיקים ליצור קבוצה שלמה.</li><li>כל קבוצה שמכילה <bdi>NAND</bdi> או <bdi>NOR</bdi> לבד <bdi>(גם עם עוד קשרים)</bdi> היא אוטומטית שלמה.</li></ul><h4>כללי היסק ותוקף טיעונים</h4><table><tr><th>שם</th><th>כלל</th></tr><tr><td><bdi>Modus Ponens (M.P)</bdi></td><td><bdi>(p→q)∧p</bdi> ⟹ <bdi>q</bdi></td></tr><tr><td><bdi>Modus Tollens (M.T)</bdi></td><td><bdi>(p→q)∧¬q</bdi> ⟹ <bdi>¬p</bdi></td></tr><tr><td><bdi>Hypothetical Syllogism (H.S)</bdi></td><td><bdi>(p→q)∧(q→r)</bdi> ⟹ <bdi>p→r</bdi></td></tr><tr><td><bdi>Disjunctive Syllogism (D.S)</bdi></td><td><bdi>(p∨q)∧¬p</bdi> ⟹ <bdi>q</bdi></td></tr><tr><td><bdi>Addition</bdi></td><td><bdi>p</bdi> ⟹ <bdi>p∨q</bdi></td></tr><tr><td><bdi>Simplification</bdi></td><td><bdi>p∧q</bdi> ⟹ <bdi>p</bdi></td></tr><tr><td><bdi>Resolution</bdi></td><td><bdi>(p∨q)∧(¬p∨r)</bdi> ⟹ <bdi>q∨r</bdi></td></tr></table><ul><li>טיעון תקף ⟺ צירוף ההנחות גורר טאוטולוגית את המסקנה ⟺ <bdi>(צירוף ההנחות)→(מסקנה)</bdi> הוא טאוטולוגיה.</li><li>מלכודת<bdi>: \"affirming the consequent\" - (p→q)∧q</bdi>⟹<bdi>p</bdi> <b>אינו</b> כלל תקף! <bdi>(בלבול נפוץ עם Modus Ponens/Tollens).</bdi></li><li>הבחנה חשובה<bdi>: →</bdi> הוא קשר לוגי <bdi>(יוצר פסוק חדש, יכול להיות T או F);</bdi> ⟹ מייצג תקפות טיעון <bdi>(לא פסוק - מתעניינים רק בהשמות בהן צירוף ההנחות אמת).</bdi></li><li>הוכחת תוקף אפשר גם באמצעות רזולוציה בלבד, לאחר הבאת ההנחות <bdi>(ושלילת המסקנה)</bdi> לצורת <bdi>CNF.</bdi></li></ul>",
     "questions":  [
                       {
                           "type":  "open",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד א', חלק א', שאלה <code>2 [11</code> נק']",
-                          "q":  "הוכיחו ללא שימוש בטבלת אמת כי מתקיים<code>: (¬p ↔ q) ↔ ((p ∧ q) → (p → q)) ≡ p ↔ ¬q</code>",
-                          "solution":  "<p>שרשרת שקילויות באמצעות<code>: a→b ≡ ¬a∨b,</code> חוקי דה-מורגן <code>¬(a∧b) ≡ ¬a∨¬b,</code> אסוציאטיביות וקומוטטיביות של <code>∨,</code> הפישוט <code>¬q∨q≡T</code> ו<code>-a∨T≡T,</code> ולבסוף <code>a→b≡¬b→¬a (</code>ניגוד<code>/contrapositive).</code> מגיעים לתוצאה <code>p↔¬q,</code> כנדרש.</p>",
-                          "answer":  "השקילות מוכחת<code>: (¬p↔q)↔((p∧q)→(p→q)) ≡ p↔¬q</code>",
-                          "deeper":  "שימוש משולב יפה: תחילה שמים לב ש<code>-(p∧q)→(p→q)</code> הוא בעצמו תמיד טאוטולוגיה (כי <code>p∧q</code> גורר <code>p,</code> ומ<code>-p</code> ניתן <code>M.P</code> להסיק <code>q</code> עצמו כבר נתון) - מה שמפשט מאוד את האגף הימני לפני שממשיכים."
+                          "src":  "חורף תשפ\"ג 2023, מועד א', חלק א', שאלה 2 [11 נק']",
+                          "q":  "הוכיחו ללא שימוש בטבלת אמת כי מתקיים<bdi>: (¬p ↔ q) ↔ ((p ∧ q) → (p → q)) ≡ p ↔ ¬q</bdi>",
+                          "solution":  "<p>שרשרת שקילויות באמצעות<bdi>: a→b ≡ ¬a∨b,</bdi> חוקי דה-מורגן <bdi>¬(a∧b) ≡ ¬a∨¬b,</bdi> אסוציאטיביות וקומוטטיביות של <bdi>∨,</bdi> הפישוט <bdi>¬q∨q≡T</bdi> ו<bdi>-a∨T≡T,</bdi> ולבסוף <bdi>a→b≡¬b→¬a (ניגוד/contrapositive).</bdi> מגיעים לתוצאה <bdi>p↔¬q,</bdi> כנדרש.</p>",
+                          "answer":  "השקילות מוכחת<bdi>: (¬p↔q)↔((p∧q)→(p→q)) ≡ p↔¬q</bdi>",
+                          "deeper":  "שימוש משולב יפה: תחילה שמים לב ש<bdi>-(p∧q)→(p→q)</bdi> הוא בעצמו תמיד טאוטולוגיה <bdi>(כי p∧q גורר p, ומ-p ניתן M.P להסיק q עצמו כבר נתון) -</bdi> מה שמפשט מאוד את האגף הימני לפני שממשיכים."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד א', חלק ב', שאלה <code>2</code>",
-                          "q":  "מצא את צורת ה<code>-DNF</code> של הפסוק הבא<code>: (p∨q∨r) ∧ (¬p∨q∨r) ∧ (p∨¬q∨r) ∧ (p∨q∨¬r) ∧ (p∨¬q∨¬r)</code>",
-                          "correct":  "<code>(p∧q∧r) ∨ (p∧q∧¬r) ∨ (p∧¬q∧r)</code>",
+                          "src":  "חורף תשפ\"ג 2023, מועד א', חלק ב', שאלה 2",
+                          "q":  "מצא את צורת ה<bdi>-DNF</bdi> של הפסוק הבא<bdi>: (p∨q∨r) ∧ (¬p∨q∨r) ∧ (p∨¬q∨r) ∧ (p∨q∨¬r) ∧ (p∨¬q∨¬r)</bdi>",
+                          "correct":  "<bdi>(p∧q∧r) ∨ (p∧q∧¬r) ∨ (p∧¬q∧r)</bdi>",
                           "opts":  [
-                                       "<code>(¬p∧¬q∧¬r) ∨ (p∧q∧r)</code>",
-                                       "<code>(p∧q∧r)</code>",
-                                       "<code>(¬p∧q∧r) ∨ (p∧¬q∧¬r)</code>"
+                                       "<bdi>(¬p∧¬q∧¬r) ∨ (p∧q∧r)</bdi>",
+                                       "<bdi>(p∧q∧r)</bdi>",
+                                       "<bdi>(¬p∧q∧r) ∨ (p∧¬q∧¬r)</bdi>"
                                    ],
-                          "ex":  "לפי האלגוריתם למעבר בין הצורות הנורמליות, משלימים את הפסוקיות (מינטרמים) שלא מופיעות בפסוק המקורי <code>(CNF)</code> מתוך כלל <code>8</code> האפשרויות ל<code>-3</code> משתנים; שלוש הפסוקיות החסרות הן אלו שמופיעות בתשובה.",
-                          "deeper":  "זהו בדיוק אותו פסוק בדיוק כמו בשאלה <code>6</code> של אביב <code>2022</code> מועד ב' - דוגמה לכך שבנק השאלות חוזר על אותם פסוקים ב\"ניסוח<code>\" (CNF↔DNF)</code> שונה במבחנים שונים."
+                          "ex":  "לפי האלגוריתם למעבר בין הצורות הנורמליות, משלימים את הפסוקיות <bdi>(מינטרמים)</bdi> שלא מופיעות בפסוק המקורי <bdi>(CNF)</bdi> מתוך כלל <bdi>8</bdi> האפשרויות ל<bdi>-3</bdi> משתנים; שלוש הפסוקיות החסרות הן אלו שמופיעות בתשובה.",
+                          "deeper":  "זהו בדיוק אותו פסוק בדיוק כמו בשאלה <bdi>6</bdi> של אביב <bdi>2022</bdi> מועד ב' - דוגמה לכך שבנק השאלות חוזר על אותם פסוקים ב\"ניסוח<bdi>\" (CNF↔DNF)</bdi> שונה במבחנים שונים."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד א', חלק ב', שאלה <code>3</code>",
-                          "q":  "נתבונן בפסוק<code>: A ≡ (¬p⊕q) ∨ ((p→q)∧(q→r) → (p→r)).</code> מהי הטענה הנכונה?",
-                          "correct":  "<code>A</code> טאוטולוגיה",
+                          "src":  "חורף תשפ\"ג 2023, מועד א', חלק ב', שאלה 3",
+                          "q":  "נתבונן בפסוק<bdi>: A ≡ (¬p⊕q) ∨ ((p→q)∧(q→r) → (p→r)).</bdi> מהי הטענה הנכונה?",
+                          "correct":  "<bdi>A</bdi> טאוטולוגיה",
                           "opts":  [
-                                       "בצורת ה<code>-DNF</code> של <code>¬A</code> יש <code>3</code> פסוקיות",
-                                       "מתקיים <code>(p∧q)∨(p⊕q)</code> ⇒ <code>A</code>",
-                                       "<code>A</code> סתירה"
+                                       "בצורת ה<bdi>-DNF</bdi> של <bdi>¬A</bdi> יש <bdi>3</bdi> פסוקיות",
+                                       "מתקיים <bdi>(p∧q)∨(p⊕q)</bdi> ⇒ <bdi>A</bdi>",
+                                       "<bdi>A</bdi> סתירה"
                                    ],
-                          "ex":  "מוכיחים על ידי חלוקה למקרים לפי ערכי <code>p, q, r (</code>לפי מבנה <code>A=B∨C,</code> כאשר <code>C</code> הוא צורת הטרנזיטיביות של הגרירה שהיא תמיד טאוטולוגיה) שבכל מקרה מתקבל <code>T,</code> ולכן הפסוק תמיד אמת. משום כך התשובות הכוללות <code>¬A</code> אינן נכונות; התשובה השלישית נפסלת בעזרת דוגמה נגדית <code>p=T, r=F, q=F.</code>",
-                          "deeper":  "אותה טכניקה כמו בשאלה <code>8</code> של אביב <code>2022</code> מועד ב' - לזהות ש<code>-(p→q)∧(q→r)→(p→r)</code> הוא כלל ה<code>-Hypothetical Syllogism</code> ולכן טאוטולוגיה קבועה, מה שהופך את כל <code>A</code> לטאוטולוגיה מיד."
+                          "ex":  "מוכיחים על ידי חלוקה למקרים לפי ערכי <bdi>p, q, r (לפי מבנה A=B∨C, כאשר C הוא צורת הטרנזיטיביות של הגרירה שהיא תמיד טאוטולוגיה)</bdi> שבכל מקרה מתקבל <bdi>T,</bdi> ולכן הפסוק תמיד אמת. משום כך התשובות הכוללות <bdi>¬A</bdi> אינן נכונות; התשובה השלישית נפסלת בעזרת דוגמה נגדית <bdi>p=T, r=F, q=F.</bdi>",
+                          "deeper":  "אותה טכניקה כמו בשאלה <bdi>8</bdi> של אביב <bdi>2022</bdi> מועד ב' - לזהות ש<bdi>-(p→q)∧(q→r)→(p→r)</bdi> הוא כלל ה<bdi>-Hypothetical Syllogism</bdi> ולכן טאוטולוגיה קבועה, מה שהופך את כל <bdi>A</bdi> לטאוטולוגיה מיד."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד א', חלק ב', שאלה <code>5</code>",
+                          "src":  "חורף תשפ\"ג 2023, מועד א', חלק ב', שאלה 5",
                           "q":  "איזה מהטיעונים הבאים הוא טיעון תקף?",
-                          "correct":  "<code>((p</code>↑<code>q)</code>↓<code>(q</code>↑<code>r)) ∧ r</code> ⇒ <code>p</code>",
+                          "correct":  "<bdi>((p↑q)↓(q↑r)) ∧ r</bdi> ⇒ <bdi>p</bdi>",
                           "opts":  [
-                                       "<code>((p</code>↑<code>q)</code>↓<code>(q</code>↑<code>r)) ∨ r</code> ⇒ <code>q</code>",
-                                       "<code>((p</code>↑<code>q)</code>↑<code>(q</code>↑<code>r)) ∧ p</code> ⇒ <code>r</code>",
-                                       "<code>((p</code>↑<code>q)∧(q</code>↑<code>r)) ∧ p</code> ⇒ <code>q</code>"
+                                       "<bdi>((p↑q)↓(q↑r)) ∨ r</bdi> ⇒ <bdi>q</bdi>",
+                                       "<bdi>((p↑q)↑(q↑r)) ∧ p</bdi> ⇒ <bdi>r</bdi>",
+                                       "<bdi>((p↑q)∧(q↑r)) ∧ p</bdi> ⇒ <bdi>q</bdi>"
                                    ],
-                          "ex":  "סעיפים א-ג נפסלים בעזרת דוגמאות נגדיות (הצבת ערכי אמת ל<code>-p,q,r).</code> בסעיף ד (הנכון): מהיפותזה נובע <code>(p</code>↑<code>q)=F ∧ (q</code>↑<code>r)=F ∧ r=T;</code> מ<code>-(p</code>↑<code>q)=F</code> נובע <code>p=T</code> וגם <code>q=T;</code> מ<code>-(q</code>↑<code>r)=F</code> ועם <code>q=T</code> נובע <code>r=T (</code>שוב, עקבי); בסה\"כ <code>p=T</code> כמבוקש - הטיעון תקף.",
-                          "deeper":  "טכניקת פתרון עם <code>NAND/NOR:</code> הכי יעיל לפתוח כל קשר לא-סטנדרטי להגדרתו <code>(p</code>↑<code>q≡¬(p∧q), p</code>↓<code>q≡¬(p∨q))</code> ואז לעבוד עם <code>∧,∨,¬</code> הרגילים בניתוח לוגי ישיר, במקום לבנות טבלת אמת מלאה בת <code>8</code> שורות."
+                          "ex":  "סעיפים א-ג נפסלים בעזרת דוגמאות נגדיות <bdi>(הצבת ערכי אמת ל-p,q,r).</bdi> בסעיף ד <bdi>(הנכון):</bdi> מהיפותזה נובע <bdi>(p↑q)=F ∧ (q↑r)=F ∧ r=T;</bdi> מ<bdi>-(p↑q)=F</bdi> נובע <bdi>p=T</bdi> וגם <bdi>q=T;</bdi> מ<bdi>-(q↑r)=F</bdi> ועם <bdi>q=T</bdi> נובע <bdi>r=T (שוב, עקבי);</bdi> בסה\"כ <bdi>p=T</bdi> כמבוקש - הטיעון תקף.",
+                          "deeper":  "טכניקת פתרון עם <bdi>NAND/NOR:</bdi> הכי יעיל לפתוח כל קשר לא-סטנדרטי להגדרתו <bdi>(p↑q≡¬(p∧q), p↓q≡¬(p∨q))</bdi> ואז לעבוד עם <bdi>∧,∨,¬</bdi> הרגילים בניתוח לוגי ישיר, במקום לבנות טבלת אמת מלאה בת <bdi>8</bdi> שורות."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד ב', חלק ב', שאלה <code>2</code>",
-                          "q":  "מהי צורת ה<code>-CNF</code> של הפסוק<code>: (p∧¬q∧r) ∨ (¬p∧q∧r) ∨ (p∧q∧r)</code>?",
-                          "correct":  "<code>(p∨q∨r) ∧ (¬p∨q∨r) ∧ (p∨¬q∨r) ∧ (p∨q∨¬r) ∧ (p∨¬q∨¬r)</code>",
+                          "src":  "חורף תשפ\"ג 2023, מועד ב', חלק ב', שאלה 2",
+                          "q":  "מהי צורת ה<bdi>-CNF</bdi> של הפסוק<bdi>: (p∧¬q∧r) ∨ (¬p∧q∧r) ∨ (p∧q∧r)</bdi>?",
+                          "correct":  "<bdi>(p∨q∨r) ∧ (¬p∨q∨r) ∧ (p∨¬q∨r) ∧ (p∨q∨¬r) ∧ (p∨¬q∨¬r)</bdi>",
                           "opts":  [
-                                       "<code>(p∨q∨r) ∧ (¬p∨¬q∨¬r)</code>",
-                                       "<code>(¬p∨¬q∨¬r) ∧ (¬p∨¬q∨r) ∧ (¬p∨q∨¬r)</code>",
-                                       "<code>(p∨q∨r)</code>"
+                                       "<bdi>(p∨q∨r) ∧ (¬p∨¬q∨¬r)</bdi>",
+                                       "<bdi>(¬p∨¬q∨¬r) ∧ (¬p∨¬q∨r) ∧ (¬p∨q∨¬r)</bdi>",
+                                       "<bdi>(p∨q∨r)</bdi>"
                                    ],
-                          "ex":  "ניתן לפתור עם טבלת אמת או עם אלגוריתם מעבר ישיר מ<code>-DNF</code> ל<code>-CNF.</code> הפסוקיות <code>¬p∨¬q∨¬r, ¬p∨¬q∨r, ¬p∨q∨¬r</code> אינן שוללות אף פסוקית בפסוק הנתון - הן נשארות רשומות בפסוק שבתשובה הראשונה, יחד עם שאר חמש הפסוקיות.",
-                          "deeper":  "אותו פסוק בדיוק כמו בשאלה <code>6</code> של אביב <code>2022</code> מועד א' (עם אותה תשובה) - עוד דוגמה לחזרתיות בבנק השאלות."
+                          "ex":  "ניתן לפתור עם טבלת אמת או עם אלגוריתם מעבר ישיר מ<bdi>-DNF</bdi> ל<bdi>-CNF.</bdi> הפסוקיות <bdi>¬p∨¬q∨¬r, ¬p∨¬q∨r, ¬p∨q∨¬r</bdi> אינן שוללות אף פסוקית בפסוק הנתון - הן נשארות רשומות בפסוק שבתשובה הראשונה, יחד עם שאר חמש הפסוקיות.",
+                          "deeper":  "אותו פסוק בדיוק כמו בשאלה <bdi>6</bdi> של אביב <bdi>2022</bdi> מועד א<bdi>' (עם אותה תשובה) -</bdi> עוד דוגמה לחזרתיות בבנק השאלות."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד ב', חלק ב', שאלה <code>3</code>",
-                          "q":  "נתבונן בפסוק<code>: A ≡ ¬p → (q↔r) ∧ r ∧ (p⊕q).</code> מהי הטענה הנכונה?",
-                          "correct":  "<code>A</code> טאוטולוגיה",
+                          "src":  "חורף תשפ\"ג 2023, מועד ב', חלק ב', שאלה 3",
+                          "q":  "נתבונן בפסוק<bdi>: A ≡ ¬p → (q↔r) ∧ r ∧ (p⊕q).</bdi> מהי הטענה הנכונה?",
+                          "correct":  "<bdi>A</bdi> טאוטולוגיה",
                           "opts":  [
-                                       "בצורת ה<code>-CNF</code> של <code>¬A</code> יש <code>3</code> פסוקיות",
-                                       "מתקיים<code>: (p∧q)∨(p⊕q)</code> ⇒ <code>A</code>",
-                                       "<code>A</code> סתירה"
+                                       "בצורת ה<bdi>-CNF</bdi> של <bdi>¬A</bdi> יש <bdi>3</bdi> פסוקיות",
+                                       "מתקיים<bdi>: (p∧q)∨(p⊕q)</bdi> ⇒ <bdi>A</bdi>",
+                                       "<bdi>A</bdi> סתירה"
                                    ],
-                          "ex":  "מנתחים לפי חלוקה למקרים: אם <code>p=F</code> אז הפסוק מהצורה <code>F→(...)</code> ולכן <code>T;</code> אם <code>p=T</code> נחלק לשני תת-מקרים לפי <code>q</code> — בכל מקרה מתקבל <code>T.</code> בסה\"כ בכל מקרה <code>A=T,</code> כלומר טאוטולוגיה. לכן התשובות עם <code>¬A</code> אינן נכונות; התשובה השלישית <code>((p∧q)∨(p⊕q))</code> אינה טאוטולוגיה (דוגמה נגדית <code>p,r,q=F)</code> ולכן <code>A</code> אינו יכול לגרור אותה תמיד באופן שמקנה תוקף.",
-                          "deeper":  "טיפ: כאשר הפסוק בנוי כ<code>-¬p→(...),</code> הדרך המהירה ביותר לבדוק טאוטולוגיה היא לבדוק בנפרד את מקרה <code>p=F (</code>גרירה עם קדם שקר - תמיד <code>T)</code> ואז להתמקד רק במקרה <code>p=T.</code>"
+                          "ex":  "מנתחים לפי חלוקה למקרים: אם <bdi>p=F</bdi> אז הפסוק מהצורה <bdi>F→(...)</bdi> ולכן <bdi>T;</bdi> אם <bdi>p=T</bdi> נחלק לשני תת-מקרים לפי <bdi>q</bdi> — בכל מקרה מתקבל <bdi>T.</bdi> בסה\"כ בכל מקרה <bdi>A=T,</bdi> כלומר טאוטולוגיה. לכן התשובות עם <bdi>¬A</bdi> אינן נכונות; התשובה השלישית <bdi>((p∧q)∨(p⊕q))</bdi> אינה טאוטולוגיה <bdi>(דוגמה נגדית p,r,q=F)</bdi> ולכן <bdi>A</bdi> אינו יכול לגרור אותה תמיד באופן שמקנה תוקף.",
+                          "deeper":  "טיפ: כאשר הפסוק בנוי כ<bdi>-¬p→(...),</bdi> הדרך המהירה ביותר לבדוק טאוטולוגיה היא לבדוק בנפרד את מקרה <bdi>p=F (גרירה עם קדם שקר - תמיד T)</bdi> ואז להתמקד רק במקרה <bdi>p=T.</bdi>"
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד ב', חלק ב', שאלה <code>4</code>",
+                          "src":  "חורף תשפ\"ג 2023, מועד ב', חלק ב', שאלה 4",
                           "q":  "איזו מבין הטענות הבאות היא הטענה הנכונה?",
-                          "correct":  "הקבוצה <code>{∨,</code>↑} היא קבוצת קשרים שלמה",
+                          "correct":  "הקבוצה <bdi>{∨,↑}</bdi> היא קבוצת קשרים שלמה",
                           "opts":  [
-                                       "הקבוצה <code>{¬,</code>↓} היא לא קבוצת קשרים שלמה",
-                                       "הקבוצה <code>{∨,∧}</code> היא קבוצת קשרים שלמה",
-                                       "הקבוצה <code>{¬,∧}</code> היא לא קבוצת קשרים שלמה"
+                                       "הקבוצה <bdi>{¬,↓}</bdi> היא לא קבוצת קשרים שלמה",
+                                       "הקבוצה <bdi>{∨,∧}</bdi> היא קבוצת קשרים שלמה",
+                                       "הקבוצה <bdi>{¬,∧}</bdi> היא לא קבוצת קשרים שלמה"
                                    ],
-                          "ex":  "{↑<code>} (NAND</code> בלבד) ידוע כקבוצת קשרים שלמה, ולכן {↑<code>,∨}</code> וודאי שלמה<code>. {¬,</code>↓} כן שלמה (הטענה השנייה שגויה<code>). {∨,∧}</code> אינה שלמה כי אי-אפשר לבטא את קשר השלילה באמצעות \"או\" ו\"גם\" בלבד<code>. {¬,∧}</code> כן שלמה (הטענה הרביעית שגויה).",
-                          "deeper":  "חזרה מדויקת (אותה שאלה, ניסוח מעט שונה) על שאלה <code>10</code> של אביב <code>2022</code> מועד א' - שני מבחנים שונים בודקים בדיוק את אותה עובדה מרכזית: {↑} ו-{↓} שלמות לבדן."
+                          "ex":  "<bdi>{↑} (NAND בלבד)</bdi> ידוע כקבוצת קשרים שלמה, ולכן <bdi>{↑,∨}</bdi> וודאי שלמה<bdi>. {¬,↓}</bdi> כן שלמה <bdi>(הטענה השנייה שגויה). {∨,∧}</bdi> אינה שלמה כי אי-אפשר לבטא את קשר השלילה באמצעות \"או\" ו\"גם\" בלבד<bdi>. {¬,∧}</bdi> כן שלמה <bdi>(הטענה הרביעית שגויה).</bdi>",
+                          "deeper":  "חזרה מדויקת <bdi>(אותה שאלה, ניסוח מעט שונה)</bdi> על שאלה <bdi>10</bdi> של אביב <bdi>2022</bdi> מועד א' - שני מבחנים שונים בודקים בדיוק את אותה עובדה מרכזית<bdi>: {↑}</bdi> ו<bdi>-{↓}</bdi> שלמות לבדן."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "חורף תשפ\"ג <code>2023,</code> מועד ב', חלק ב', שאלה <code>5</code>",
+                          "src":  "חורף תשפ\"ג 2023, מועד ב', חלק ב', שאלה 5",
                           "q":  "איזה מהטיעונים הבאים הוא טיעון תקף?",
-                          "correct":  "<code>(¬q→p) ∧ (q→¬r) ∧ r</code> ⇒ <code>p</code>",
+                          "correct":  "<bdi>(¬q→p) ∧ (q→¬r) ∧ r</bdi> ⇒ <bdi>p</bdi>",
                           "opts":  [
-                                       "<code>(p⊕q) ∧ ((p→r)∨(r</code>↑<code>q))</code> ⇒ <code>q</code>",
-                                       "<code>(p⊕q) ∧ ((p→q)∨(q</code>↑<code>q))</code> ⇒ <code>q</code>",
-                                       "<code>(p∨(q∧r)) ∧ (q↔r) ∧ p</code> ⇒ <code>r</code>"
+                                       "<bdi>(p⊕q) ∧ ((p→r)∨(r↑q))</bdi> ⇒ <bdi>q</bdi>",
+                                       "<bdi>(p⊕q) ∧ ((p→q)∨(q↑q))</bdi> ⇒ <bdi>q</bdi>",
+                                       "<bdi>(p∨(q∧r)) ∧ (q↔r) ∧ p</bdi> ⇒ <bdi>r</bdi>"
                                    ],
-                          "ex":  "סעיפים א-ג נפסלים בעזרת הצבות ערכי אמת ספציפיות המפרות את הטיעון. בסעיף הרביעי (הנכון): בהינתן <code>¬q→p=T ∧ q→¬r=T ∧ r=T,</code> מ<code>-(q→¬r)=T</code> ו<code>-r=T (</code>כלומר <code>¬r=F)</code> נובע <code>q=F;</code> מ<code>-(¬q→p)=T</code> ו<code>-q=F (</code>כלומר <code>¬q=T)</code> נובע <code>p=T -</code> כמבוקש. הטיעון תקף.",
-                          "deeper":  "טיפ: כאשר ההנחות כוללות <code>→</code> ופסוק ידוע (כמו <code>r=T),</code> הכי יעיל להתחיל מהעובדות הידועות <code>(r=T)</code> ולעבוד אחורה עם <code>Modus Tollens/Ponens</code> כדי לגלות ערכי משתנים נוספים בשרשור."
+                          "ex":  "סעיפים א-ג נפסלים בעזרת הצבות ערכי אמת ספציפיות המפרות את הטיעון. בסעיף הרביעי <bdi>(הנכון):</bdi> בהינתן <bdi>¬q→p=T ∧ q→¬r=T ∧ r=T,</bdi> מ<bdi>-(q→¬r)=T</bdi> ו<bdi>-r=T (כלומר ¬r=F)</bdi> נובע <bdi>q=F;</bdi> מ<bdi>-(¬q→p)=T</bdi> ו<bdi>-q=F (כלומר ¬q=T)</bdi> נובע <bdi>p=T -</bdi> כמבוקש. הטיעון תקף.",
+                          "deeper":  "טיפ: כאשר ההנחות כוללות <bdi>→</bdi> ופסוק ידוע <bdi>(כמו r=T),</bdi> הכי יעיל להתחיל מהעובדות הידועות <bdi>(r=T)</bdi> ולעבוד אחורה עם <bdi>Modus Tollens/Ponens</bdi> כדי לגלות ערכי משתנים נוספים בשרשור."
                       },
                       {
                           "type":  "open",
-                          "src":  "סמסטר א' תשפ\"ה <code>2025,</code> מועד א', שאלה <code>1</code>א <code>[12</code> נק']",
-                          "q":  "מצאו את צורת ה<code>-DNF</code> של הפסוק<code>: (p ∨ q ∨ r) ∧ (p ∨ ¬q ∨ r) ∧ ((p → q) ∨ r) ∧ (¬p ∨ q ∨ ¬r) ∧ (¬p ∨ ¬q ∨ r)</code>",
-                          "solution":  "<p>אפשר לפתור עם טבלת אמת. דרך חלופה: פותחים את הגרירה בסעיף האמצעי <code>(p → q ≡ ¬p ∨ q),</code> ומקבלים <code>CNF: (p ∨ q ∨ r) ∧ (p ∨ ¬q ∨ r) ∧ (¬p ∨ q ∨ r) ∧ (¬p ∨ q ∨ ¬r) ∧ (¬p ∨ ¬q ∨ r),</code> ואז הופכים ל<code>-DNF</code> לפי אלגוריתם השלמת הפסוקיות מתוך <code>8</code> השורות האפשריות.</p>",
-                          "answer":  "<code>(¬p ∧ q ∧ r) ∨ (¬p ∧ ¬q ∧ r) ∨ (p ∧ q ∧ r)</code>",
-                          "deeper":  "טיפ מרכזי: לפני שממירים ל<code>-DNF/CNF,</code> כדאי קודם לפתוח כל קשר לא-בסיסי (במקרה זה <code>→)</code> לצורתו הבסיסית <code>(∨,∧,¬),</code> כדי שכל הפסוקיות יהיו \"פסוקיות או\" תקינות (ליטרלים בלבד, ללא <code>→).</code>"
+                          "src":  "סמסטר א' תשפ\"ה 2025, מועד א', שאלה 1א [12 נק']",
+                          "q":  "מצאו את צורת ה<bdi>-DNF</bdi> של הפסוק<bdi>: (p ∨ q ∨ r) ∧ (p ∨ ¬q ∨ r) ∧ ((p → q) ∨ r) ∧ (¬p ∨ q ∨ ¬r) ∧ (¬p ∨ ¬q ∨ r)</bdi>",
+                          "solution":  "<p>אפשר לפתור עם טבלת אמת. דרך חלופה: פותחים את הגרירה בסעיף האמצעי <bdi>(p → q ≡ ¬p ∨ q),</bdi> ומקבלים <bdi>CNF: (p ∨ q ∨ r) ∧ (p ∨ ¬q ∨ r) ∧ (¬p ∨ q ∨ r) ∧ (¬p ∨ q ∨ ¬r) ∧ (¬p ∨ ¬q ∨ r),</bdi> ואז הופכים ל<bdi>-DNF</bdi> לפי אלגוריתם השלמת הפסוקיות מתוך <bdi>8</bdi> השורות האפשריות.</p>",
+                          "answer":  "<bdi>(¬p ∧ q ∧ r) ∨ (¬p ∧ ¬q ∧ r) ∨ (p ∧ q ∧ r)</bdi>",
+                          "deeper":  "טיפ מרכזי: לפני שממירים ל<bdi>-DNF/CNF,</bdi> כדאי קודם לפתוח כל קשר לא-בסיסי <bdi>(במקרה זה →)</bdi> לצורתו הבסיסית <bdi>(∨,∧,¬),</bdi> כדי שכל הפסוקיות יהיו \"פסוקיות או\" תקינות <bdi>(ליטרלים בלבד, ללא →).</bdi>"
                       },
                       {
                           "type":  "open",
-                          "src":  "סמסטר א' תשפ\"ה <code>2025,</code> מועד א', שאלה <code>1</code>ב <code>[13</code> נק']",
-                          "q":  "נתון פסוק <code>A</code> שצורת ה<code>-CNF</code> השלמה שלו היא<code>: (a ∨ ¬b ∨ c ∨ ¬d) ∧ (¬a ∨ b ∨ ¬c ∨ d) ∧ (¬a ∨ b ∨ c ∨ ¬d) ∧ (a ∨ ¬b ∨ ¬c ∨ d).</code> הוכיחו או הפריכו: הפסוק <code>((a</code> ↑ <code>b)</code> ↑ <code>(c</code> ↑ <code>d)) → A</code> הוא טאוטולוגיה.",
-                          "solution":  "<p>שאלה זהה במהות לשאלה <code>1</code> האמריקאית ממועד א' אביב תשע\"ט <code>2019:</code> בונים טבלת אמת חלקית של <code>A</code> מתוך ה<code>-CNF</code> הנתון <code>(4</code> פסוקיות ⟹ <code>4</code> שורות <code>F</code> מתוך <code>16),</code> ובודקים שבכל אחת מ<code>-4</code> השורות הללו מתקיים גם <code>(a</code>↑<code>b)</code>↑<code>(c</code>↑<code>d)=F -</code> כך שהגרירה <code>F→F=T</code> בכל מקום; בשאר <code>12</code> השורות <code>A=T</code> והגרירה <code>T→T=T.</code> לכן הפסוק כולו תמיד <code>T.</code></p>",
-                          "answer":  "הטענה נכונה - הפסוק <code>((a</code>↑<code>b)</code>↑<code>(c</code>↑<code>d))→A</code> הוא טאוטולוגיה",
-                          "deeper":  "כדאי לשים לב: זו אותה מסגרת שאלה שחוזרת ברוב המבחנים (\"פסוק <code>A</code> נתון ב<code>-CNF/DNF</code> שלמה עם <code>k</code> פסוקיות; בדקו טענה על <code>((a</code>↑<code>b)</code>↑<code>(c</code>↑<code>d))→A\") -</code> שווה להתאמן היטב על הטכניקה הכללית (לא רק על התוצאה הספציפית)."
+                          "src":  "סמסטר א' תשפ\"ה 2025, מועד א', שאלה 1ב [13 נק']",
+                          "q":  "נתון פסוק <bdi>A</bdi> שצורת ה<bdi>-CNF</bdi> השלמה שלו היא<bdi>: (a ∨ ¬b ∨ c ∨ ¬d) ∧ (¬a ∨ b ∨ ¬c ∨ d) ∧ (¬a ∨ b ∨ c ∨ ¬d) ∧ (a ∨ ¬b ∨ ¬c ∨ d).</bdi> הוכיחו או הפריכו: הפסוק <bdi>((a ↑ b) ↑ (c ↑ d)) → A</bdi> הוא טאוטולוגיה.",
+                          "solution":  "<p>שאלה זהה במהות לשאלה <bdi>1</bdi> האמריקאית ממועד א' אביב תשע\"ט <bdi>2019:</bdi> בונים טבלת אמת חלקית של <bdi>A</bdi> מתוך ה<bdi>-CNF</bdi> הנתון <bdi>(4 פסוקיות ⟹ 4 שורות F מתוך 16),</bdi> ובודקים שבכל אחת מ<bdi>-4</bdi> השורות הללו מתקיים גם <bdi>(a↑b)</bdi>↑<bdi>(c↑d)=F -</bdi> כך שהגרירה <bdi>F→F=T</bdi> בכל מקום; בשאר <bdi>12</bdi> השורות <bdi>A=T</bdi> והגרירה <bdi>T→T=T.</bdi> לכן הפסוק כולו תמיד <bdi>T.</bdi></p>",
+                          "answer":  "הטענה נכונה - הפסוק <bdi>((a↑b)↑(c↑d))→A</bdi> הוא טאוטולוגיה",
+                          "deeper":  "כדאי לשים לב: זו אותה מסגרת שאלה שחוזרת ברוב המבחנים <bdi>(\"פסוק A נתון ב-CNF/DNF שלמה עם k פסוקיות; בדקו טענה על ((a↑b)↑(c↑d))→A\") -</bdi> שווה להתאמן היטב על הטכניקה הכללית <bdi>(לא רק על התוצאה הספציפית).</bdi>"
                       },
                       {
                           "type":  "open",
-                          "src":  "סמסטר א' תשפ\"ה <code>2025,</code> מועד ב', שאלה <code>1</code>א <code>[12</code> נק']",
-                          "q":  "מצאו את צורת ה<code>-CNF</code> של הפסוק<code>: (¬(¬p → ¬q) ∧ r) ∨ (¬p ∧ ¬q ∧ r) ∨ (p ∧ q ∧ r)</code>",
-                          "solution":  "<p>אפשר עם טבלת אמת. דרך חלופה: מפשטים את הביטוי השמאלי <code>¬(¬p→¬q) ≡ ¬(¬(¬p)∨¬q) ≡ ¬(p∨¬q) ≡ ¬p∧q (</code>דה-מורגן), ומקבלים <code>DNF: (¬p∧q∧r) ∨ (¬p∧¬q∧r) ∨ (p∧q∧r),</code> שהופכים ל<code>-CNF</code> לפי אלגוריתם השלמת הפסוקיות.</p>",
-                          "answer":  "<code>(p∨q∨r) ∧ (p∨¬q∨r) ∧ (¬p∨q∨r) ∧ (¬p∨q∨¬r) ∧ (¬p∨¬q∨r)</code>",
-                          "deeper":  "מלכודת: יש לפשט קודם את <code>¬(¬p→¬q)</code> בעזרת כלל הגרירה ודה-מורגן לפני שמנסים לבנות טבלת אמת או <code>DNF/CNF -</code> ניסיון לעבוד עם הביטוי המקונן כמות שהוא מוביל לבלבול."
+                          "src":  "סמסטר א' תשפ\"ה 2025, מועד ב', שאלה 1א [12 נק']",
+                          "q":  "מצאו את צורת ה<bdi>-CNF</bdi> של הפסוק<bdi>: (¬(¬p → ¬q) ∧ r) ∨ (¬p ∧ ¬q ∧ r) ∨ (p ∧ q ∧ r)</bdi>",
+                          "solution":  "<p>אפשר עם טבלת אמת. דרך חלופה: מפשטים את הביטוי השמאלי <bdi>¬(¬p→¬q) ≡ ¬(¬(¬p)∨¬q) ≡ ¬(p∨¬q) ≡ ¬p∧q (דה-מורגן),</bdi> ומקבלים <bdi>DNF: (¬p∧q∧r) ∨ (¬p∧¬q∧r) ∨ (p∧q∧r),</bdi> שהופכים ל<bdi>-CNF</bdi> לפי אלגוריתם השלמת הפסוקיות.</p>",
+                          "answer":  "<bdi>(p∨q∨r) ∧ (p∨¬q∨r) ∧ (¬p∨q∨r) ∧ (¬p∨q∨¬r) ∧ (¬p∨¬q∨r)</bdi>",
+                          "deeper":  "מלכודת: יש לפשט קודם את <bdi>¬(¬p→¬q)</bdi> בעזרת כלל הגרירה ודה-מורגן לפני שמנסים לבנות טבלת אמת או <bdi>DNF/CNF -</bdi> ניסיון לעבוד עם הביטוי המקונן כמות שהוא מוביל לבלבול."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר א' תשפ\"ו <code>2026,</code> מועד א', שאלה <code>3 [10</code> נק']",
-                          "q":  "יהי <code>A ≡ (¬p∨q)→(r↔q).</code> מהי צורת ה<code>-CNF</code> השלמה של <code>A</code>?",
-                          "correct":  "<code>(¬p∨¬q∨r)∧(p∨¬q∨r)∧(p∨q∨¬r)</code>",
+                          "src":  "סמסטר א' תשפ\"ו 2026, מועד א', שאלה 3 [10 נק']",
+                          "q":  "יהי <bdi>A ≡ (¬p∨q)→(r↔q).</bdi> מהי צורת ה<bdi>-CNF</bdi> השלמה של <bdi>A</bdi>?",
+                          "correct":  "<bdi>(¬p∨¬q∨r)∧(p∨¬q∨r)∧(p∨q∨¬r)</bdi>",
                           "opts":  [
-                                       "<code>(p∨q∨r)∧(¬p∨¬q∨¬r)</code>",
-                                       "<code>(¬p∨q∨r)∧(p∨¬q∨¬r)∧(p∨q∨r)</code>",
-                                       "<code>(p∨¬q∨r)</code>"
+                                       "<bdi>(p∨q∨r)∧(¬p∨¬q∨¬r)</bdi>",
+                                       "<bdi>(¬p∨q∨r)∧(p∨¬q∨¬r)∧(p∨q∨r)</bdi>",
+                                       "<bdi>(p∨¬q∨r)</bdi>"
                                    ],
-                          "ex":  "נבנה באמצעות טבלת אמת מלאה <code>(8</code> שורות<code>, 3</code> משתנים <code>p,q,r)</code> ואיתור השורות בהן <code>A=F.</code>",
-                          "deeper":  "הביטוי <code>(¬p∨q)</code> הוא בעצם <code>p→q,</code> כך ש<code>-A</code> שקול ל<code>-(p→q)→(r↔q) -</code> שווה לזהות זאת לפני בניית הטבלה כדי לחסוך בחישוב."
+                          "ex":  "נבנה באמצעות טבלת אמת מלאה <bdi>(8 שורות, 3 משתנים p,q,r)</bdi> ואיתור השורות בהן <bdi>A=F.</bdi>",
+                          "deeper":  "הביטוי <bdi>(¬p∨q)</bdi> הוא בעצם <bdi>p→q,</bdi> כך ש<bdi>-A</bdi> שקול ל<bdi>-(p→q)→(r↔q) -</bdi> שווה לזהות זאת לפני בניית הטבלה כדי לחסוך בחישוב."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר א' תשפ\"ו <code>2026,</code> מועד א', שאלה <code>4 [10</code> נק']",
-                          "q":  "איזה מהטיעונים הבאים הוא טיעון תקף (עם קשרי <code>NAND</code>↑<code>, NOR</code>↓<code>, XOR⊕, →</code> בין <code>p,q,r)</code>?",
-                          "correct":  "<code>p∧((p</code>↑<code>q)</code>↓<code>(q</code>↑<code>r))</code> ⇒ <code>p</code>",
+                          "src":  "סמסטר א' תשפ\"ו 2026, מועד א', שאלה 4 [10 נק']",
+                          "q":  "איזה מהטיעונים הבאים הוא טיעון תקף <bdi>(עם קשרי NAND↑, NOR↓, XOR⊕, → בין p,q,r)</bdi>?",
+                          "correct":  "<bdi>p∧((p↑q)↓(q↑r))</bdi> ⇒ <bdi>p</bdi>",
                           "opts":  [
-                                       "<code>(p⊕q)∧(q→r)</code> ⇒ <code>p</code>↑<code>r</code>",
-                                       "<code>(p</code>↓<code>q)∧(q</code>↑<code>r)</code> ⇒ <code>r</code>",
-                                       "<code>(p</code>↑<code>q)⊕(q</code>↓<code>r)</code> ⇒ <code>p∧r</code>"
+                                       "<bdi>(p⊕q)∧(q→r)</bdi> ⇒ <bdi>p</bdi>↑<bdi>r</bdi>",
+                                       "<bdi>(p↓q)∧(q↑r)</bdi> ⇒ <bdi>r</bdi>",
+                                       "<bdi>(p↑q)⊕(q↓r)</bdi> ⇒ <bdi>p∧r</bdi>"
                                    ],
-                          "ex":  "הוכחה: מהצבת ערכי אמת מוכרחים להגיע ל<code>-p=T (</code>הנחת ההנחה <code>p</code> אמת כבר קובעת שהמסקנה <code>p</code> אמת - טיעון תקף באופן טריוויאלי אך חוקי). שאר הטיעונים הופרכו בדוגמאות נגדיות (הצבת ערכי אמת ספציפיים ל<code>-p,q,r).</code>",
-                          "deeper":  "מלכודת: טיעון עם הנחה שכבר מכילה ישירות את המסקנה <code>(p∧(...)</code>⇒<code>p)</code> הוא תמיד תקף באופן טריוויאלי <code>(Simplification) -</code> אין צורך לנתח את שאר ההנחה בכלל."
+                          "ex":  "הוכחה: מהצבת ערכי אמת מוכרחים להגיע ל<bdi>-p=T (הנחת ההנחה p אמת כבר קובעת שהמסקנה p אמת - טיעון תקף באופן טריוויאלי אך חוקי).</bdi> שאר הטיעונים הופרכו בדוגמאות נגדיות <bdi>(הצבת ערכי אמת ספציפיים ל-p,q,r).</bdi>",
+                          "deeper":  "מלכודת: טיעון עם הנחה שכבר מכילה ישירות את המסקנה <bdi>(p∧(...)⇒p)</bdi> הוא תמיד תקף באופן טריוויאלי <bdi>(Simplification) -</bdi> אין צורך לנתח את שאר ההנחה בכלל."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר א' תשפ\"ו <code>2026,</code> מועד ב', שאלה <code>2 [10</code> נק']",
-                          "q":  "יהיו <code>p,q,r</code> פסוקים כלשהם. איזו מהטענות הבאות נכונה בהכרח (עם קשר <code>NAND</code>↑ וגרירה/שקילות לוגית)?",
-                          "correct":  "<code>(p</code>↑<code>q)∨r</code> ⇒ <code>p</code>↑<code>(q</code>↑<code>r)</code>",
+                          "src":  "סמסטר א' תשפ\"ו 2026, מועד ב', שאלה 2 [10 נק']",
+                          "q":  "יהיו <bdi>p,q,r</bdi> פסוקים כלשהם. איזו מהטענות הבאות נכונה בהכרח <bdi>(עם קשר NAND↑ וגרירה/שקילות לוגית)</bdi>?",
+                          "correct":  "<bdi>(p↑q)∨r</bdi> ⇒ <bdi>p</bdi>↑<bdi>(q↑r)</bdi>",
                           "opts":  [
-                                       "<code>p</code>↑<code>(q</code>↑<code>r)</code> ⇒ <code>(p</code>↑<code>q)</code>↑<code>r</code>",
-                                       "<code>(p</code>↑<code>q)</code>↑<code>r ≡ p</code>↑<code>(q</code>↑<code>r)</code>",
-                                       "<code>(p</code>↑<code>q)∨r ≡ p</code>↑<code>(q</code>↑<code>r)</code>"
+                                       "<bdi>p</bdi>↑<bdi>(q↑r)</bdi> ⇒ <bdi>(p↑q)</bdi>↑<bdi>r</bdi>",
+                                       "<bdi>(p↑q)</bdi>↑<bdi>r ≡ p</bdi>↑<bdi>(q↑r)</bdi>",
+                                       "<bdi>(p↑q)∨r ≡ p</bdi>↑<bdi>(q↑r)</bdi>"
                                    ],
-                          "ex":  "מוכח: כשאגף שמאל אמת, גם אגף ימין אמת. שאר הטענות הופרכו בהצבות ערכי אמת ספציפיים המראות ש<code>-NAND</code> אינו קיבוצי <code>(associative) - (p</code>↑<code>q)</code>↑<code>r ≠ p</code>↑<code>(q</code>↑<code>r)</code> באופן כללי.",
-                          "deeper":  "מלכודת מרכזית<code>: NAND (</code>↑) הוא קשר חילופי (קומוטטיבי) אך אינו קיבוצי (אסוציאטיבי) - בניגוד ל<code>-∧,∨</code> הרגילים. יש להיזהר במיוחד משאלות המנסות \"להזיז סוגריים\" סביב ↑."
+                          "ex":  "מוכח: כשאגף שמאל אמת, גם אגף ימין אמת. שאר הטענות הופרכו בהצבות ערכי אמת ספציפיים המראות ש<bdi>-NAND</bdi> אינו קיבוצי <bdi>(associative) - (p↑q)</bdi>↑<bdi>r ≠ p</bdi>↑<bdi>(q↑r)</bdi> באופן כללי.",
+                          "deeper":  "מלכודת מרכזית<bdi>: NAND (↑)</bdi> הוא קשר חילופי <bdi>(קומוטטיבי)</bdi> אך אינו קיבוצי <bdi>(אסוציאטיבי) -</bdi> בניגוד ל<bdi>-∧,∨</bdi> הרגילים. יש להיזהר במיוחד משאלות המנסות \"להזיז סוגריים\" סביב ↑."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר א' תשפ\"ו <code>2026,</code> מועד ב', שאלה <code>3 [10</code> נק']",
-                          "q":  "יהי <code>A ≡ ((¬p)</code>↑<code>q)→(r</code>↓<code>p).</code> מהי צורת ה<code>-DNF</code> השלמה של <code>A</code>?",
-                          "correct":  "<code>(¬p∧q∧r)∨(¬p∧q∧¬r)∨(¬p∧¬q∧¬r)</code>",
+                          "src":  "סמסטר א' תשפ\"ו 2026, מועד ב', שאלה 3 [10 נק']",
+                          "q":  "יהי <bdi>A ≡ ((¬p)↑q)→(r↓p).</bdi> מהי צורת ה<bdi>-DNF</bdi> השלמה של <bdi>A</bdi>?",
+                          "correct":  "<bdi>(¬p∧q∧r)∨(¬p∧q∧¬r)∨(¬p∧¬q∧¬r)</bdi>",
                           "opts":  [
-                                       "<code>(p∧q∧r)∨(p∧¬q∧r)</code>",
-                                       "<code>(¬p∧¬q∧r)∨(p∧q∧¬r)</code>",
-                                       "<code>(p∨q∨r)</code>"
+                                       "<bdi>(p∧q∧r)∨(p∧¬q∧r)</bdi>",
+                                       "<bdi>(¬p∧¬q∧r)∨(p∧q∧¬r)</bdi>",
+                                       "<bdi>(p∨q∨r)</bdi>"
                                    ],
-                          "ex":  "נבנה מטבלת אמת <code>(8</code> שורות<code>, 3</code> משתנים) ואיתור השורות בהן <code>A=T.</code>",
-                          "deeper":  "לפני בניית הטבלה, כדאי לפתוח כל קשר<code>: (¬p)</code>↑<code>q ≡ ¬(¬p∧q) ≡ p∨¬q,</code> ו<code>-r</code>↓<code>p ≡ ¬(r∨p) -</code> כך שהחישוב הידני של כל שורה מתפשט משמעותית."
+                          "ex":  "נבנה מטבלת אמת <bdi>(8 שורות, 3 משתנים)</bdi> ואיתור השורות בהן <bdi>A=T.</bdi>",
+                          "deeper":  "לפני בניית הטבלה, כדאי לפתוח כל קשר<bdi>: (¬p)</bdi>↑<bdi>q ≡ ¬(¬p∧q) ≡ p∨¬q,</bdi> ו<bdi>-r</bdi>↓<bdi>p ≡ ¬(r∨p) -</bdi> כך שהחישוב הידני של כל שורה מתפשט משמעותית."
                       },
                       {
                           "type":  "open",
-                          "src":  "סמסטר ב' תשפ\"ה <code>2025,</code> מועד א', שאלה <code>1</code>ב <code>[10</code> נק']",
-                          "q":  "הפסוק <code>((p → k) → p) → p -</code> קבעו האם הוא טאוטולוגיה, סתירה, או אף אחד מהם, ונמקו.",
-                          "solution":  "<p>פישוט לוגי: פותחים את כל הגרירות <code>(a→b≡¬a∨b)</code> ומפעילים דה-מורגן על השלילות. מתקבל שהביטוי שקול ל<code>-T∨(¬p∨¬k∨p)</code> שהוא תמיד אמת (כי <code>p∨¬p≡T</code> מופיע כתת-ביטוי). לכן הפסוק הוא טאוטולוגיה.</p>",
+                          "src":  "סמסטר ב' תשפ\"ה 2025, מועד א', שאלה 1ב [10 נק']",
+                          "q":  "הפסוק <bdi>((p → k) → p) → p -</bdi> קבעו האם הוא טאוטולוגיה, סתירה, או אף אחד מהם, ונמקו.",
+                          "solution":  "<p>פישוט לוגי: פותחים את כל הגרירות <bdi>(a→b≡¬a∨b)</bdi> ומפעילים דה-מורגן על השלילות. מתקבל שהביטוי שקול ל<bdi>-T∨(¬p∨¬k∨p)</bdi> שהוא תמיד אמת <bdi>(כי p∨¬p≡T מופיע כתת-ביטוי).</bdi> לכן הפסוק הוא טאוטולוגיה.</p>",
                           "answer":  "טאוטולוגיה",
-                          "deeper":  "זהו \"חוק פירס<code>\" (Peirce's law) -</code> דוגמה קלאסית ומפורסמת בלוגיקה לטאוטולוגיה שאינה טריוויאלית למבט ראשון (משום שנראית \"מעגלית\"), אך מוכחת בקלות בפישוט או בטבלת אמת."
+                          "deeper":  "זהו \"חוק פירס<bdi>\" (Peirce's law) -</bdi> דוגמה קלאסית ומפורסמת בלוגיקה לטאוטולוגיה שאינה טריוויאלית למבט ראשון <bdi>(משום שנראית \"מעגלית\"),</bdi> אך מוכחת בקלות בפישוט או בטבלת אמת."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר ב' תשפ\"ה <code>2025,</code> מועד א', חלק ב', שאלה <code>2 [10</code> נק']",
-                          "q":  "סמנו את הטענה הנכונה מבין <code>5</code> הטענות הבאות בנוגע לשלמות קבוצות קשרים<code>: {→,</code>↓<code>}, {∧,∨}, {∨,¬}, {∧,∨,¬}, {→}.</code>",
-                          "correct":  "<code>{→,</code>↓} היא קבוצת קשרים שלמה",
+                          "src":  "סמסטר ב' תשפ\"ה 2025, מועד א', חלק ב', שאלה 2 [10 נק']",
+                          "q":  "סמנו את הטענה הנכונה מבין <bdi>5</bdi> הטענות הבאות בנוגע לשלמות קבוצות קשרים<bdi>: {→,↓}, {∧,∨}, {∨,¬}, {∧,∨,¬}, {→}.</bdi>",
+                          "correct":  "<bdi>{→,↓}</bdi> היא קבוצת קשרים שלמה",
                           "opts":  [
-                                       "<code>{∧,∨}</code> היא קבוצת קשרים שלמה",
-                                       "<code>{∨,¬}</code> אינה קבוצת קשרים שלמה",
-                                       "<code>{∧,∨,¬}</code> אינה קבוצת קשרים שלמה",
-                                       "<code>{→}</code> היא קבוצת קשרים שלמה"
+                                       "<bdi>{∧,∨}</bdi> היא קבוצת קשרים שלמה",
+                                       "<bdi>{∨,¬}</bdi> אינה קבוצת קשרים שלמה",
+                                       "<bdi>{∧,∨,¬}</bdi> אינה קבוצת קשרים שלמה",
+                                       "<bdi>{→}</bdi> היא קבוצת קשרים שלמה"
                                    ],
-                          "ex":  "<code>{→,</code>↓} שלמה: כבר {↓} לבדה <code>(NOR)</code> היא קבוצה שלמה, ולכן כל קבוצה המכילה אותה (עם עוד קשרים) שלמה גם היא<code>. {∧,∨} (</code>ללא <code>¬)</code> אינה שלמה<code>. {∨,¬}</code> כן שלמה (הטענה שאינה שלמה שגויה<code>). {∧,∨,¬}</code> כן שלמה (הטענה שאינה שלמה שגויה<code>). {→}</code> לבדה אינה שלמה (אין דרך לבטא שלילה רק באמצעות <code>→).</code>",
-                          "deeper":  "מלכודת<code>: →</code> לבדו אינו שלם, בניגוד ל-↑ ו-↓ שכל אחד מהם לבדו כן שלם - קל להתבלבל ולחשוב ש\"קשר בודד מספיק\" הוא תכונה כללית, אך היא נכונה רק ל<code>-NAND</code> ו<code>-NOR.</code>"
+                          "ex":  "<bdi>{→,↓}</bdi> שלמה: כבר <bdi>{↓}</bdi> לבדה <bdi>(NOR)</bdi> היא קבוצה שלמה, ולכן כל קבוצה המכילה אותה <bdi>(עם עוד קשרים)</bdi> שלמה גם היא<bdi>. {∧,∨} (ללא ¬)</bdi> אינה שלמה<bdi>. {∨,¬}</bdi> כן שלמה <bdi>(הטענה שאינה שלמה שגויה). {∧,∨,¬}</bdi> כן שלמה <bdi>(הטענה שאינה שלמה שגויה). {→}</bdi> לבדה אינה שלמה <bdi>(אין דרך לבטא שלילה רק באמצעות →).</bdi>",
+                          "deeper":  "מלכודת<bdi>: →</bdi> לבדו אינו שלם, בניגוד ל-↑ ו-↓ שכל אחד מהם לבדו כן שלם - קל להתבלבל ולחשוב ש\"קשר בודד מספיק\" הוא תכונה כללית, אך היא נכונה רק ל<bdi>-NAND</bdi> ו<bdi>-NOR.</bdi>"
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר ב' תשפ\"ה <code>2025,</code> מועד א', חלק ב', שאלה <code>5 [10</code> נק']",
-                          "q":  "פסוק <code>A</code> נתון בצורת <code>CNF</code> שלמה<code>: (p∨q∨k∨r)∧(p∨¬q∨¬k∨r)∧(p∨¬q∨k∨¬r).</code> כמה פסוקיות \"או\" יש ב<code>-CNF</code> השלמה של <code>¬A</code>?",
-                          "correct":  "<code>13</code>",
+                          "src":  "סמסטר ב' תשפ\"ה 2025, מועד א', חלק ב', שאלה 5 [10 נק']",
+                          "q":  "פסוק <bdi>A</bdi> נתון בצורת <bdi>CNF</bdi> שלמה<bdi>: (p∨q∨k∨r)∧(p∨¬q∨¬k∨r)∧(p∨¬q∨k∨¬r).</bdi> כמה פסוקיות \"או\" יש ב<bdi>-CNF</bdi> השלמה של <bdi>¬A</bdi>?",
+                          "correct":  "<bdi>13</bdi>",
                           "opts":  [
-                                       "<code>3</code>",
-                                       "<code>16</code>",
-                                       "<code>10</code>"
+                                       "<bdi>3</bdi>",
+                                       "<bdi>16</bdi>",
+                                       "<bdi>10</bdi>"
                                    ],
-                          "ex":  "מתוך <code>16</code> השורות האפשריות ל<code>-4</code> משתנים <code>(p,q,k,r), 3</code> שורות שייכות ל<code>-A (</code>אלו הפסוקיות שלו הן פסוקיות <code>F,</code> כלומר <code>A=F</code> בהן), ולכן <code>13</code> השורות הנותרות שייכות ל<code>-¬A -</code> ומכיוון ש<code>-¬A</code> שקול ל<code>-CNF</code> הנבנה משורות ה<code>-F</code> שלו, יש בו <code>13</code> פסוקיות.",
-                          "deeper":  "טיפ כללי לזכור: אם <code>CNF</code> שלם של <code>A</code> מכיל <code>k</code> פסוקיות (מתוך <code>2ⁿ</code> אפשריות ל<code>-n</code> משתנים), אז <code>CNF</code> השלם של <code>¬A</code> מכיל בדיוק <code>2ⁿ</code>−<code>k</code> פסוקיות - יחס משלים פשוט."
+                          "ex":  "מתוך <bdi>16</bdi> השורות האפשריות ל<bdi>-4</bdi> משתנים <bdi>(p,q,k,r), 3</bdi> שורות שייכות ל<bdi>-A (אלו הפסוקיות שלו הן פסוקיות F, כלומר A=F בהן),</bdi> ולכן <bdi>13</bdi> השורות הנותרות שייכות ל<bdi>-¬A -</bdi> ומכיוון ש<bdi>-¬A</bdi> שקול ל<bdi>-CNF</bdi> הנבנה משורות ה<bdi>-F</bdi> שלו, יש בו <bdi>13</bdi> פסוקיות.",
+                          "deeper":  "טיפ כללי לזכור: אם <bdi>CNF</bdi> שלם של <bdi>A</bdi> מכיל <bdi>k</bdi> פסוקיות <bdi>(מתוך 2ⁿ אפשריות ל-n משתנים),</bdi> אז <bdi>CNF</bdi> השלם של <bdi>¬A</bdi> מכיל בדיוק <bdi>2ⁿ</bdi>−<bdi>k</bdi> פסוקיות - יחס משלים פשוט."
                       },
                       {
                           "type":  "mcq",
-                          "src":  "סמסטר ב' תשפ\"ה <code>2025,</code> מועד ב', חלק ב', שאלה <code>5 [10</code> נק']",
-                          "q":  "יהי <code>A ≡ (p</code>↓<code>r)</code>↑<code>(q</code>↓<code>r).</code> מהי צורת ה<code>-CNF</code> השלמה של <code>A</code>?",
-                          "correct":  "<code>(p∨q∨r)</code>",
+                          "src":  "סמסטר ב' תשפ\"ה 2025, מועד ב', חלק ב', שאלה 5 [10 נק']",
+                          "q":  "יהי <bdi>A ≡ (p↓r)</bdi>↑<bdi>(q↓r).</bdi> מהי צורת ה<bdi>-CNF</bdi> השלמה של <bdi>A</bdi>?",
+                          "correct":  "<bdi>(p∨q∨r)</bdi>",
                           "opts":  [
-                                       "<code>(p∨q∨r)∧(¬p∨¬q∨¬r)</code>",
-                                       "<code>(¬p∨¬q∨¬r)</code>",
-                                       "<code>(p∨q∨r)∧(p∨¬q∨r)</code>"
+                                       "<bdi>(p∨q∨r)∧(¬p∨¬q∨¬r)</bdi>",
+                                       "<bdi>(¬p∨¬q∨¬r)</bdi>",
+                                       "<bdi>(p∨q∨r)∧(p∨¬q∨r)</bdi>"
                                    ],
-                          "ex":  "נמצא מטבלת אמת - השורה היחידה עם ערך <code>F</code> היא <code>p=q=r=F (</code>בשורה זו <code>p</code>↓<code>r=T,q</code>↓<code>r=T</code> ולכן <code>A=(T)</code>↑<code>(T)=F).</code> בכל שאר השורות <code>A=T.</code> לכן ה<code>-CNF</code> השלמה מכילה פסוקית אחת בלבד<code>: p∨q∨r.</code>",
-                          "deeper":  "אותו פסוק <code>A≡(p</code>↓<code>r)</code>↑<code>(q</code>↓<code>r)</code> הופיע כבר בחורף תשע\"ט <code>2019</code> מועד ב<code>' q2 -</code> עוד דוגמה לחזרתיות פסוקים בבנק המבחנים, שווה לשנן היטב את הטכניקה."
+                          "ex":  "נמצא מטבלת אמת - השורה היחידה עם ערך <bdi>F</bdi> היא <bdi>p=q=r=F (בשורה זו p↓r=T,q↓r=T ולכן A=(T)↑(T)=F).</bdi> בכל שאר השורות <bdi>A=T.</bdi> לכן ה<bdi>-CNF</bdi> השלמה מכילה פסוקית אחת בלבד<bdi>: p∨q∨r.</bdi>",
+                          "deeper":  "אותו פסוק <bdi>A≡(p↓r)</bdi>↑<bdi>(q↓r)</bdi> הופיע כבר בחורף תשע\"ט <bdi>2019</bdi> מועד ב<bdi>' q2 -</bdi> עוד דוגמה לחזרתיות פסוקים בבנק המבחנים, שווה לשנן היטב את הטכניקה."
                       }
                   ]
 }
